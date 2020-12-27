@@ -1,0 +1,20 @@
+<div class="profileImage">
+	{{#ImageURL}}
+	<form enctype="multipart/form-data" method="post" action="/image/user/{{id}}">
+	<input type="hidden" name="_method" value="put"/>
+		<label for="file_input">
+			<img src = "{{ImageURL}}" class="profileImage"/><br>		
+		</label>
+		<input accept="image/png, image/jpeg" type="file" name="file" style= "display : none;" id="file_input" onchange="form.submit()">
+	</form>
+	{{/ImageURL}}
+	{{^ImageURL}}
+	<form enctype="multipart/form-data" method="post" action="/image/user/{{id}}">
+		<label for="file_input">
+			<img src = "/images/defaultImage.jpg"  class="profileImage"/><br>		
+		</label>
+		<input accept="image/png, image/jpeg" type="file" name="file" style= "display : none;" id="file_input" onchange="form.submit()">
+	</form>
+	{{/ImageURL}}
+	
+</div>
