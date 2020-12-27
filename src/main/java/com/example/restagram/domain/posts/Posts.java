@@ -1,17 +1,15 @@
 package com.example.restagram.domain.posts;
 
 import com.example.restagram.domain.BaseTimeEntity;
-import com.example.restagram.domain.Users;
+import com.example.restagram.domain.Users.User;
 import com.example.restagram.domain.comments.Comments;
 import com.example.restagram.domain.tables.LikesTables;
 import com.example.restagram.domain.tables.TagsTables;
-import com.example.restagram.domain.tags.Tags;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,7 +23,7 @@ public class Posts extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private Users user;
+    private User user;
 
     @Column(length = 1024)
     private String content;
@@ -41,7 +39,7 @@ public class Posts extends BaseTimeEntity {
     private List<Comments> comments ;
 
     @Builder
-    public Posts(Users user, String content){
+    public Posts(User user, String content){
         this.user = user;
         this.content = content;
     }

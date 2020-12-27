@@ -15,7 +15,7 @@ import com.example.restagram.domain.images.ImagesRepository;
 public class ImageService {
 	@Autowired
 	private ImagesRepository imageRepo;
-	
+	// 추후 infra 구축. -작성자:김병연
 	public void savePostImages(Long postId, MultipartFile[] files) throws IllegalStateException, IOException {
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ postId.toString();
 		File folder = new File(path);
