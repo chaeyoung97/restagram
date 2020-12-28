@@ -32,10 +32,11 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-mustache'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.projectlombok:lombok'
+    compile group: 'org.springframework', name: 'spring-websocket', version: '5.2.3.RELEASE'
     compile 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
-
+    implementation 'org.springframework.session:spring-session-core'
 }
 
 test {
