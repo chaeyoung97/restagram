@@ -1,4 +1,4 @@
-//package com.example.restagram.domain.Users;
+//package com.example.restagram.domain.users;
 //
 //import java.sql.Timestamp;
 //
