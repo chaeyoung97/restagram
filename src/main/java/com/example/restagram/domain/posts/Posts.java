@@ -1,7 +1,7 @@
 package com.example.restagram.domain.posts;
 
 import com.example.restagram.domain.BaseTimeEntity;
-import com.example.restagram.domain.Users.User;
+import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.comments.Comments;
 import com.example.restagram.domain.tables.LikesTables;
 import com.example.restagram.domain.tables.TagsTables;
@@ -23,28 +23,27 @@ public class Posts extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User user;
+    private Users user;
 
     @Column(length = 1024)
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TagsTables> tags ;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<LikesTables> likes ;
 
     @OrderBy("createdDate asc")
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comments> comments ;
 
     @Builder
-    public Posts(User user, String content){
-        this.user = user;
+    public Posts(String content){
         this.content = content;
     }
 
-//    public void addTag(Tags tag){
-//        tags.add(tag);
-//    }
+    public void update(String content){
+        this.content = content;
+    }
 }

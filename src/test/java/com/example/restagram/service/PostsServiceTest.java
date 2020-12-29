@@ -1,6 +1,5 @@
 package com.example.restagram.service;
 
-import com.example.restagram.domain.Users.User;
 import com.example.restagram.domain.posts.PostsRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,13 +26,6 @@ public class PostsServiceTest {
     @Autowired
     private PostsRepository postsRepository;
 
-    @Test
-    public void Posts_등록() throws Exception{
-        //given
-        String content = "테스트 내용";
-        User user = new User("테스트 사용자");
-        //when
-        //then
-    }
+
 
 }

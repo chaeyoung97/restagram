@@ -1,6 +1,6 @@
 <div class="profileImage">
 	{{#ImageURL}}
-	<form enctype="multipart/form-data" method="post" action="/image/user/{{id}}">
+	<form enctype="multipart/form-data" method="post" action="/image/users/{{id}}">
 	<input type="hidden" name="_method" value="put"/>
 		<label for="file_input">
 			<img src = "{{ImageURL}}" class="profileImage"/><br>		
@@ -9,7 +9,7 @@
 	</form>
 	{{/ImageURL}}
 	{{^ImageURL}}
-	<form enctype="multipart/form-data" method="post" action="/image/user/{{id}}">
+	<form enctype="multipart/form-data" method="post" action="/image/users/{{id}}">
 		<label for="file_input">
 			<img src = "/images/defaultImage.jpg"  class="profileImage"/><br>		
 		</label>

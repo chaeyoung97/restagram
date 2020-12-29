@@ -2,6 +2,7 @@ package com.example.restagram.domain.tables;
 
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.tags.Tags;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,10 @@ public class TagsTables {
     @ManyToOne
     @JoinColumn(name = "tag_id")
     private Tags tag;
+
+    @Builder
+    public TagsTables(Posts posts, Tags tags){
+        this.post = posts;
+        this.tag = tags;
+    }
 }
