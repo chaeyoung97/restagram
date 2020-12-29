@@ -1,8 +1,7 @@
 package com.example.restagram.service;
 
-import com.example.restagram.domain.Users;
+import com.example.restagram.domain.Users.User;
 import com.example.restagram.domain.posts.PostsRepository;
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class PostsServiceTest {
     public void Posts_등록() throws Exception{
         //given
         String content = "테스트 내용";
-        Users user = new Users("테스트 사용자");
+        User user = new User("테스트 사용자");
         //when
         //then
     }

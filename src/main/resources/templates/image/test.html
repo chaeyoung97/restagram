@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.profileImage{
+	width : 150px;
+	height : 150px;
+}
+</style>
+</head>
+<body>
+{{#ImageName}}
+<div>
+	<h2>{{ImageName}}</h2>
+</div>
+{{/ImageName}}
+{{^ImageName}}
+	<h2>이미지를 업로드 해주세요</h2>
+{{/ImageName}}
+
+
+{{>/include/profileImage}}
+</body>
+</html>
+
