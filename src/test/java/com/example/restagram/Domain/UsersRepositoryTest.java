@@ -1,7 +1,7 @@
 //package com.example.restagram.Domain;
 //
-//import com.example.restagram.domain.Users.Users;
-//import com.example.restagram.domain.Users.UsersRepository;
+//import com.example.restagram.domain.users.Users;
+//import com.example.restagram.domain.users.UsersRepository;
 //import org.junit.After;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

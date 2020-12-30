@@ -1,6 +1,6 @@
 //package com.example.restagram.web;
-//import com.example.restagram.domain.Users.Users;
-//import com.example.restagram.domain.Users.UsersRepository;
+//import com.example.restagram.domain.users.Users;
+//import com.example.restagram.domain.users.UsersRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;

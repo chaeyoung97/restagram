@@ -11,6 +11,8 @@ import com.example.restagram.web.dto.PostsSaveRequestDto;
 import com.example.restagram.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,7 @@ public class PostsService {
     private final TagsRepository tagsRepository;
     private final TagsTablesRepository tagsTablesRepository;
 
+    @Transactional
     public Long save(PostsSaveRequestDto requestDto){
         Posts posts = postsRepository.save(requestDto.toEntity());
         List<String>tags = ExtractHashTag.extract(requestDto.getContent());
@@ -44,8 +47,11 @@ public class PostsService {
         return posts.getId();
     }
 
+    //더티체킹은 트랜젝션안에서만 이루어져서 @Transactional어노테이션이 업으면 더티체킹이 안됨!!!!
+    @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto){
         Posts posts = postsRepository.findById(id).get();
+        posts.update(requestDto.getContent());
         for(int i=0; i<posts.getTags().size(); i++){
             tagsTablesRepository.delete(posts.getTags().get(i));    //해당 게시물에 등록된 태그를 제거(태그 테이블에서 제거)(이케하면 posts의 tag리스트에서도 삭제됨을 확인함)
         }
@@ -57,6 +63,7 @@ public class PostsService {
             for(int i=0; i <tags.size(); i++){
                 tag = tagsRepository.findByTagName(tags.get(i));
                 if(tag.isPresent()){    // Tags에 이미 태그가 등록되어 있다면
+
                     tagsTablesRepository.save(TagsTables.builder().posts(posts).tags(tag.get()).build()); //태그 테이블에 바로 등록
                 }
                 else{   //Tags에 태그가 등록되어 있지 않다면
@@ -70,15 +77,17 @@ public class PostsService {
         return posts.getId();
     }
 
+    @Transactional
     public Long delete(Long id){
         postsRepository.deleteById(id); // cascadeType.REMOVE옵션을 줬기 때문에 post만 삭제해도 태그, 댓글, 좋아요가 모두 삭제됨
         return id;
     }
-
+//    @Transactional(readOnly = true)
 //    public Posts findByid(Long id){
 //        return postsRepository.findById(id).get();
 //    }
 
+    @Transactional(readOnly = true)
     public Long findByid(Long id){
         return new Long(postsRepository.findById(id).get().getTags().size());
     }
