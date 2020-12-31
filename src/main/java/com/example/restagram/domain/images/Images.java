@@ -15,7 +15,6 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Images extends BaseTimeEntity{
 	 @Column(name = "image_id")
@@ -27,4 +26,15 @@ public class Images extends BaseTimeEntity{
 	 
 	 @Lob
 	 private String imageURL;
+	 
+	 private Long postId;
+	 
+	 private Long userId;
+	 
+	 public void update(String imageName, String imageURL, Long postId, Long userId) {
+		this.imageName = imageName;
+		this.imageURL = imageURL;
+		this.postId = postId;
+		this.userId = userId;
+	 }
 }
