@@ -22,6 +22,11 @@
 
 
 {{>/include/profileImage}}
+
+<br><form method="post" action="/image/user/{{id}}">
+<input type="hidden" name="_method" value="delete"/>
+<input type="submit" value="삭제">
+</form>
 </body>
 </html>
 

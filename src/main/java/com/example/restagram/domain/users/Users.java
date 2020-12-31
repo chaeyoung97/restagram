@@ -1,79 +1,56 @@
-//package com.example.restagram.domain.users;
-//
-//import java.sql.Timestamp;
-//
-//import javax.persistence.Column;
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
-//
-//import com.example.restagram.domain.BaseTimeEntity;
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-//
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Setter
-//@Entity
-//public class Users extends BaseTimeEntity {
-//	@Id
-//	@GeneratedValue
-//	private Long id;
-//
-//	private String name;
-//
-//	@Column(nullable=false)
-//	private String userId;
-//	private String password;
-//	private String email;
-//	private String phoneNum;
-//	private String intro;
-//	private String profileImage;
-//
-//	@Override
-//	public String toString() {
-//		return "User [id=" + id + ", name=" + name + ", userId=" + userId + ", password=" + password + ", email="
-//				+ email + ", phoneNum=" + phoneNum + ", intro=" + intro + ", profileImage=" + profileImage + "]";
-//	}
-//
-//	public void update(Users newUsers) {
-//		this.name=name;
-//		this.password=password;
-//		this.email=email;
-//		this.phoneNum=phoneNum;
-//		this.intro=intro;
-//		this.profileImage=profileImage;
-//	}
-//
-//}
-
 package com.example.restagram.domain.users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.web.context.WebApplicationContext;
 
-@AllArgsConstructor
+import java.io.Serializable;
+
 @NoArgsConstructor
-@Setter
+@ToString
+@Getter
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Entity
-public class Users extends BaseTimeEntity {
+public class Users extends BaseTimeEntity implements Serializable {
 	@Id
-	@GeneratedValue
-	Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	String userName;
+	private String name;
+
+	@Column(nullable=false)
+	private String userId;
+	private String password;
+	private String email;
+	private String phoneNum;
+	private String intro;
+	private String profileImage;
+	private String role;
 
 	@Builder
-	public Users(String userName){
-		this.userName= userName;
+	public Users(String name, String userId, String password, String email, String phoneNum, String intro, String profileImage) {
+		this.name = name;
+		this.userId = userId;
+		this.password = password;
+		this.email = email;
+		this.phoneNum = phoneNum;
+		this.intro = intro;
+		this.profileImage = profileImage;
+		this.role="ROLE_USER";
 	}
+
+	public void update(Users newUsers) {
+		this.name=name;
+		this.password=password;
+		this.email=email;
+		this.phoneNum=phoneNum;
+		this.intro=intro;
+		this.profileImage=profileImage;
+	}
+
 }
+
