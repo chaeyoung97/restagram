@@ -33,15 +33,18 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-mustache'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.projectlombok:lombok'
-    compile group: 'org.springframework', name: 'spring-websocket', version: '5.2.3.RELEASE'
+//    compile group: 'org.springframework', name: 'spring-websocket', version: '5.2.3.RELEASE' // 세션 동기화로 인해 잠시 비활성화  작성자:김병연.
     compile 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.session:spring-session-core'
+    compile('org.springframework.session:spring-session-jdbc')  // session 의존성 추가
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile 'org.springframework.security:spring-security-web'
     compile 'org.springframework.security:spring-security-config'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+
 }
 
 test {

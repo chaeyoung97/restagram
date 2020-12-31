@@ -1,3 +1,4 @@
+/*
 package com.example.restagram.web;
 
 import com.example.restagram.domain.users.Users;
@@ -98,3 +99,4 @@ public class FollowController {
 		return "/follow/follow";
 	}
 }
+*/
