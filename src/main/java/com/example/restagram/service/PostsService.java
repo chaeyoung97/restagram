@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +24,12 @@ public class PostsService {
     private final PostsRepository postsRepository;
     private final TagsRepository tagsRepository;
     private final TagsTablesRepository tagsTablesRepository;
+    private final ImageService imageService;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto){
         Posts posts = postsRepository.save(requestDto.toEntity());
+//        imageService.savePostImages(posts.getId(), requestDto.getMultipartFiles());
         List<String>tags = ExtractHashTag.extract(requestDto.getContent());
         Optional<Tags> tag;
 
@@ -82,13 +85,14 @@ public class PostsService {
         postsRepository.deleteById(id); // cascadeType.REMOVE옵션을 줬기 때문에 post만 삭제해도 태그, 댓글, 좋아요가 모두 삭제됨
         return id;
     }
-//    @Transactional(readOnly = true)
-//    public Posts findByid(Long id){
-//        return postsRepository.findById(id).get();
-//    }
 
     @Transactional(readOnly = true)
-    public Long findByid(Long id){
-        return new Long(postsRepository.findById(id).get().getTags().size());
+    public Posts findByid(Long id){
+        return postsRepository.findById(id).get();
     }
+
+//    @Transactional(readOnly = true)
+//    public Long findByid(Long id){
+//        return new Long(postsRepository.findById(id).get().getTags().size());
+//    }
 }

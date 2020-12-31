@@ -25,7 +25,7 @@ public class CommentsApiController {
     }
 
     @DeleteMapping("/{id}")
-    public Long delete(@PathVariable Long id){
-        return commentsService.delete(id);
+    public Long delete(@PathVariable Long postId, @PathVariable Long id){
+        return commentsService.delete(postId,id);
     }
 }

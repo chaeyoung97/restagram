@@ -24,11 +24,11 @@ public class PostsApiController {
     @DeleteMapping("/{id}")
     public Long delete(@PathVariable Long id){ return postsService.delete(id); }
 
-//    @GetMapping("/{id}")
-//    public Posts findById(@PathVariable Long id){ return postsService.findByid(id); }
-
     @GetMapping("/{id}")
-    public Long findById(@PathVariable Long id){ return postsService.findByid(id); }
+    public Posts findById(@PathVariable Long id){ return postsService.findByid(id); }
 
+//    @GetMapping("/{id}")
+//    public Long findById(@PathVariable Long id){ return postsService.findByid(id); }
+//
 
 }

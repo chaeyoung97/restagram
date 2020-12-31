@@ -2,6 +2,7 @@ package com.example.restagram.domain.tables;
 
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.posts.Posts;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,9 @@ public class LikesTables{
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Posts post;
+
+    @Builder
+    public LikesTables(Posts posts){
+        this.post = posts;
+    }
 }
