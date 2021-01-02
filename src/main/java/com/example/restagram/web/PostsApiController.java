@@ -31,7 +31,7 @@ public class PostsApiController {
         session.setAttribute("sessionedUser", users);
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .content(request.getParameter("content"))
-                .files(request.getFiles("files,"))
+                .files(request.getFiles("files"))
                 .build();
         Posts posts = postsService.save(requestDto, HttpSessionUtils.getUserFromSession(session));
         try{

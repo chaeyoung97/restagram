@@ -32,17 +32,9 @@ public class ImageService {
 		if(!folder.exists()) {
 			folder.mkdirs();
 		}
-		System.out.println("폴더 생성 완료");
-		if(files == null){
-			System.out.println("파일이 null");
-			return;
-		}
-		if(files.isEmpty())
-			System.out.println("파일이 0개");
 
-		for(int i =0; i< files.size();i++){
+		for(MultipartFile file : files){
 			System.out.println("이미지 저장");
-			MultipartFile file = files.get(i);
 			Long count = imageRepo.count();
 			String fName = Long.toString(count+1) + "." + FilenameUtils.getExtension(file.getOriginalFilename());
 			String fURL = path + "\\" + fName;
