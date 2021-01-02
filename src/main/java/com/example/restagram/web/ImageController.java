@@ -2,6 +2,8 @@ package com.example.restagram.web;
 
 import java.io.IOException;
 
+import com.example.restagram.domain.posts.Posts;
+import com.example.restagram.domain.posts.PostsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,9 @@ public class ImageController {
 	
 	@Autowired
 	private ImageService service;
+
+	@Autowired
+	private PostsRepository postsRepository;
 	
 	//User 프로필 Control
 	@GetMapping("/user/{id}")
@@ -64,7 +69,7 @@ public class ImageController {
 	
 	@PutMapping("/post/{postId}")
 	public String updatePostImage(@PathVariable Long postId,@RequestParam MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
-		service.updatePostImages(postId, files,attr);		
+		service.updatePostImages(postId, files,attr);
 		return "redirect:/image/post/{postId}";
 	}
 	

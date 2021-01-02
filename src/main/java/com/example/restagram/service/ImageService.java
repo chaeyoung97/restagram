@@ -1,9 +1,12 @@
 package com.example.restagram.service;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.example.restagram.domain.posts.Posts;
+import com.example.restagram.domain.posts.PostsRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,12 @@ import com.example.restagram.domain.images.ImagesRepository;
 public class ImageService {
 	@Autowired
 	private ImagesRepository imageRepo;
+	@Autowired
+	private PostsRepository postsRepository;
 	// 추후 infra 구축. -작성자:김병연
 	public void savePostImages(Long postId, MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
-		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ postId.toString();
+		Posts posts = postsRepository.findById(postId).get();
+		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
 		File folder = new File(path);
 		if(!folder.exists()) {
 			folder.mkdirs();
@@ -32,8 +38,12 @@ public class ImageService {
 			String fURL = path + "\\" + fName;
 			File destFile = new File(fURL);
 			file.transferTo(destFile);
-			Images image = new Images();
-			image.update(fName, "/images/post/"+postId.toString()+"/"+fName, postId, null);
+			Images image = Images.builder()
+					.imageName(fName)
+					.imageURL("/images/post/"+posts.getId().toString()+"/"+fName)
+					.posts(posts)
+					.userId(null)
+					.build();
 			imageRepo.save(image);
 		}
 		attr.addFlashAttribute("images", imageRepo.findAll());
@@ -46,12 +56,13 @@ public class ImageService {
 	}
 	
 	public void updatePostImages(Long postId, MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
-		List<Images> imageList = imageRepo.findAllByPostId(postId);
+		Posts posts = postsRepository.findById(postId).get();
+		List<Images> imageList = imageRepo.findAllByPostId(posts.getId());
 		for(Images image : imageList) {
 			String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
 			deleteImage(prevURL, image);
 		}		
-		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ postId.toString();
+		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
 		File folder = new File(path);
 		if(!folder.exists()) {
 			folder.mkdirs();
@@ -63,8 +74,12 @@ public class ImageService {
 			String fURL = path + "\\" + fName;
 			File destFile = new File(fURL);
 			file.transferTo(destFile);
-			Images image = new Images();			
-			image.update(fName, "/images/post/"+postId.toString()+"/"+fName, postId, null);
+			Images image = Images.builder()
+					.imageName(fName)
+					.imageURL("/images/post/"+posts.getId().toString()+"/"+fName)
+					.posts(posts)
+					.userId(null)
+					.build();
 			imageRepo.save(image);
 		}
 		
@@ -93,7 +108,7 @@ public class ImageService {
 		File destFile = new File(fURL);
 		file.transferTo(destFile);
 		Images image = new Images();
-		image.update(fName, "/images/profile/"+id.toString()+"/"+fName, null, id);
+		image.update(fName, "/images/profile/"+id.toString()+"/"+fName, null);
 		attr.addFlashAttribute("ImageName", fName);
 		attr.addFlashAttribute("ImageURL","/images/profile/"+id.toString()+"/"+fName);
 		imageRepo.save(image);
@@ -114,7 +129,7 @@ public class ImageService {
 		
 		File destFile = new File(fURL);
 		file.transferTo(destFile);
-		image.update(fName, "/images/profile/"+id.toString()+"/"+fName, null, id);
+		image.update(fName, "/images/profile/"+id.toString()+"/"+fName, null);
 		
 		imageRepo.save(image);
 		attr.addFlashAttribute("ImageName", fName);
