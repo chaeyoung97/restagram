@@ -12,24 +12,25 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user)
     {
-      if(user!=null)
-      {
-          model.addAttribute("member",user.getUsername());
-      }
+        if(user!=null)
+        {
+            model.addAttribute("member",user.getUsername());
+            return "index";  //로그인이 되어있다면 home화면으로 이동
+        }
 
-        return "index";
+        return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
     }
 
     //회원가입 페이지
     @GetMapping("/signUpForm")
     public String signUpForm() {
-        return "user/signUpForm";
+        return "signUpForm";
     }
 
     //로그인 페이지로 이동
     @GetMapping("/loginForm")
     public String loginForm() {
-        return "/user/login";
+        return "login";
     }
 
 

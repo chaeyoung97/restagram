@@ -81,19 +81,29 @@
 
                 <h1 class="sprite_insta_big_logo title"></h1>
 
-                <form action="/login" method="POST">
+                <form> <!-- Controller에서 회원가입 로직을 처리할 예정 -->
                     <p class="login_user_name">
-                        <label for="username">사용자명:</label>
-                        <input type="text" name="username" id="username" autofocus/>
+                        <label for="user_id">사용자명:</label>
+                        <input type="text" id="user_id" placeholder="user_id" autofocus/> <br/>
                     </p>
-
-                    <p class="login_user_password">
+                    <p class="login_user_name">
                         <label for="password">비밀번호:</label>
-                        <input type="password" name="password" id="password"/>
+                        <input type="password" id="password" placeholder="password"/> <br/>
                     </p>
-
-                    <button type="submit"class="submit_btn">로그인</button>
+                    <p class="login_user_name">
+                        <label for="name">이름:</label>
+                        <input type="text" id="name" placeholder="name"/><br>
+                    </p>
+                    <p class="login_user_name">
+                        <label for="email">이메일:</label>
+                        <input type="text" id="email" placeholder="email"/><br>
+                    </p>
+                    <p class="login_user_name">
+                        <label for="phone_Num">핸드폰:</label>
+                        <input type="text" id="phone_Num" placeholder="phoneNum"/><br>
+                    </p>
                 </form>
+                <button type="button" class="submit_btn" id="btn-create">회원가입 완료하기</button>
 
 
 
@@ -101,7 +111,7 @@
 
             <div class="bottom_box">
                 <div>
-                    <span>아이디가 없으신가요?</span><a href="/signUpForm">회원가입</a>
+                    <span>아이디가 이미 있으신가요?</span><a href="/login">로그인하러가기</a>
                 </div>
             </div>
 
@@ -114,6 +124,9 @@
 </section>
 
 
-<script src="js/insta.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="/JS/createUser.js"></script>
 </body>
 </html>
