@@ -1,13 +1,15 @@
 package com.example.restagram.service;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.posts.PostsRepository;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -24,7 +26,8 @@ public class ImageService {
 	@Autowired
 	private PostsRepository postsRepository;
 	// 추후 infra 구축. -작성자:김병연
-	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) {
+		System.out.println("이미지 저장함수 실행");
 		Posts posts = postsRepository.findById(postId).get();
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
 		File folder = new File(path);
@@ -35,10 +38,9 @@ public class ImageService {
 		for(MultipartFile file : files){
 			System.out.println("이미지 저장");
 			Long count = imageRepo.count();
-			String fName = Long.toString(count+1) + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+			String fName = Long.toString(count+1) + ".jpg";
 			String fURL = path + "\\" + fName;
-			File destFile = new File(fURL);
-			file.transferTo(destFile);
+			saveImage(fURL, file);
 			Images image = Images.builder()
 					.imageName(fName)
 					.imageURL("/images/post/"+posts.getId().toString()+"/"+fName)
@@ -48,33 +50,31 @@ public class ImageService {
 			imageRepo.save(image);
 		}
 		attr.addFlashAttribute("images", imageRepo.findAll());
+		System.out.println("정상종료");
 	}
 	
 	public void getPostImages(Long postId, Model model) {
 		model.addAttribute("postId", postId);
 		List<Images> imageList =  imageRepo.findAllByPostId(postId);
 		model.addAttribute("images", imageList);
+		System.out.println(imageList.size());
 	}
 	
-	public void updatePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public void updatePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) {
 		Posts posts = postsRepository.findById(postId).get();
 		List<Images> imageList = imageRepo.findAllByPostId(posts.getId());
 		for(Images image : imageList) {
 			String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
 			deleteImage(prevURL, image);
+			imageRepo.delete(image);
 		}		
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
-		File folder = new File(path);
-		if(!folder.exists()) {
-			folder.mkdirs();
-		}
 		
 		for(MultipartFile file : files) {
 			Long count = imageRepo.count();
-			String fName = Long.toString(count+1) + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+			String fName = Long.toString(count+1) + ".jpg";
 			String fURL = path + "\\" + fName;
-			File destFile = new File(fURL);
-			file.transferTo(destFile);
+			saveImage(fURL, file);
 			Images image = Images.builder()
 					.imageName(fName)
 					.imageURL("/images/post/"+posts.getId().toString()+"/"+fName)
@@ -92,31 +92,32 @@ public class ImageService {
 		for(Images image : imageList) {
 			String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
 			deleteImage(prevURL, image);
+			imageRepo.delete(image);
 		}		
 	}
 	
-	public void saveProfileImage(Long id, MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public void saveProfileImage(Long id, MultipartFile file, RedirectAttributes attr){
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\profile\\"+ id.toString();
 		File folder = new File(path);
 		if(!folder.exists()) {
 			folder.mkdirs();
 		}
 		
-		String fName = "profile." + FilenameUtils.getExtension(file.getOriginalFilename());
-		System.out.println(fName);
+		String fName = "profile.jpg";
 		String fURL = path + "\\" + fName;
-		
-		File destFile = new File(fURL);
-		file.transferTo(destFile);
-		Images image = new Images();
-		image.update(fName, "/images/profile/"+id.toString()+"/"+fName, null);
+		saveImage(fURL, file);
+		Images image = Images.builder().imageName(fName)
+					.imageURL("/images/profile/"+id.toString()+"/"+fName)
+					.posts(null)
+					.userId(id)
+					.build();
 		attr.addFlashAttribute("ImageName", fName);
 		attr.addFlashAttribute("ImageURL","/images/profile/"+id.toString()+"/"+fName);
 		imageRepo.save(image);
 	}
 	
-	public void updateProfileImage(Long id, MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
-		Images image = imageRepo.findById(id).get();
+	public void updateProfileImage(Long id, MultipartFile file, RedirectAttributes attr) {
+		Images image = imageRepo.findByUserId(id);
 		deleteImage(System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL(), image);		
 		
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\profile\\"+ id.toString();
@@ -125,14 +126,10 @@ public class ImageService {
 			folder.mkdirs();
 		}
 		
-		String fName = "profile." + FilenameUtils.getExtension(file.getOriginalFilename());
+		String fName = "profile.jpg";
 		String fURL = path + "\\" + fName;
+		saveImage(fURL, file);
 		
-		File destFile = new File(fURL);
-		file.transferTo(destFile);
-		image.update(fName, "/images/profile/"+id.toString()+"/"+fName, null);
-		
-		imageRepo.save(image);
 		attr.addFlashAttribute("ImageName", fName);
 		attr.addFlashAttribute("ImageURL","/images/profile/"+id.toString()+"/"+fName);
 	}
@@ -150,12 +147,11 @@ public class ImageService {
 		Images image =  imageRepo.findByUserId(id);
 		String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
 		deleteImage(prevURL,image);
-		
+		imageRepo.delete(image);
 	}
 	
 	
 	private void deleteImage(String prevURL, Images image) {
-		imageRepo.delete(image);
 		File prevFile = new File(prevURL);
 		if(prevFile.exists()) {
 			if(prevFile.delete()) {
@@ -165,6 +161,20 @@ public class ImageService {
 			}
 		}else {
 			System.out.println("파일이 존재하지 않습니다.");
+		}
+	}
+	
+	private void saveImage(String fURL, MultipartFile file){
+		File destFile = new File(fURL);
+		BufferedImage bImage;
+		try {
+			bImage = ImageIO.read(file.getInputStream());		
+			BufferedImage result = new BufferedImage(bImage.getWidth(), bImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+			result.createGraphics().drawImage(bImage, 0, 0, Color.WHITE,null);
+			ImageIO.write(result, "jpg", destFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
