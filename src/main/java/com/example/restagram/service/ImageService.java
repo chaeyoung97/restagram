@@ -25,7 +25,6 @@ public class ImageService {
 	private PostsRepository postsRepository;
 	// 추후 infra 구축. -작성자:김병연
 	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
-		System.out.println("이미지 저장함수 실행");
 		Posts posts = postsRepository.findById(postId).get();
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
 		File folder = new File(path);
@@ -49,7 +48,6 @@ public class ImageService {
 			imageRepo.save(image);
 		}
 		attr.addFlashAttribute("images", imageRepo.findAll());
-		System.out.println("정상종료");
 	}
 	
 	public void getPostImages(Long postId, Model model) {
@@ -58,7 +56,7 @@ public class ImageService {
 		model.addAttribute("images", imageList);
 	}
 	
-	public void updatePostImages(Long postId, MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public void updatePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
 		Posts posts = postsRepository.findById(postId).get();
 		List<Images> imageList = imageRepo.findAllByPostId(posts.getId());
 		for(Images image : imageList) {

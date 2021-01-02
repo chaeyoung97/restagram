@@ -69,7 +69,7 @@ public class ImageController {
 	}
 	
 	@PutMapping("/post/{postId}")
-	public String updatePostImage(@PathVariable Long postId,@RequestParam MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public String updatePostImage(@PathVariable Long postId,@RequestParam List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
 		service.updatePostImages(postId, files,attr);
 		return "redirect:/image/post/{postId}";
 	}

@@ -1,6 +1,8 @@
 {{#images.0}}
-<form name="upload" method="post" action="/image/post/{{postId}}" enctype="multipart/form-data">
-<input type="hidden" name="_method" value="update"/>
+<form name="upload" method="post" action="/api/posts/1" enctype="multipart/form-data">
+<input type="hidden" name="_method" value="put"/>
+	<input type="text" name="content">
+
 	{{#images}}
 		<img src = "{{imageURL}}" class="profileImage"/>
 	{{/images}}
@@ -20,7 +22,7 @@
 </form>
 {{/images.0}}
 
-<form method="post" action="/image/post/{{postId}}">
+<form method="post" action="/api/posts/1">
 	<input type="hidden" name="_method" value="delete"/>
 	<input type="submit" value="삭제">
 </form>

@@ -42,23 +42,15 @@ public class PostsApiController {
         return posts.getId();
     }
 
-//    @PostMapping("")
-//    public Long save(@RequestBody PostsSaveRequestDto requestDto, RedirectAttributes attributes, HttpSession session){
-//
-//        Posts posts = postsService.save(requestDto, HttpSessionUtils.getUserFromSession(session));
-//        try{
-//            imageService.savePostImages(posts.getId(), requestDto.getFiles(), attributes);
-//        }catch (Exception e){
-//            System.out.println("이미지 저장 에러");
-//        }
-//        return posts.getId();
-//    }
-
     @PutMapping("/{id}")
-    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto, RedirectAttributes attributes){
+    public Long update(@PathVariable Long id, MultipartHttpServletRequest request, RedirectAttributes attributes){
+        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+                .content(request.getParameter("content"))
+                .files(request.getFiles("files"))
+                .build();
         Posts posts = postsService.update(id, requestDto);
         try {
-            imageService.updatePostImages(id, requestDto.getMultipartFiles(), attributes);
+            imageService.updatePostImages(id, requestDto.getFiles(), attributes);
         }catch (Exception e){
             System.out.println("이미지 업데이트 에러");
         }
@@ -67,6 +59,7 @@ public class PostsApiController {
 
     @DeleteMapping("/{id}")
     public Long delete(@PathVariable Long id){
+        imageService.deletePostImage(id);
         return postsService.delete(id); //cascade 옵션때문에 태그테이블, 좋아요테이블, 이미지 모두 삭제됨
     }
 
