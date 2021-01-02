@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentsSaveRequestDto {
     private String content;
+
     @Builder
     public CommentsSaveRequestDto(String content){
         this.content = content;
     }
 
-    public Comments toEntity(Posts posts){
-        return Comments.builder().posts(posts).content(content).build();
+    public Comments toEntity(Posts posts, Users user){
+        return Comments.builder().posts(posts).content(content).user(user).build();
     }
 }

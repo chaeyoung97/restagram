@@ -10,7 +10,8 @@
 {{/images.0}}
 
 {{^images.0}}
-<form name="upload" method="post" action="/image/post/{{postId}}" enctype="multipart/form-data">
+<form name="upload" method="post" action="/api/posts" enctype="multipart/form-data">
+	<input type="text" name="content">
 	{{#images}}
 		<img src = "{{imageURL}}" class="profileImage"/>
 	{{/images}}

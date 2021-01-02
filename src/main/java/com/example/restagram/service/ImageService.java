@@ -24,15 +24,25 @@ public class ImageService {
 	@Autowired
 	private PostsRepository postsRepository;
 	// 추후 infra 구축. -작성자:김병연
-	public void savePostImages(Long postId, MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
+		System.out.println("이미지 저장함수 실행");
 		Posts posts = postsRepository.findById(postId).get();
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
 		File folder = new File(path);
 		if(!folder.exists()) {
 			folder.mkdirs();
 		}
-		
-		for(MultipartFile file : files) {
+		System.out.println("폴더 생성 완료");
+		if(files == null){
+			System.out.println("파일이 null");
+			return;
+		}
+		if(files.isEmpty())
+			System.out.println("파일이 0개");
+
+		for(int i =0; i< files.size();i++){
+			System.out.println("이미지 저장");
+			MultipartFile file = files.get(i);
 			Long count = imageRepo.count();
 			String fName = Long.toString(count+1) + "." + FilenameUtils.getExtension(file.getOriginalFilename());
 			String fURL = path + "\\" + fName;
@@ -47,6 +57,7 @@ public class ImageService {
 			imageRepo.save(image);
 		}
 		attr.addFlashAttribute("images", imageRepo.findAll());
+		System.out.println("정상종료");
 	}
 	
 	public void getPostImages(Long postId, Model model) {

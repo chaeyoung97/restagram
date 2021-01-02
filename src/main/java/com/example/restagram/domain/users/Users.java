@@ -22,7 +22,7 @@ public class Users extends BaseTimeEntity implements Serializable {
 
 	private String name;
 
-	@Column(nullable=false)
+//	@Column(nullable=false)
 	private String userId;
 	private String password;
 	private String email;
@@ -31,6 +31,9 @@ public class Users extends BaseTimeEntity implements Serializable {
 	private String profileImage;
 	private String role;
 
+	public Users(String name){
+		this.name = name;
+	}
 	@Builder
 	public Users(String name, String userId, String password, String email, String phoneNum, String intro, String profileImage) {
 		this.name = name;

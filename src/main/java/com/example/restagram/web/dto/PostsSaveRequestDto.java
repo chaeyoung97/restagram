@@ -2,27 +2,31 @@ package com.example.restagram.web.dto;
 
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.users.Users;
+import com.example.restagram.utils.HttpSessionUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
+@Setter
 public class PostsSaveRequestDto {
     private String content;
-    private Users user;
-    private MultipartFile[] multipartFiles;
+    private List<MultipartFile> files;
 
     @Builder
-    public PostsSaveRequestDto(Users user, String content, MultipartFile[] multipartFiles){
-        this.user = user;
+    public PostsSaveRequestDto(String content, List<MultipartFile> files){
         this.content = content;
-        this.multipartFiles = multipartFiles;
+        this.files = files;
     }
 
-    public Posts toEntity(){
-        return Posts.builder().user(user).content(content).build();
+    public Posts toEntity(Users users){
+        return Posts.builder().user(users).content(content).build();
     }
 }
 

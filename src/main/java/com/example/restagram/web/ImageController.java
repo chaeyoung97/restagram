@@ -1,6 +1,7 @@
 package com.example.restagram.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.posts.PostsRepository;
@@ -62,7 +63,7 @@ public class ImageController {
 	}
 	
 	@PostMapping("/post/{postId}")
-	public String postImage(@PathVariable Long postId,@RequestParam MultipartFile[] files, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public String postImage(@PathVariable Long postId, @RequestParam List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
 		service.savePostImages(postId, files, attr);
 		return "redirect:/image/post/{postId}";
 	}
