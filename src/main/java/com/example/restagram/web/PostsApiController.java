@@ -26,19 +26,13 @@ public class PostsApiController {
 
     @PostMapping("")
     public Long save(MultipartHttpServletRequest request, RedirectAttributes attributes, HttpSession session){
-
-        Users users =  usersRepository.save(new Users("테스트사용자"));
-        session.setAttribute("sessionedUser", users);
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .content(request.getParameter("content"))
                 .files(request.getFiles("files"))
                 .build();
         Posts posts = postsService.save(requestDto, HttpSessionUtils.getUserFromSession(session));
-        try{
-            imageService.savePostImages(posts.getId(), requestDto.getFiles(), attributes);
-        }catch (Exception e){
-            System.out.println("이미지 저장 에러");
-        }
+        imageService.savePostImages(posts.getId(), requestDto.getFiles(), attributes);
+
         return posts.getId();
     }
 
@@ -49,17 +43,14 @@ public class PostsApiController {
                 .files(request.getFiles("files"))
                 .build();
         Posts posts = postsService.update(id, requestDto);
-        try {
-            imageService.updatePostImages(id, requestDto.getFiles(), attributes);
-        }catch (Exception e){
-            System.out.println("이미지 업데이트 에러");
-        }
+        imageService.updatePostImages(id, requestDto.getFiles(), attributes);
+
         return posts.getId();
     }
 
     @DeleteMapping("/{id}")
     public Long delete(@PathVariable Long id){
-        imageService.deletePostImage(id);
+        imageService.deletePostImage(id);   //이미지 폴더 내에서도 삭제해주어야함
         return postsService.delete(id); //cascade 옵션때문에 태그테이블, 좋아요테이블, 이미지 모두 삭제됨
     }
 
