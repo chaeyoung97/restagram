@@ -15,7 +15,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/h2-console/*").permitAll();// h2 데이터베이스 접근 허용.
@@ -24,9 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/users/signUpForm","/users/loginForm").permitAll()
-                .antMatchers("/users/**")
-                .authenticated() // 로그인이 필요하다.
+                .antMatchers("/signUpForm","/loginForm").permitAll()
+//                .antMatchers("").authenticated() // 로그인이 필요하다. 이 부분은 api 부분의 url 적는 곳.
                 .anyRequest() // 기타 url 모두 허용.
                 .permitAll()
                 .and()

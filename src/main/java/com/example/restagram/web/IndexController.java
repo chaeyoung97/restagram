@@ -1,14 +1,22 @@
 package com.example.restagram.web;
 
+import com.example.restagram.config.LoginUser;
+import com.example.restagram.domain.users.SessionUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
     // 기본 home
     @GetMapping("/")
-    public String index()
+    public String index(Model model, @LoginUser SessionUser user)
     {
+      if(user!=null)
+      {
+          model.addAttribute("member",user.getUsername());
+      }
+
         return "index";
     }
 
@@ -24,16 +32,5 @@ public class IndexController {
         return "/user/login";
     }
 
-    //팔로우
-    @GetMapping("/follow")
-    public String follow() {
-        return "";
-    }
-
-    //팔로워
-    @GetMapping("/follower")
-    public String follower() {
-        return "";
-    }
 
 }

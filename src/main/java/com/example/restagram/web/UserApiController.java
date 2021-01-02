@@ -24,6 +24,8 @@ public class UserApiController {
     //회원가입 페이지.
     @PostMapping("/api/create")
     public Long insta_user(@RequestBody UserSaveRequestDto requestDto) {
+        System.out.println(">>>>>>>>>>>>>>>"+requestDto.toString());
+        System.out.println("create API");
         return userService.save(requestDto);
     }
 

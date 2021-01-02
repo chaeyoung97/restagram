@@ -1,6 +1,7 @@
 package com.example.restagram.config;
 
 import com.example.restagram.domain.users.Users;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,10 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetail implements UserDetails {
     private Users user;
 
-    public PrincipalDetails(Users user) {
+    public PrincipalDetail(Users user) {
         this.user = user;
     }
 
@@ -29,7 +30,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUserId();
+        return user.getUsername();
     }
 
     /**

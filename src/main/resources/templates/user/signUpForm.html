@@ -5,6 +5,17 @@
     <title>login</title>
 </head>
 <body>
-<h2> login form html</h2>
+{{>include/navigationBar}}
+    <h1> Join Page </h1>
+    <form> <!-- Controller에서 회원가입 로직을 처리할 예정 -->
+        <input type="text" id="user_id" placeholder="user_id" autofocus/> <br/>
+        <input type="password" id="password" placeholder="password"/> <br/>
+        <input type="text" id="name" placeholder="name"/><br>
+        <input type="text" id="email" placeholder="email"/><br>
+        <input type="text" id="phone_Num" placeholder="phoneNum"/><br>
+    </form>
+    <button type="button" class="btn btn-primary" id="btn-create">회원가입 완료하기</button>
+<a href="/signUpForm">로그인하러가기</a></body>
+{{>include/footer}}
 </body>
 </html>

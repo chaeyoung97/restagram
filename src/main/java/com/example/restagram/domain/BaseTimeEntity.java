@@ -1,5 +1,6 @@
 package com.example.restagram.domain;
 
+import com.example.restagram.domain.users.Users;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -37,4 +38,6 @@ public abstract class BaseTimeEntity {
         return dateTime.format(DateTimeFormatter.ofPattern(format));
 
     }
+
+
 }

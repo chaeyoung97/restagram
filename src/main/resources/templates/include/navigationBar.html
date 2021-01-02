@@ -1,0 +1,19 @@
+<head>
+    <title>인스타 클론코딩.</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="col-md-6">
+    현재 신분:
+    {{#member}} <span>{{member}} 님 반갑습니다.</span>
+    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+    {{/member}}
+
+    {{^member}}
+    <span> GUEST </span>
+    <a href="/loginForm" class="btn btn-success active" role="button">로그인</a>
+    <a href="/signUpForm" class="btn btn-secondary active" role="button">회원가입.</a>
+    {{/member}}
+</div>
+</body>
