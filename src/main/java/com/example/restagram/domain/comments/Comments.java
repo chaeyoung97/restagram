@@ -24,15 +24,16 @@ public class Comments extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name="post_id")
     private Posts post;
-//
-//    @ManyToOne
-//    @JoinColumn(name ="user_id")
-//    private Users user;
+
+    @ManyToOne
+    @JoinColumn(name ="user_id")
+    private Users user;
 
     @Builder
-    public Comments(Posts posts,String content){
+    public Comments(Posts posts, String content, Users user){
         this.post = posts;
         this.content = content;
+        this.user = user;
     }
 
     public void update(String content){

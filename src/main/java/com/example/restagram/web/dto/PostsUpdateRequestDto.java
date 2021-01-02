@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class PostsUpdateRequestDto {
     private String content;
-    private MultipartFile[] multipartFiles;
+    private List<MultipartFile> files;
 
 
     @Builder
-    public PostsUpdateRequestDto(String content, MultipartFile[] multipartFiles){
+    public PostsUpdateRequestDto(String content, List<MultipartFile> files){
         this.content = content;
-        this.multipartFiles = multipartFiles;
+        this.files = files;
     }
 }

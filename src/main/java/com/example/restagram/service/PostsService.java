@@ -6,7 +6,9 @@ import com.example.restagram.domain.tables.TagsTables;
 import com.example.restagram.domain.tables.TagsTablesRepository;
 import com.example.restagram.domain.tags.Tags;
 import com.example.restagram.domain.tags.TagsRepository;
+import com.example.restagram.domain.users.Users;
 import com.example.restagram.utils.ExtractHashTag;
+import com.example.restagram.utils.HttpSessionUtils;
 import com.example.restagram.web.dto.PostsSaveRequestDto;
 import com.example.restagram.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +30,8 @@ public class PostsService {
     private final ImageService imageService;
 
     @Transactional
-    public Posts save(PostsSaveRequestDto requestDto){
-        Posts posts = postsRepository.save(requestDto.toEntity());
+    public Posts save(PostsSaveRequestDto requestDto, Users users){
+        Posts posts = postsRepository.save(requestDto.toEntity(users));
         List<String>tags = ExtractHashTag.extract(requestDto.getContent());
         Optional<Tags> tag;
 
