@@ -1,14 +1,11 @@
 package com.example.restagram.domain.images;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
 
+import com.example.restagram.domain.posts.Posts;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,15 +23,24 @@ public class Images extends BaseTimeEntity{
 	 
 	 @Lob
 	 private String imageURL;
-	 
-	 private Long postId;
-	 
+
+	@ManyToOne
+	@JoinColumn(name="post_id")
+	private Posts post;
+
 	 private Long userId;
 	 
-	 public void update(String imageName, String imageURL, Long postId, Long userId) {
+	 public void update(String imageName, String imageURL, Long userId) {
 		this.imageName = imageName;
 		this.imageURL = imageURL;
-		this.postId = postId;
 		this.userId = userId;
+	 }
+
+	 @Builder
+	 public Images(String imageName, String imageURL, Posts posts, Long userId){
+	 	this.imageName = imageName;
+	 	this.imageURL = imageURL;
+	 	this.post = posts;
+	 	this.userId = userId;
 	 }
 }

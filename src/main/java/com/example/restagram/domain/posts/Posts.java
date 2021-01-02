@@ -39,14 +39,15 @@ public class Posts extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comments> comments ;
 
-//    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    private List<Images> images;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Images> images;
 
     private Long commentsCnt = new Long(0);
     private Long likeCnt = new Long(0);
 
     @Builder
-    public Posts(String content){
+    public Posts(Users user, String content){
+        this.user = user;
         this.content = content;
     }
 

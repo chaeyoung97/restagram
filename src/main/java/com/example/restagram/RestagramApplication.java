@@ -14,12 +14,6 @@ public class RestagramApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(RestagramApplication.class, args);
-
-        String s="abc";
-        Posts post=new Posts(s);
-
-        post.getId();
-
     }
 
 }

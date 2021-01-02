@@ -27,9 +27,8 @@ public class PostsService {
     private final ImageService imageService;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto){
+    public Posts save(PostsSaveRequestDto requestDto){
         Posts posts = postsRepository.save(requestDto.toEntity());
-//        imageService.savePostImages(posts.getId(), requestDto.getMultipartFiles());
         List<String>tags = ExtractHashTag.extract(requestDto.getContent());
         Optional<Tags> tag;
 
@@ -47,12 +46,12 @@ public class PostsService {
                 }
             }
         }
-        return posts.getId();
+        return posts;
     }
 
     //더티체킹은 트랜젝션안에서만 이루어져서 @Transactional어노테이션이 업으면 더티체킹이 안됨!!!!
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
+    public Posts update(Long id, PostsUpdateRequestDto requestDto){
         Posts posts = postsRepository.findById(id).get();
         posts.update(requestDto.getContent());
         for(int i=0; i<posts.getTags().size(); i++){
@@ -77,7 +76,7 @@ public class PostsService {
                 }
             }
         }
-        return posts.getId();
+        return posts;
     }
 
     @Transactional
