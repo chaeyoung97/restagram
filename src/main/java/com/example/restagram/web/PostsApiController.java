@@ -1,6 +1,8 @@
 package com.example.restagram.web;
 
+import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.posts.Posts;
+import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.ImageService;
@@ -25,13 +27,16 @@ public class PostsApiController {
     private final UsersRepository usersRepository;
 
     @PostMapping("")
-    public Long save(MultipartHttpServletRequest request, RedirectAttributes attributes, HttpSession session){
+    public Long save(MultipartHttpServletRequest request, RedirectAttributes attributes, @LoginUser SessionUser user){
+        if(user == null)
+            return null;
+        Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .content(request.getParameter("content"))
                 .files(request.getFiles("files"))
                 .build();
-        Posts posts = postsService.save(requestDto, HttpSessionUtils.getUserFromSession(session));
-        imageService.savePostImages(posts.getId(), requestDto.getFiles(), attributes);
+        Posts posts = postsService.save(requestDto, sessionedUser);
+        imageService.savePostImages(posts.getId(),  requestDto.getFiles(), attributes);
 
         return posts.getId();
     }

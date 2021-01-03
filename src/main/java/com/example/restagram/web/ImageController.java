@@ -61,17 +61,17 @@ public class ImageController {
 		return "image/posttest";
 	}
 	
-	@PostMapping("/post/{postId}")
-	public String postImage(@PathVariable Long postId, @RequestParam List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
-		service.savePostImages(postId, files, attr);
-		return "redirect:/image/post/{postId}";
-	}
-	
-	@PutMapping("/post/{postId}")
-	public String updatePostImage(@PathVariable Long postId,@RequestParam List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
-		service.updatePostImages(postId, files,attr);
-		return "redirect:/image/post/{postId}";
-	}
+//	@PostMapping("/post/{postId}")
+//	public String postImage(@PathVariable Long postId, @RequestParam List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
+//		service.savePostImages(postId, files, attr);
+//		return "redirect:/image/post/{postId}";
+//	}
+//
+//	@PutMapping("/post/{postId}")
+//	public String updatePostImage(@PathVariable Long postId,@RequestParam List<MultipartFile> files, RedirectAttributes attr) throws IllegalStateException, IOException {
+//		service.updatePostImages(postId, files,attr);
+//		return "redirect:/image/post/{postId}";
+//	}
 	
 	@DeleteMapping("/post/{postId}")
 	public String deletePostImage(@PathVariable Long postId, RedirectAttributes attr ) {

@@ -11,7 +11,7 @@
     <meta property="og:title" content="instagram">
     <meta property="og:description" content="instagram clone">
     <meta property="og:image" content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
-    .
+
     <!-- Twitter Meta Tags / 트위터 -->
     <meta name="twitter:card" content="instagram clone">
     <meta name="twitter:title" content="instagram">
@@ -44,7 +44,7 @@
     <div id="main_container">
 
         <div class="post_form_container">
-            <form action="#" class="post_form">
+            <form class="post_form" id = "post-save">
                 <div class="title">
                     NEW POST
                 </div>
@@ -62,16 +62,17 @@
                     </div>
                 </div>
                 <p>
-                    <input type="file" name="photo" id="id_photo" required="required">
+                    <input type="file" name="photo" id="files" required="required" multiple = "multiple">
                 </p>
                 <p>
-                    <textarea name="content" id="text_field" cols="50" rows="5" placeholder="140자 까지 등록 가능합니다.
+                    <textarea name="content" id="content" cols="50" rows="5" placeholder="140자 까지 등록 가능합니다.
 #태그명 을 통해서 검색 태그를 등록할 수 있습니다.
 예시 : I # love # insta!"></textarea>
 
                 </p>
-                <input class="submit_btn" type="submit" value="저장">
             </form>
+            <button class="submit_btn" id = "btn-save" type="button">저장</button>
+
 
         </div>
 
@@ -80,10 +81,13 @@
 
 </section>
 
-<script src="js/insta.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script src="/JS/post.js"></script>
+
 
 <script>
-       var fileInput  = document.querySelector( "#id_photo" ),
+       var fileInput  = document.querySelector( "#files" ),
            button     = document.querySelector( ".input-file-trigger" ),
            the_return = document.querySelector(".file-return");
 

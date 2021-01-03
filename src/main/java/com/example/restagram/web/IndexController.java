@@ -54,5 +54,13 @@ public class IndexController {
         return "/user/userList";
     }
 
+    //게시물 작성 페이지로 이동
+    @GetMapping("/posts")
+    public String write(@LoginUser SessionUser user){
+        if(user != null)
+            return "new_post";
+        return "login"; //아직 예외 페이지 처리가 안되어 있어 일단 로그인 페이지로 가도돍 함;
+    }
+
 
 }
