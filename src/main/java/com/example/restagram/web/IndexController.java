@@ -2,10 +2,12 @@ package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.users.SessionUser;
+import com.example.restagram.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+@RequiredArgsConstructor
 @Controller
 public class IndexController {
     // 기본 home
@@ -16,6 +18,7 @@ public class IndexController {
         {
             model.addAttribute("member",user.getUsername());
             return "index";  //로그인이 되어있다면 home화면으로 이동
+
         }
 
         return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
@@ -31,6 +34,24 @@ public class IndexController {
     @GetMapping("/loginForm")
     public String loginForm() {
         return "login";
+    }
+
+    private final UserService userService;
+
+    // 관리자만 허용하는 userList
+    @GetMapping("/admin/userList")
+    public String userList(@LoginUser SessionUser user,Model model){
+        System.out.println("여기가 관리자 페이지."); // 관리자의 역할  h2 데이터 베이스 직접 변경
+                                                    // update users set ROLE='ADMIN' where username='admin'
+        try {
+            user.getUsername(); // null 이 발생하면 예외처리 구문으로 Error를 일으킴.
+            model.addAttribute("userList",userService.userlist());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return "/user/userList";
     }
 
 

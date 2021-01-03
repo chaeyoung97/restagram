@@ -1,5 +1,6 @@
 package com.example.restagram.config;
 
+import com.example.restagram.domain.users.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,16 +18,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/h2-console/*").permitAll();// h2 데이터베이스 접근 허용.
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+//
         http.csrf()
-                .disable()
+                .disable().headers().frameOptions().disable().and()
                 .authorizeRequests()
-                .antMatchers("/signUpForm","/loginForm").permitAll()
+                .antMatchers("/signUpForm","/loginForm","/h2-console/*").permitAll()
+//                .antMatchers("").hasRole("USER") // 사용자 접근 url
+                .antMatchers("/admin/userList").hasRole("ADMIN") // 회원 정보 list 관리자 권한 승인한자만 사용가능.
 //                .antMatchers("").authenticated() // 로그인이 필요하다. 이 부분은 api 부분의 url 적는 곳.
-                .anyRequest() // 기타 url 모두 허용.
-                .permitAll()
+//                .anyRequest() // 기타 url 모두 허용.
+//                .authenticated()
                 .and()
                 .formLogin()//로그인페이지 사용
                 .loginPage("/users/loginForm")

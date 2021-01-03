@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @RestController // return 값이 template 주소가 아닌 객체 또는 아이디 값으로 확인하는 Api 용 Controller 분할.
@@ -25,7 +28,6 @@ public class UserApiController {
     @PostMapping("/api/create")
     public Long insta_user(@RequestBody UserSaveRequestDto requestDto) {
         System.out.println(">>>>>>>>>>>>>>>"+requestDto.toString());
-        System.out.println("create API");
         return userService.save(requestDto);
     }
 
@@ -40,8 +42,6 @@ public class UserApiController {
     }
     // 탈퇴(삭제기능)
 
-
-    // 회원 리스트 (관리자만)
 
 
 

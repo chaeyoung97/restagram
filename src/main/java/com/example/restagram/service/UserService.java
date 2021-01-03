@@ -4,6 +4,7 @@ import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
+import com.example.restagram.web.userDto.UserListResponseDto;
 import com.example.restagram.web.userDto.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +40,7 @@ public class UserService implements UserDetailsService {
         return optionalUser.map(PrincipalDetail::new).orElse(null);
     }
 
+    // user Create
     @Transactional
     public Long save(UserSaveRequestDto requestDto) {
         if(!userRepository.findByUsername(requestDto.getUsername()).isPresent())
@@ -52,5 +56,9 @@ public class UserService implements UserDetailsService {
         }
     }
 
-
+    @Transactional(readOnly = true) // 조회속도 개선.
+    public List<UserListResponseDto> userlist() {
+        return userRepository.findbyAll_createdDate().stream()
+                .map(UserListResponseDto::new).collect(Collectors.toList());
+    }
 }
