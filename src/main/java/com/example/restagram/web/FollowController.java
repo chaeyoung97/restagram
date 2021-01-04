@@ -52,7 +52,7 @@ public class FollowController {
 		Optional<Users> optToUser=usersRepository.findById(id);
 		Users toUser=optToUser.get();
 
-		followRepository.deleteByFromUserAndToUserID(fromUser.getId(), toUser.getId());
+		followRepository.deleteByFromUserIdAndToUserId(fromUser.getId(), toUser.getId());
 
 		List<Follow> follows=followRepository.findAll();
 
