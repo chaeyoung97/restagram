@@ -36,6 +36,7 @@ public class IndexController {
         return "login";
     }
 
+
     private final UserService userService;
 
     // 관리자만 허용하는 userList

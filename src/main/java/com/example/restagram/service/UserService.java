@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encrpyt;
 
     // 로그인 인증과정.
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<Users> optionalUser=userRepository.findByUsername(s);
