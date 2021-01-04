@@ -39,7 +39,7 @@
 <section id="container">
 
     {{>layout/navigator}}
-
+{{#session}}
     <div id="main_container">
 
         <section class="b_inner">
@@ -53,9 +53,9 @@
 
                 <div class="detail">
                     <div class="top">
-                        <div class="user_name">KindTiger</div>
-                        <a href="profile_edit.html" class="profile_edit">프로필편집</a>
-                        <a href="#" class="logout">로그아웃</a>
+                        <div class="user_name">{{session.userName}}</div>
+                        <a href="/profile_edit" class="profile_edit">프로필편집</a>
+                        <a href="/logout" class="logout">로그아웃</a>
                     </div>
 
                     <ul class="middle">
@@ -147,7 +147,7 @@
         </section>
     </div>
 
-
+{{/session}}
 </section>
 
 
