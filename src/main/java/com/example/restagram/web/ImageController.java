@@ -3,7 +3,12 @@ package com.example.restagram.web;
 import java.io.IOException;
 import java.util.List;
 
+import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.posts.PostsRepository;
+import com.example.restagram.domain.users.SessionUser;
+import com.example.restagram.domain.users.Users;
+import com.example.restagram.domain.users.UsersRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +35,9 @@ public class ImageController {
 	@Autowired
 	private PostsRepository postsRepository;
 	
+	@Autowired
+	private UsersRepository usersRepository;
+	
 	//User 프로필 Control
 	@GetMapping("/user/{id}")
 	public String testProfile(@PathVariable Long id, Model model){
@@ -38,8 +46,11 @@ public class ImageController {
 	}
 
 	@PostMapping("/user/{id}")
-	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
-		service.saveProfileImage(id, file, attr);
+	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr, @LoginUser SessionUser user) throws IllegalStateException, IOException {
+		if(user == null)
+			return null;
+	    Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
+		service.saveProfileImage(id, file, attr, sessionedUser);
 		return "redirect:/image/user/{id}";
 	}
 	
