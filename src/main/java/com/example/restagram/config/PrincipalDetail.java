@@ -16,6 +16,11 @@ public class PrincipalDetail implements UserDetails {
         this.user = user;
     }
 
+    //followController에서 필요
+    public Users getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();

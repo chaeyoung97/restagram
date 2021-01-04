@@ -14,17 +14,17 @@ import java.sql.Timestamp;
 public class Follow {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;	//팔로우 시퀀스
+	private Long id;	//팔로우 시퀀스
 	
 	//fromUser가 toUser를 follow함
 	@ManyToOne
 	@JoinColumn(name="fromUserId")
-	private Users followId;
+	private Users fromUser;
 	
 	//toUser를 fromUser가 follower함
 	@ManyToOne
 	@JoinColumn(name="toUserId")
-	private Users followerId;
+	private Users toUser;
 	
 	//follow, follower 창에서 로그인 한 사용자의 팔로우 상태 확인
 	@Transient	//DB에 안 들어가게 함
