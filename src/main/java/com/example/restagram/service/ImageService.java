@@ -7,9 +7,14 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpSession;
 
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.posts.PostsRepository;
+import com.example.restagram.domain.users.SessionUser;
+import com.example.restagram.domain.users.Users;
+import com.example.restagram.utils.HttpSessionUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -25,8 +30,8 @@ public class ImageService {
 	private ImagesRepository imageRepo;
 	@Autowired
 	private PostsRepository postsRepository;
-	// 추후 infra 구축. -작성자:김병연
-	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) {
+	
+	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr, Users user) {
 		System.out.println("이미지 저장함수 실행");
 		Posts posts = postsRepository.findById(postId).get();
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
@@ -44,8 +49,8 @@ public class ImageService {
 			Images image = Images.builder()
 					.imageName(fName)
 					.imageURL("/images/post/"+posts.getId().toString()+"/"+fName)
-					.posts(posts)
-					.userId(null)
+					.post(posts)
+					.user(user)
 					.build();
 			imageRepo.save(image);
 		}
@@ -62,6 +67,7 @@ public class ImageService {
 	
 	public void updatePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) {
 		Posts posts = postsRepository.findById(postId).get();
+		Users user = posts.getUser();
 		List<Images> imageList = imageRepo.findAllByPostId(posts.getId());
 		for(Images image : imageList) {
 			String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
@@ -69,7 +75,6 @@ public class ImageService {
 			imageRepo.delete(image);
 		}		
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\post\\"+ posts.getId().toString();
-		
 		for(MultipartFile file : files) {
 			Long count = imageRepo.count();
 			String fName = Long.toString(count+1) + ".jpg";
@@ -78,8 +83,8 @@ public class ImageService {
 			Images image = Images.builder()
 					.imageName(fName)
 					.imageURL("/images/post/"+posts.getId().toString()+"/"+fName)
-					.posts(posts)
-					.userId(null)
+					.post(posts)
+					.user(user)
 					.build();
 			imageRepo.save(image);
 		}
@@ -96,7 +101,7 @@ public class ImageService {
 		}		
 	}
 	
-	public void saveProfileImage(Long id, MultipartFile file, RedirectAttributes attr){
+	public void saveProfileImage(Long id, MultipartFile file, RedirectAttributes attr, Users user){
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\profile\\"+ id.toString();
 		File folder = new File(path);
 		if(!folder.exists()) {
@@ -108,8 +113,8 @@ public class ImageService {
 		saveImage(fURL, file);
 		Images image = Images.builder().imageName(fName)
 					.imageURL("/images/profile/"+id.toString()+"/"+fName)
-					.posts(null)
-					.userId(id)
+					.post(null)
+					.user(user)
 					.build();
 		attr.addFlashAttribute("ImageName", fName);
 		attr.addFlashAttribute("ImageURL","/images/profile/"+id.toString()+"/"+fName);
@@ -117,7 +122,7 @@ public class ImageService {
 	}
 	
 	public void updateProfileImage(Long id, MultipartFile file, RedirectAttributes attr) {
-		Images image = imageRepo.findByUserId(id);
+		Images image = imageRepo.findByUserIdAndImageName(id, "profile.jpg");
 		deleteImage(System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL(), image);		
 		
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\profile\\"+ id.toString();
@@ -137,14 +142,14 @@ public class ImageService {
 	public void getProfileImage(Long id, Model model) {
 		model.addAttribute("id", id);
 		if(imageRepo.existsByUserId(id)) {
-			Images profileImage =  imageRepo.findByUserId(id);
+			Images profileImage =  imageRepo.findByUserIdAndImageName(id, "profile.jpg");
 			model.addAttribute("ImageName", profileImage.getImageName());
 			model.addAttribute("ImageURL", profileImage.getImageURL());			
 		}
 	}
 	
 	public void deleteProfileImage(Long id) {
-		Images image =  imageRepo.findByUserId(id);
+		Images image =  imageRepo.findByUserIdAndImageName(id, "profile.jpg");
 		String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
 		deleteImage(prevURL,image);
 		imageRepo.delete(image);
