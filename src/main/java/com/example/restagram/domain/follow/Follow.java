@@ -1,4 +1,4 @@
-package com.example.restagram.follow;
+package com.example.restagram.domain.follow;
 
 import com.example.restagram.domain.users.Users;
 import lombok.Getter;
