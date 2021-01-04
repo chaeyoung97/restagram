@@ -2,6 +2,8 @@ package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.users.SessionUser;
+import com.example.restagram.domain.users.Users;
+import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,18 +15,20 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
+    private final UsersRepository usersRepository;
+    private final UserService userService;
+
     // 기본 home
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user)
     {
-        if(user!=null)
+        if(user==null)
         {
-            model.addAttribute("member",user.getUsername());
-            return "index";  //로그인이 되어있다면 home화면으로 이동
-
+            return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
         }
 
-        return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
+        model.addAttribute("session", usersRepository.findByUsername(user.getUsername()));
+        return "index";  //로그인이 되어있다면 home화면으로 이동
     }
 
     //회원가입 페이지
@@ -37,15 +41,6 @@ public class IndexController {
     @GetMapping("/loginForm")
     public String loginForm() {
         return "login";
-    }
-
-    private final UserService userService;
-
-    //로그아웃
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("sessionedUser");
-        return "redirect:/";
     }
 
     // 관리자만 허용하는 userList
@@ -74,9 +69,11 @@ public class IndexController {
 
     //프로필 페이지로 이동
     @GetMapping("/profile")
-    public String profile(@LoginUser SessionUser user){
+    public String profile(@LoginUser SessionUser user, Model model){
         if(user == null)
             return "login";
+        Users sessionUser = usersRepository.findByUsername(user.getUsername()).get();
+        model.addAttribute("session", sessionUser);
         return "profile";
     }
 
