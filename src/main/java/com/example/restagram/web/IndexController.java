@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
@@ -37,6 +40,13 @@ public class IndexController {
     }
 
     private final UserService userService;
+
+    //로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("sessionedUser");
+        return "redirect:/";
+    }
 
     // 관리자만 허용하는 userList
     @GetMapping("/admin/userList")
