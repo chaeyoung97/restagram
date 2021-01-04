@@ -30,12 +30,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authenticated()
                 .and()
                 .formLogin()//로그인페이지 사용
-                    .loginPage("/users/loginForm")
+                    .loginPage("/loginForm")
                     .loginProcessingUrl("/login") // 로그인 실제 이루어지는 곳. // 이곳은 스프링 시큐리티 자체에서 제공. 만들필요 x.
                     .defaultSuccessUrl("/")
                 .and()
                 .logout()
                     .logoutUrl("/logout")
-                .logoutSuccessUrl("/users/loginForm");
+                .logoutSuccessUrl("/");
     }
 }

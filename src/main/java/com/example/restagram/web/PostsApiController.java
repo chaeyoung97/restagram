@@ -36,7 +36,7 @@ public class PostsApiController {
                 .files(request.getFiles("files"))
                 .build();
         Posts posts = postsService.save(requestDto, sessionedUser);
-        imageService.savePostImages(posts.getId(),  requestDto.getFiles(), attributes);
+        imageService.savePostImages(posts.getId(),  requestDto.getFiles(), attributes, sessionedUser);
 
         return posts.getId();
     }
