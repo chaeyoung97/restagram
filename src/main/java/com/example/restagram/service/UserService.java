@@ -28,14 +28,13 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encrpyt;
 
     // 로그인 인증과정.
-    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<Users> optionalUser=userRepository.findByUsername(s);
         if(optionalUser.isPresent())
         {
             Users member=optionalUser.get();
-//            System.out.println(member.toString());
+            System.out.println(member.toString());
             httpSession.setAttribute("sessionUser", new SessionUser(member));
         }
         return optionalUser.map(PrincipalDetail::new).orElse(null);
@@ -61,7 +60,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findbyAll_createdDate().stream()
                 .map(UserListResponseDto::new).collect(Collectors.toList());
     }
-
 
 
 }
