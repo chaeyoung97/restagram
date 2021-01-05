@@ -42,7 +42,7 @@ public class Users extends BaseTimeEntity implements Serializable {
 //	프로필에서 사용자가 작성한 게시글 목록을 불러오기 위해 양방향 매핑을 해줌
 	@OrderBy("createdDate")
 	@OneToMany(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<Posts> posts = new ArrayList<>();
+	private List<Posts> posts;
 
 	@Builder
 	public Users(String name, String username, String password, String email) {

@@ -69,6 +69,7 @@
     <section id="main_container">
         <div class="inner">
             {{#user}}
+            {{#posts}}
             <div class="contents_box">
                 <article class="contents">
                     <header class="top">
@@ -77,7 +78,7 @@
                                 <img src="/imgs/thumb.jpeg" alt="프로필이미지">
                             </div>
                             <div class="user_name">
-                                <div class="nick_name m_text">{{username}}</div>
+                                <div class="nick_name m_text">{{user.username}}</div>
                                 <div class="country s_text">Seoul, South Korea</div>
                             </div>
 
@@ -138,6 +139,7 @@
                     </div>
                 </article>
             </div>
+            {{/posts}}
             {{/user}}
             <input type="hidden" id="page" value="1">
 
@@ -250,6 +252,6 @@
 
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!--<script src="js/main.js"></script> --> //
+<!--<script src="js/main.js"></script> -->
 </body>
 </html>

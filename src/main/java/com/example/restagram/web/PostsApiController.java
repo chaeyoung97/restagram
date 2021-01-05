@@ -1,6 +1,7 @@
 package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
+import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
@@ -12,6 +13,7 @@ import com.example.restagram.web.dto.PostsSaveRequestDto;
 import com.example.restagram.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.h2.engine.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

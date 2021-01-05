@@ -9,8 +9,10 @@ import com.example.restagram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,8 +30,8 @@ public class IndexController {
         {
             return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
         }
-        System.out.println(userDetails.getUser().toString());
-        model.addAttribute("user", userDetails.getUser());
+        System.out.println(usersRepository.findById(userDetails.getUser().getId()).get().getPosts().size());
+        model.addAttribute("user", usersRepository.findById(userDetails.getUser().getId()).get());
         return "index";  //로그인이 되어있다면 home화면으로 이동
     }
 
@@ -75,9 +77,19 @@ public class IndexController {
         if(sessionUser == null)
             return "login";
         Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
-        model.addAttribute("session", users);
+        model.addAttribute("user", users);
         return "profile";
     }
 
+    /*
+      유저가 작성한 게시글 갯수 확인용 api
+      테스트완료 후 삭제할 예정
+   */
+    @Transactional
+    @GetMapping("/get/{id}/")
+    public Long image(@PathVariable Long id){
+        Users users = usersRepository.findById(id).get();
+        return new Long(users.getPosts().size());
+    }
 
 }
