@@ -54,6 +54,7 @@ public class Users extends BaseTimeEntity implements Serializable {
 			this.role=Role.ADMIN;
 		else
 			this.role = Role.USER;
+		profileImage = "/imgs/defaultImage.jpg";
 	}
 
 	public void update(Users newUsers) {

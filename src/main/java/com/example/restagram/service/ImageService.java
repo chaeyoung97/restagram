@@ -151,6 +151,8 @@ public class ImageService {
 		model.addAttribute("id", id);
 		if(imageRepo.existsByUserId(id)) {
 			Images profileImage =  imageRepo.findByUserIdAndImageName(id, "profile.jpg");
+			if(profileImage == null)	//NPE 발생하여 추가해 두었습니다.
+				return;
 			model.addAttribute("ImageName", profileImage.getImageName());
 			model.addAttribute("ImageURL", profileImage.getImageURL());			
 		}
