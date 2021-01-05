@@ -31,9 +31,6 @@ public class ImageController {
 	
 	@Autowired
 	private ImageService service;
-
-	@Autowired
-	private PostsRepository postsRepository;
 	
 	@Autowired
 	private UsersRepository usersRepository;
@@ -51,20 +48,22 @@ public class ImageController {
 			return null;
 	    Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
 		service.saveProfileImage(id, file, attr, sessionedUser);
-		return "redirect:/image/user/{id}";
+		return "redirect:/profile";
 	}
 	
 	@PutMapping("/user/{id}")
 	public String updateProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
 		service.updateProfileImage(id, file, attr);
-		return "redirect:/image/user/{id}";
+		return "redirect:/profile";
 	}
 	
 	@DeleteMapping("/user/{id}")//프로필 삭제
 	public String delteProfile(@PathVariable Long id , RedirectAttributes attr) {
 		service.deleteProfileImage(id);
-		return "redirect:/image/user/{id}";
+		return "redirect:/profile";
 	}
+	
+	
 	//게시물 Control
 	@GetMapping("/post/{postId}")
 	public String testPost(@PathVariable Long postId, Model model){

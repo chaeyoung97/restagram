@@ -5,6 +5,7 @@ import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
+import com.example.restagram.service.ImageService;
 import com.example.restagram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +20,8 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
     private final UsersRepository usersRepository;
     private final UserService userService;
-
+    private final ImageService imageService;
+    
     // 기본 home
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser sessionUser, @AuthenticationPrincipal PrincipalDetail userDetails)
@@ -75,6 +77,7 @@ public class IndexController {
             return "login";
         Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
         model.addAttribute("session", users);
+        imageService.getProfileImage(users.getId(), model);
         return "profile";
     }
 
