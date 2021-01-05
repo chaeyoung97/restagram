@@ -15,7 +15,7 @@ var create = {
             password: $('#password').val(),
             email: $('#email').val(),
             name: $("#name").val(),
-            phoneNum: $("#phone_Num").val(),
+            phoneNum: null,
             intro: null,
             profile_Image :null
         };

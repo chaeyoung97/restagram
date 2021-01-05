@@ -27,16 +27,16 @@ public class PostsApiController {
     private final UsersRepository usersRepository;
 
     @PostMapping("")
-    public Long save(MultipartHttpServletRequest request, RedirectAttributes attributes, @LoginUser SessionUser user){
-        if(user == null)
+    public Long save(MultipartHttpServletRequest request, RedirectAttributes attributes, @LoginUser SessionUser sessionUser){
+        if(sessionUser == null)
             return null;
-        Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
+        Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .content(request.getParameter("content"))
                 .files(request.getFiles("files"))
                 .build();
-        Posts posts = postsService.save(requestDto, sessionedUser);
-        imageService.savePostImages(posts.getId(),  requestDto.getFiles(), attributes);
+        Posts posts = postsService.save(requestDto, users);
+        imageService.savePostImages(posts.getId(),  requestDto.getFiles(), attributes, users);
 
         return posts.getId();
     }

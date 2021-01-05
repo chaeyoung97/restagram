@@ -3,7 +3,12 @@ package com.example.restagram.web;
 import java.io.IOException;
 import java.util.List;
 
+import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.posts.PostsRepository;
+import com.example.restagram.domain.users.SessionUser;
+import com.example.restagram.domain.users.Users;
+import com.example.restagram.domain.users.UsersRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +31,9 @@ public class ImageController {
 	
 	@Autowired
 	private ImageService service;
-
+	
 	@Autowired
-	private PostsRepository postsRepository;
+	private UsersRepository usersRepository;
 	
 	//User 프로필 Control
 	@GetMapping("/user/{id}")
@@ -38,22 +43,27 @@ public class ImageController {
 	}
 
 	@PostMapping("/user/{id}")
-	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
-		service.saveProfileImage(id, file, attr);
-		return "redirect:/image/user/{id}";
+	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr, @LoginUser SessionUser user) throws IllegalStateException, IOException {
+		if(user == null)
+			return null;
+	    Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
+		service.saveProfileImage(id, file, attr, sessionedUser);
+		return "redirect:/profile";
 	}
 	
 	@PutMapping("/user/{id}")
 	public String updateProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
 		service.updateProfileImage(id, file, attr);
-		return "redirect:/image/user/{id}";
+		return "redirect:/profile";
 	}
 	
 	@DeleteMapping("/user/{id}")//프로필 삭제
 	public String delteProfile(@PathVariable Long id , RedirectAttributes attr) {
 		service.deleteProfileImage(id);
-		return "redirect:/image/user/{id}";
+		return "redirect:/profile";
 	}
+	
+	
 	//게시물 Control
 	@GetMapping("/post/{postId}")
 	public String testPost(@PathVariable Long postId, Model model){

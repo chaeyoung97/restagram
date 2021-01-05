@@ -48,6 +48,15 @@
     position: relative;
 }
 
+.preview{
+	display: flex;
+	position:relative;
+}
+
+.upload{
+	width:300px;
+}
+
 .plus_icon{
     width: 80px;
     height: 80px;
@@ -118,3 +127,28 @@
     margin-top: 10px;
 }
 
+.slide_btn{
+	background: #3897f0;
+    border-color: #3897f0;
+    color: #fff;
+     border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    outline: none;
+    padding: 0;
+    height: 80px;
+    width: 60px;
+    position: absolute;
+    top: 35%;
+}
+#btn-slide-right{
+	right: 0;
+	visibility: hidden;
+}
+#btn-slide-left{
+	left: 0;
+	visibility: hidden;
+}

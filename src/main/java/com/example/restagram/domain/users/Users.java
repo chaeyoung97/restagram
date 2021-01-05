@@ -3,15 +3,9 @@ package com.example.restagram.domain.users;
 import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
-import com.example.restagram.domain.posts.Posts;
-import com.example.restagram.domain.tables.TagsTables;
 import lombok.*;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
-import java.util.List;
 
 
 @NoArgsConstructor
@@ -38,24 +32,25 @@ public class Users extends BaseTimeEntity implements Serializable {
 	@Column(nullable = true)
 	private String profileImage;
 
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private String role;
+	private Role role;
 
 	//프로필에서 사용자가 작성한 게시글 목록을 불러오기 위해 양방향 매핑을 해줌
-	@OrderBy("createdDate")
-	@OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<Posts> posts ;
+//	@OrderBy("createdDate")
+//	@OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+//	private List<Posts> posts ;
 	
 	@Builder
-	public Users(String name, String username, String password, String email, String phoneNum, String intro, String profileImage) {
+	public Users(String name, String username, String password, String email) {
 		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.phoneNum = phoneNum;
-		this.intro = intro;
-		this.profileImage = profileImage;
-		this.role="ROLE_USER";
+		if(name.equals("admin"))
+			this.role=Role.ADMIN;
+		else
+			this.role = Role.USER;
 	}
 
 	public void update(Users newUsers) {
