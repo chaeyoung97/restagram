@@ -6,6 +6,7 @@ import com.example.restagram.service.UserService;
 import com.example.restagram.web.userDto.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -42,13 +43,5 @@ public class UserApiController {
         return Long.valueOf(12);
     }
     // 탈퇴(삭제기능)
-
-
-
-
-    
-
-
-
 
 }
