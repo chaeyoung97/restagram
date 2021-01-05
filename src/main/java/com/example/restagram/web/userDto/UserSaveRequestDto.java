@@ -16,10 +16,7 @@ public class UserSaveRequestDto {
     private String password;
     private String name;
     private String email;
-    private String phoneNum;
-    private String intro;
-    private String profileImage;
-    private String role= Role.USER.getKey(); // 일반사용자 자동.
+//    private String role= Role.USER.getKey(); // 일반사용자 자동.
 
     public void setPassword(String password) {
         this.password = password;
@@ -32,16 +29,13 @@ public class UserSaveRequestDto {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phoneNum = phoneNum;
-        this.intro = intro;
-        this.profileImage = profileImage;
     }
 
     public Users toEntity() {
 
         return Users.builder().name(name).username(username)
-                .password(password).intro(intro).email(email)
-                .phoneNum(phoneNum).profileImage(profileImage).build();
+                .password(password).email(email)
+                .build();
     }
 
 }

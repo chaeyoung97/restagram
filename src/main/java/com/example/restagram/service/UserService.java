@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
         {
             Users member=optionalUser.get();
             System.out.println(member.toString());
-            httpSession.setAttribute("user", new SessionUser(member));
+            httpSession.setAttribute("sessionUser", new SessionUser(member));
         }
         return optionalUser.map(PrincipalDetail::new).orElse(null);
     }
@@ -46,7 +46,6 @@ public class UserService implements UserDetailsService {
         if(!userRepository.findByUsername(requestDto.getUsername()).isPresent())
         {
             requestDto.setPassword(encrpyt.encode(requestDto.getPassword()));
-            requestDto.toEntity();
             return userRepository.save(requestDto.toEntity()).getId();
         }
         else

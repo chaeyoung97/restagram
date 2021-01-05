@@ -48,27 +48,19 @@
 
                 <form> <!-- Controller에서 회원가입 로직을 처리할 예정 -->
                     <p class="login_user_name">
-                        <label for="user_id">사용자명:</label>
-                        <input type="text" id="user_id" placeholder="user_id" autofocus/> <br/>
+                        <input type="text" id="email" placeholder="이메일 주소" autofocus/><br>
                     </p>
                     <p class="login_user_name">
-                        <label for="password">비밀번호:</label>
-                        <input type="password" id="password" placeholder="password"/> <br/>
+                        <input type="text" id="name" placeholder="성명"/><br>
                     </p>
                     <p class="login_user_name">
-                        <label for="name">이름:</label>
-                        <input type="text" id="name" placeholder="name"/><br>
+                        <input type="text" id="user_id" placeholder="사용자 이름"  /> <br/>
                     </p>
                     <p class="login_user_name">
-                        <label for="email">이메일:</label>
-                        <input type="text" id="email" placeholder="email"/><br>
-                    </p>
-                    <p class="login_user_name">
-                        <label for="phone_Num">핸드폰:</label>
-                        <input type="text" id="phone_Num" placeholder="phoneNum"/><br>
+                        <input type="password" id="password" placeholder="비밀번호"/> <br/>
                     </p>
                 </form>
-                <button type="button" class="submit_btn" id="btn-create">회원가입 완료하기</button>
+                <button type="button" class="submit_btn" id="btn-create">가입</button>
 
 
 
@@ -76,7 +68,7 @@
 
             <div class="bottom_box">
                 <div>
-                    <span>아이디가 이미 있으신가요?</span><a href="/login">로그인하러가기</a>
+                    <span>계정이 있으신가요?</span><a href="/login">로그인</a>
                 </div>
             </div>
 
@@ -92,6 +84,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<script src="/JS/createUser.js"></script>
+<script src="/js/createUser.js"></script>
 </body>
 </html>

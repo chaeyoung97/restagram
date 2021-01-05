@@ -1,7 +1,8 @@
 package com.example.restagram.Web;
 
-import com.example.restagram.follow.Follow;
-import com.example.restagram.follow.FollowRepository;
+
+import com.example.restagram.domain.follow.Follow;
+import com.example.restagram.domain.follow.FollowRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

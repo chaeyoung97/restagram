@@ -29,6 +29,6 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     //만일 supportsParameter의 리턴값이 false 로 떨어진다면 해당 메소드는 실행되지 않음. true 인경우에만 실행되므로 httpSession에서 "user" 로 저장된 객체를 꺼내오게 됨
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        return httpSession.getAttribute("user");
+        return httpSession.getAttribute("sessionUser");
     }
 }
