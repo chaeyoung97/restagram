@@ -28,7 +28,8 @@ public class IndexController {
         {
             return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
         }
-        model.addAttribute("login", userDetails.getUser());
+        System.out.println(userDetails.getUser().toString());
+        model.addAttribute("user", userDetails.getUser());
         return "index";  //로그인이 되어있다면 home화면으로 이동
     }
 
