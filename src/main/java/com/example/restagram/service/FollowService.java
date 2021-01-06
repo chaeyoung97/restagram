@@ -8,6 +8,7 @@ import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -24,20 +25,23 @@ public class FollowService {
         이미 팔로우가 되어 있다면 FollowTable에서 삭제 (언팔로우)
         팔로우가 되어 있지 않다면 FollowTable에 추가(팔로우)
      */
+    @Transactional
     public Long follow(
             //누가(로그인한 사용자)
             Users fromUser,
             //누구를(팔로우한 사용자)
             Long toUserId) {
-        Users toUser =  usersRepository.findById(toUserId).get();
-        Optional<FollowTable> follow = followTableRepository.findByFromUserAndToUser(fromUser, toUser);
+        Optional<Users> toUser =  usersRepository.findById(toUserId);
+        if(!toUser.isPresent())
+            return -2L;
+        Optional<FollowTable> follow = followTableRepository.findByFromUserAndToUser(fromUser, toUser.get());
 
         //follow테이블에 이미 존재한다면
         if(follow.isPresent()) {
             followTableRepository.delete(follow.get());
             return 0L;
         }
-        return followTableRepository.save(FollowTable.builder().fromUser(fromUser).toUser(toUser).build()).getId();
+        return followTableRepository.save(FollowTable.builder().fromUser(fromUser).toUser(toUser.get()).build()).getId();
     }
 
 }

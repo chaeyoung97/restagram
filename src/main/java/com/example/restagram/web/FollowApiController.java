@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
-@RequestMapping("/follow")
+@RequestMapping("/follow/fromUser/{fromUserId}")
 @RestController
 public class FollowApiController {
 
@@ -27,20 +27,27 @@ public class FollowApiController {
 		이미 팔로우가 되어 있다면 follow 언팔로우
 		팔로우가 되어 있지 않다면 팔로우하는 api
 
-		return -1 :세션유저 없음
+		return -3 :세션유저와 from유저가 다름
+			   -2 :toUser 없음
+			   -1 :세션유저 없음
 			    0 :언팔 성공
 			    N :팔로우 성공
 	 */
-	@GetMapping("/{toUserId}")
+	@GetMapping("/toUser/{toUserId}")
 	public Long follow(
-			//누가(로그인한 사용자)
 			@LoginUser SessionUser sessionUser,
+			//누가(로그인한 사용자)
+			@PathVariable Long fromUserId,
 			//누구를(팔로우한 사용자)
 			@PathVariable Long toUserId) {
 
 		if(sessionUser == null)
 			return -1L;
-		return 	followService.follow(usersRepository.findByUsername(sessionUser.getUsername()).get(), toUserId);
+		Users fromUser = usersRepository.findByUsername(sessionUser.getUsername()).get();
+		if(!fromUserId.equals(fromUser.getId()))
+			return -3L;
+
+		return 	followService.follow(fromUser, toUserId);
 	}
 
 //	//사용자가 팔로우하는 사람의 팔로워 목록
