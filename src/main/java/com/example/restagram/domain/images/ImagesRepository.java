@@ -9,6 +9,6 @@ public interface ImagesRepository extends JpaRepository<Images, Long>{
 	Images findByPostId(Long postId);
 	List<Images> findAllByPostId(Long userId);
 	Images findByUserIdAndImageName(Long userId, String imageName);
-	boolean existsByUserId(Long userId);
+	boolean existsByUserIdAndImageName(Long userId,String imageName);
 	boolean existsByPostId(Long postId);
 }

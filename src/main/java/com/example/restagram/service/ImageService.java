@@ -17,6 +17,7 @@ import com.example.restagram.utils.HttpSessionUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,7 +31,8 @@ public class ImageService {
 	private ImagesRepository imageRepo;
 	@Autowired
 	private PostsRepository postsRepository;
-	
+
+	@Transactional
 	public void savePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr, Users user) {
 		System.out.println("이미지 저장함수 실행");
 		Posts posts = postsRepository.findById(postId).get();
@@ -57,14 +59,16 @@ public class ImageService {
 		attr.addFlashAttribute("images", imageRepo.findAll());
 		System.out.println("정상종료");
 	}
-	
+
+	@Transactional(readOnly = true)
 	public void getPostImages(Long postId, Model model) {
 		model.addAttribute("postId", postId);
 		List<Images> imageList =  imageRepo.findAllByPostId(postId);
 		model.addAttribute("images", imageList);
 		System.out.println(imageList.size());
 	}
-	
+
+	@Transactional
 	public void updatePostImages(Long postId, List<MultipartFile> files, RedirectAttributes attr) {
 		Posts posts = postsRepository.findById(postId).get();
 		Users user = posts.getUser();
@@ -91,7 +95,8 @@ public class ImageService {
 		
 		attr.addFlashAttribute("images", imageRepo.findAll());
 	}
-	
+
+	@Transactional
 	public void deletePostImage(Long postId) {
 		List<Images> imageList = imageRepo.findAllByPostId(postId);
 		for(Images image : imageList) {
@@ -100,7 +105,8 @@ public class ImageService {
 			imageRepo.delete(image);
 		}		
 	}
-	
+
+	@Transactional
 	public void saveProfileImage(Long id, MultipartFile file, RedirectAttributes attr, Users user){
 		String path = System.getProperty("user.dir") + "\\bin\\main\\static\\images\\profile\\"+ id.toString();
 		File folder = new File(path);
@@ -120,7 +126,8 @@ public class ImageService {
 		attr.addFlashAttribute("ImageURL","/images/profile/"+id.toString()+"/"+fName);
 		imageRepo.save(image);
 	}
-	
+
+	@Transactional
 	public void updateProfileImage(Long id, MultipartFile file, RedirectAttributes attr) {
 		Images image = imageRepo.findByUserIdAndImageName(id, "profile.jpg");
 		deleteImage(System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL(), image);		
@@ -138,23 +145,24 @@ public class ImageService {
 		attr.addFlashAttribute("ImageName", fName);
 		attr.addFlashAttribute("ImageURL","/images/profile/"+id.toString()+"/"+fName);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public void getProfileImage(Long id, Model model) {
 		model.addAttribute("id", id);
-		if(imageRepo.existsByUserId(id)) {
+		if(imageRepo.existsByUserIdAndImageName(id, "profile.jpg")) {
 			Images profileImage =  imageRepo.findByUserIdAndImageName(id, "profile.jpg");
 			model.addAttribute("ImageName", profileImage.getImageName());
 			model.addAttribute("ImageURL", profileImage.getImageURL());			
 		}
 	}
-	
+
+	@Transactional
 	public void deleteProfileImage(Long id) {
 		Images image =  imageRepo.findByUserIdAndImageName(id, "profile.jpg");
 		String prevURL = System.getProperty("user.dir") + "/bin/main/static"+  image.getImageURL();
 		deleteImage(prevURL,image);
 		imageRepo.delete(image);
 	}
-	
 	
 	private void deleteImage(String prevURL, Images image) {
 		File prevFile = new File(prevURL);
@@ -168,7 +176,7 @@ public class ImageService {
 			System.out.println("파일이 존재하지 않습니다.");
 		}
 	}
-	
+
 	private void saveImage(String fURL, MultipartFile file){
 		File destFile = new File(fURL);
 		BufferedImage bImage;

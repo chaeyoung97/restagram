@@ -3,9 +3,12 @@ package com.example.restagram.domain.users;
 import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
+import com.example.restagram.domain.posts.Posts;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -36,11 +39,11 @@ public class Users extends BaseTimeEntity implements Serializable {
 	@Column(nullable = false)
 	private Role role;
 
-	//프로필에서 사용자가 작성한 게시글 목록을 불러오기 위해 양방향 매핑을 해줌
-//	@OrderBy("createdDate")
-//	@OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-//	private List<Posts> posts ;
-	
+//	프로필에서 사용자가 작성한 게시글 목록을 불러오기 위해 양방향 매핑을 해줌
+	@OrderBy("createdDate")
+	@OneToMany(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Posts> posts;
+
 	@Builder
 	public Users(String name, String username, String password, String email) {
 		this.name = name;
@@ -51,6 +54,7 @@ public class Users extends BaseTimeEntity implements Serializable {
 			this.role=Role.ADMIN;
 		else
 			this.role = Role.USER;
+		profileImage = "/imgs/defaultImage.jpg";
 	}
 
 	public void update(Users newUsers) {
