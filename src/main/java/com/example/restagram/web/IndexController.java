@@ -83,6 +83,7 @@ public class IndexController {
       아래는 테스트용 api
       테스트완료 후 삭제할 예정
    */
+    //유저가 작성한 게시물 갯수 확인
     @Transactional
     @GetMapping("/get/{id}/")
     public @ResponseBody Long image(@PathVariable Long id){
@@ -90,11 +91,12 @@ public class IndexController {
         return new Long(users.getPosts().size());
     }
 
+    //유저가 팔로우한 목록 확인
     @Transactional
     @GetMapping("/get/user/{id}/")
     public @ResponseBody
     String follw(@PathVariable Long id){
         Users users = usersRepository.findById(id).get();
-        return "팔로잉: " + users.getFollower().size() + "팔로워: " + users.getFollowing().size();
+        return "팔로잉: " + users.getFollowing().size() +  "팔로워: " + users.getFollower().size();
     }
 }
