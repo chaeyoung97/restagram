@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@RequestMapping("/like/user/{userId}/post/{postId}")
+@RequestMapping("/like")
 @RestController
 public class likesApiController {
 
@@ -29,27 +29,22 @@ public class likesApiController {
 		이미 좋아요 되어 있다면 좋아요 취소
 		아니라면 좋아요 등록하는 api
 
-		return -4 :해당 게시물 없음
-		       -3 :세션유저와 좋아요 누른 유저가 다름
-		       -2 :해당 유저 없음
+		return -2 :해당 게시물 없음
 			   -1 :세션유저 없음
 			    0 :좋아요 취소 성공
 			    N :좋아요 성공
 
 	 */
     @Transactional(readOnly = true)
-    @GetMapping("")
-    public Long like(@LoginUser SessionUser sessionUser, @PathVariable Long userId, @PathVariable Long postId){
+    @GetMapping("/post/{postId}")
+    public Long like(@LoginUser SessionUser sessionUser, @PathVariable Long postId){
         if(sessionUser == null)
             return -1L;
-        Optional<Users> users = usersRepository.findByUsername(sessionUser.getUsername());
-        if(!users.isPresent())
-            return 2L;
-        if(!userId.equals(users.get().getId()))
-            return -3L;
+        Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
+
         Optional<Posts> posts = postsRepository.findById(postId);
         if(!posts.isPresent())
             return -4L;
-        return likesService.like(users.get(), posts.get());
+        return likesService.like(users, posts.get());
     }
 }
