@@ -149,10 +149,8 @@ public class ImageService {
 	@Transactional(readOnly = true)
 	public void getProfileImage(Long id, Model model) {
 		model.addAttribute("id", id);
-		if(imageRepo.existsByUserId(id)) {
+		if(imageRepo.existsByUserIdAndImageName(id, "profile.jpg")) {
 			Images profileImage =  imageRepo.findByUserIdAndImageName(id, "profile.jpg");
-			if(profileImage == null)	//NPE 발생하여 추가해 두었습니다.
-				return;
 			model.addAttribute("ImageName", profileImage.getImageName());
 			model.addAttribute("ImageURL", profileImage.getImageURL());			
 		}
