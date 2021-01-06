@@ -3,12 +3,11 @@ package com.example.restagram.domain.users;
 import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
-import com.example.restagram.domain.follow.Follow;
+import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.posts.Posts;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,10 +45,10 @@ public class Users extends BaseTimeEntity implements Serializable {
 	private List<Posts> posts;
 
 	@OneToMany(mappedBy = "fromUser" ,fetch = FetchType.LAZY)
-	private List<Follow> following;
+	private List<FollowTable> following;
 
 	@OneToMany(mappedBy = "toUser" ,fetch = FetchType.LAZY)
-	private List<Follow> follower;
+	private List<FollowTable> follower;
 
 	@Builder
 	public Users(String name, String username, String password, String email) {
