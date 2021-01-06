@@ -41,11 +41,13 @@ public class IndexController {
     public String signUpForm() {
         return "signUpForm";
     }
+
     //로그인 페이지로 이동
     @GetMapping("/loginForm")
     public String loginForm() {
         return "login";
     }
+
     // 관리자만 허용하는 userList
     @GetMapping("/admin/userList")
     public String userList(@LoginUser SessionUser user,Model model){
@@ -61,6 +63,7 @@ public class IndexController {
         }
         return "/user/userList";
     }
+
     //게시물 작성 페이지로 이동
     @GetMapping("/posts")
     public String write(@LoginUser SessionUser sessionUser){
@@ -68,6 +71,7 @@ public class IndexController {
             return "login";//아직 예외 페이지 처리가 안되어 있어 일단 로그인 페이지로 가도돍 함;
         return "new_post";
     }
+
     //프로필 페이지로 이동
     @GetMapping("/profile")
     public String profile(@LoginUser SessionUser sessionUser, Model model){
@@ -83,6 +87,7 @@ public class IndexController {
       아래는 테스트용 api
       테스트완료 후 삭제할 예정
    */
+
     //유저가 작성한 게시물 갯수 확인
     @Transactional
     @GetMapping("/get/{id}/")

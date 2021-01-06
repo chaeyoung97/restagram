@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.example.restagram.domain.BaseTimeEntity;
 import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.posts.Posts;
+import com.example.restagram.domain.tables.LikesTables;
 import lombok.*;
 
 import java.io.Serializable;
@@ -44,11 +45,15 @@ public class Users extends BaseTimeEntity implements Serializable {
 	@OneToMany(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Posts> posts;
 
+	@OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<LikesTables> likes;
+
 	@OneToMany(mappedBy = "fromUser" ,fetch = FetchType.LAZY)
 	private List<FollowTable> following;
 
 	@OneToMany(mappedBy = "toUser" ,fetch = FetchType.LAZY)
 	private List<FollowTable> follower;
+
 
 	@Builder
 	public Users(String name, String username, String password, String email) {

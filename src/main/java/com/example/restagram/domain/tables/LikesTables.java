@@ -26,7 +26,8 @@ public class LikesTables{
     private Posts post;
 
     @Builder
-    public LikesTables(Posts posts){
+    public LikesTables(Users users, Posts posts){
+        this.user = users;
         this.post = posts;
     }
 }
