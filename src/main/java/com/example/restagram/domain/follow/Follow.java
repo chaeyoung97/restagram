@@ -2,12 +2,13 @@ package com.example.restagram.domain.follow;
 
 import com.example.restagram.domain.users.Users;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-
+@NoArgsConstructor
 @Setter
 @Getter
 @Entity

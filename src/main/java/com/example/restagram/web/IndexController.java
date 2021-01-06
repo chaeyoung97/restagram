@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
@@ -78,13 +80,21 @@ public class IndexController {
     }
 
     /*
-      유저가 작성한 게시글 갯수 확인용 api
+      아래는 테스트용 api
       테스트완료 후 삭제할 예정
    */
     @Transactional
     @GetMapping("/get/{id}/")
-    public Long image(@PathVariable Long id){
+    public @ResponseBody Long image(@PathVariable Long id){
         Users users = usersRepository.findById(id).get();
         return new Long(users.getPosts().size());
+    }
+
+    @Transactional
+    @GetMapping("/get/user/{id}/")
+    public @ResponseBody
+    String follw(@PathVariable Long id){
+        Users users = usersRepository.findById(id).get();
+        return "팔로잉: " + users.getFollower().size() + "팔로워: " + users.getFollowing().size();
     }
 }

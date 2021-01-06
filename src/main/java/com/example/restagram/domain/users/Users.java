@@ -3,6 +3,7 @@ package com.example.restagram.domain.users;
 import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
+import com.example.restagram.domain.follow.Follow;
 import com.example.restagram.domain.posts.Posts;
 import lombok.*;
 
@@ -43,6 +44,12 @@ public class Users extends BaseTimeEntity implements Serializable {
 	@OrderBy("createdDate")
 	@OneToMany(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Posts> posts;
+
+	@OneToMany(mappedBy = "fromUser" ,fetch = FetchType.LAZY)
+	private List<Follow> following;
+
+	@OneToMany(mappedBy = "toUser" ,fetch = FetchType.LAZY)
+	private List<Follow> follower;
 
 	@Builder
 	public Users(String name, String username, String password, String email) {
