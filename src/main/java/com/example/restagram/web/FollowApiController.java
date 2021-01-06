@@ -27,8 +27,11 @@ public class FollowApiController {
 		이미 팔로우가 되어 있다면 follow 언팔로우
 		팔로우가 되어 있지 않다면 팔로우하는 api
 
-		return -3 :세션유저와 from유저가 다름
-			   -2 :toUser 없음
+		return
+			   -5 :toUser와 fromUser가 같음
+			   -4 :toUser 없음
+			   -3 :세션유저와 from유저가 다름
+			   -2 :from 유저 없음
 			   -1 :세션유저 없음
 			    0 :언팔 성공
 			    N :팔로우 성공
@@ -43,11 +46,19 @@ public class FollowApiController {
 
 		if(sessionUser == null)
 			return -1L;
-		Users fromUser = usersRepository.findByUsername(sessionUser.getUsername()).get();
-		if(!fromUserId.equals(fromUser.getId()))
+		Optional<Users> fromUser = usersRepository.findById(fromUserId);
+		if(!fromUser.isPresent())
+			return -2L;
+		if(!fromUserId.equals(usersRepository.findByUsername(sessionUser.getUsername()).get().getId()))
 			return -3L;
+		Optional<Users> toUser = usersRepository.findById(toUserId);
+		if(!toUser.isPresent())
+			return -4L;
+		if(toUser.equals(fromUser))
+			return -5L;
 
-		return 	followService.follow(fromUser, toUserId);
+
+		return 	followService.follow(fromUser.get(), toUser.get());
 	}
 
 //	//사용자가 팔로우하는 사람의 팔로워 목록

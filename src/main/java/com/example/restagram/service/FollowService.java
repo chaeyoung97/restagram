@@ -30,18 +30,16 @@ public class FollowService {
             //누가(로그인한 사용자)
             Users fromUser,
             //누구를(팔로우한 사용자)
-            Long toUserId) {
-        Optional<Users> toUser =  usersRepository.findById(toUserId);
-        if(!toUser.isPresent())
-            return -2L;
-        Optional<FollowTable> follow = followTableRepository.findByFromUserAndToUser(fromUser, toUser.get());
+            Users toUser) {
 
-        //follow테이블에 이미 존재한다면
+        Optional<FollowTable> follow = followTableRepository.findByFromUserAndToUser(fromUser, toUser);
+
+        //follow테이블에 이미 존재한다면 언팔로우
         if(follow.isPresent()) {
             followTableRepository.delete(follow.get());
             return 0L;
         }
-        return followTableRepository.save(FollowTable.builder().fromUser(fromUser).toUser(toUser.get()).build()).getId();
+        return followTableRepository.save(FollowTable.builder().fromUser(fromUser).toUser(toUser).build()).getId();
     }
 
 }
