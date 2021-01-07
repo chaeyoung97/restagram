@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
+@EqualsAndHashCode
 @NoArgsConstructor
 @ToString
 @Getter

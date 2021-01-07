@@ -68,14 +68,13 @@
 
     <section id="main_container">
         <div class="inner">
-            {{#user}}
             {{#posts}}
             <div class="contents_box">
                 <article class="contents">
                     <header class="top">
                         <div class="user_container">
                             <div class="profile_img">
-                                <img src="/imgs/thumb.jpeg" alt="프로필이미지">
+                                <img src="{{^posts.user}}{{user.profileImage}}{{/posts.user}}" alt="프로필이미지">
                             </div>
                             <div class="user_name">
                                 <div class="nick_name m_text">{{user.username}}</div>
@@ -95,7 +94,7 @@
 
                     <div class="img_section">
                         <div class="trans_inner">
-                            <div><img src="/imgs/img_section/img01.jpg" alt="visual01"></div>
+                            <div><img src="{{images}}" alt="visual01"></div>
                         </div>
                     </div>
 
@@ -114,7 +113,7 @@
 
                     <div class="likes m_text">
                         좋아요
-                        <span id="like-count-39">2,346</span>
+                        <span id="like-count-39">{{likeCnt}}</span>
                         <span id="bookmark-count-39"></span>
                         개
                     </div>
@@ -140,7 +139,6 @@
                 </article>
             </div>
             {{/posts}}
-            {{/user}}
             <input type="hidden" id="page" value="1">
 
             <div class="side_box">
@@ -243,15 +241,7 @@
 
 
 </section>
+{{>layout/footer}}
 
-
-
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!--<script src="js/main.js"></script> -->
 </body>
 </html>

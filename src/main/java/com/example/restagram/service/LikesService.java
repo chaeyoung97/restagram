@@ -26,8 +26,10 @@ public class LikesService {
         //Like테이블에 이미 존재 한다면 좋아요 취소
         if(likesTables.isPresent()){
             likesTablesRepository.delete(likesTables.get());
+            posts.removeLikes();
             return 0L;
         }
+        posts.addLikes();
         return likesTablesRepository.save(LikesTables.builder().users(users).posts(posts).build()).getId();
     }
 }

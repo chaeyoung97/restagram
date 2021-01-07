@@ -1,6 +1,7 @@
 package com.example.restagram.domain;
 
 import com.example.restagram.domain.users.Users;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,6 +13,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@EqualsAndHashCode
 @Getter
 @MappedSuperclass   //JAP entity클래스들이 supertimeentity를 상속할 경우 이 클래스의 필드들도 칼럼으로 인식하도록 함
 @EntityListeners(AuditingEntityListener.class)  //이 클래스에 Auditing기능을 포함시킴

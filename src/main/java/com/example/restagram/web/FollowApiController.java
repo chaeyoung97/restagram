@@ -45,7 +45,7 @@ public class FollowApiController {
 		Optional<Users> toUser = usersRepository.findById(toUserId);
 		if(!toUser.isPresent())
 			return -2L;
-		if(toUser.equals(fromUser))
+		if(toUser.get().equals(fromUser))
 			return -3L;
 
 
