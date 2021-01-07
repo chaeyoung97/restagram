@@ -11,12 +11,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
 @Entity
-public class Posts extends BaseTimeEntity {
+public class Posts extends BaseTimeEntity implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
