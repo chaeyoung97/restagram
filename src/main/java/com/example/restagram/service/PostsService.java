@@ -94,7 +94,7 @@ public class PostsService {
         return postsRepository.findById(id).get();
     }
 
-    //사용자가 팔로우하는 사람들의 게시글 목록
+    //사용자가 팔로우하는 사람들의 게시글 목록(자신의 게시물 포함)
     @Transactional(readOnly = true)
     public List<Posts> findAllPostsByMyFollowing(Users users){
         List<Posts> postsList = new ArrayList<>();
@@ -102,7 +102,7 @@ public class PostsService {
             for(Posts posts : table.getToUser().getPosts())
                 postsList.add(posts);
         }
-
+        postsList.addAll(users.getPosts());
         Collections.sort(postsList, new Comparator<Posts>() {
             @Override
             public int compare(Posts a, Posts b) {
