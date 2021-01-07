@@ -1,5 +1,7 @@
 package com.example.restagram.web;
 
+import com.example.restagram.config.LoginUser;
+import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.UserService;
@@ -33,6 +35,7 @@ public class UserApiController {
     }
 
     // 회원정보 수정 탈퇴 기능api추가.
+    
 
 
     //회원 정보 수정
@@ -42,6 +45,23 @@ public class UserApiController {
         users.update(newUsers);
         return Long.valueOf(12);
     }
-    // 탈퇴(삭제기능)
-
+//    // 탈퇴(삭제기능)
+//    @PostMapping("/withdrawal")
+//    public String withdrawal(@RequestBody UserSaveRequestDto requestDto, @PathVariable Long id,@LoginUser SessionUser user) throws Exception {
+//        String result=checkPw(requestDto.getPassword(), user);
+//
+//        if(result.equals("pwConfirmOK")) {
+//            //탈퇴
+//            usersRepository.withdrawal(requestDto);
+//            //로그인 세션 삭제
+//            Users users=usersRepository.findById(id).get();
+//            if(users!=null) {
+//                session.invalide();
+//            }
+//
+//            result="Success";
+//        } else result="Fail";
+//
+//        return result;
+//    }
 }

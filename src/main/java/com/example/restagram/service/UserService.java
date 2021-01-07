@@ -26,6 +26,9 @@ public class UserService implements UserDetailsService {
     private final UsersRepository userRepository;
     private final HttpSession httpSession;
     private final PasswordEncoder encrpyt;
+    private final PostsService postsService;
+    private final FollowService followService;
+    private final ImageService imageService;
 
     // 로그인 인증과정.
     @Override
@@ -59,6 +62,22 @@ public class UserService implements UserDetailsService {
     public List<UserListResponseDto> userlist() {
         return userRepository.findbyAll_createdDate().stream()
                 .map(UserListResponseDto::new).collect(Collectors.toList());
+    }
+
+    //회원 탈퇴
+    @Transactional
+    public void withdrawal(UserSaveRequestDto requestDto) throws Exception {
+        //프로필 사진 삭제
+        imageService.deleteProfileImage(requestDto.getId());
+        //팔로우 삭제
+      //  followService.
+
+        //관련 게시글 삭제
+        postsService.delete(requestDto.getId());
+
+
+        //탈퇴 진행
+        userRepository.withdrawal(requestDto);
     }
 
 

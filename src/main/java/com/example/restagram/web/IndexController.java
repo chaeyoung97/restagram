@@ -48,6 +48,10 @@ public class IndexController {
         return "signUpForm";
     }
 
+    //회원탈퇴 페이지
+    @GetMapping("/withdrawal")
+    public String deleteMember() { return "withdrawal"; }
+
     //로그인 페이지로 이동
     @GetMapping("/loginForm")
     public String loginForm() {

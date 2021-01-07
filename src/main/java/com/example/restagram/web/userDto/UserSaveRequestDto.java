@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public class UserSaveRequestDto {
-
+    private Long id;
     private String username;
     private String password;
     private String name;
@@ -24,7 +24,8 @@ public class UserSaveRequestDto {
 
     //    private String role;
     @Builder
-    public UserSaveRequestDto(String name, String username, String password, String email, String phoneNum, String intro, String profileImage) {
+    public UserSaveRequestDto(Long id, String name, String username, String password, String email, String phoneNum, String intro, String profileImage) {
+        this.id=id;
         this.name = name;
         this.username = username;
         this.password = password;
