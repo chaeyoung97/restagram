@@ -1,13 +1,16 @@
 package com.example.restagram.web;
 import com.example.restagram.config.LoginUser;
 import com.example.restagram.config.PrincipalDetail;
+import com.example.restagram.domain.posts.Posts;
+import com.example.restagram.domain.posts.PostsRepository;
+import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.ImageService;
+import com.example.restagram.service.PostsService;
 import com.example.restagram.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -15,24 +18,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import java.util.*;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
     private final UsersRepository usersRepository;
     private final UserService userService;
     private final ImageService imageService;
+    private final PostsService postsService;
 
     // 기본 home
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser sessionUser, @AuthenticationPrincipal PrincipalDetail userDetails)
+    public String index(Model model, @LoginUser SessionUser sessionUser)
     {
-        if(sessionUser == null)
-        {
+        if(sessionUser == null){
             return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
         }
-        System.out.println(usersRepository.findById(userDetails.getUser().getId()).get().getPosts().size());
-        model.addAttribute("user", usersRepository.findById(userDetails.getUser().getId()).get());
+        Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
+        List<Posts> postsList = postsService.findAllPostsByMyFollowing(users);
+        model.addAttribute("user", users);
+        model.addAttribute("posts", postsList);
         return "index";  //로그인이 되어있다면 home화면으로 이동
     }
 
