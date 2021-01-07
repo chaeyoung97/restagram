@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ImagesRepository extends JpaRepository<Images, Long>{
 	Images findByUserId(Long userId);
 	Images findByPostId(Long postId);
-	List<Images> findAllByPostId(Long userId);
+	List<Images> findAllByPostId(Long postId);
+	List<Images> findAllByUserIdAndImageNameNot(Long userId,String imageName);
 	Images findByUserIdAndImageName(Long userId, String imageName);
 	boolean existsByUserIdAndImageName(Long userId,String imageName);
 	boolean existsByPostId(Long postId);

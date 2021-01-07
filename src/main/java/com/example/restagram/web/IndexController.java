@@ -86,6 +86,7 @@ public class IndexController {
         Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
         model.addAttribute("user", users);
         imageService.getProfileImage(users.getId(), model);
+        imageService.getUserImages(users.getId(), model);
         return "profile";
     }
 

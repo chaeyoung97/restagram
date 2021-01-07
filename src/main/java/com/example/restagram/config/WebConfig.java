@@ -28,10 +28,10 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     //외부에 저장된 이미지를 불러오기위해 리소스 매핑을 함함
-    @Override
+   /* @Override
    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("files:///" + System.getProperty("user.dir") + "\\bin\\main\\static\\images\\");
-    }
+    }*/
 
 }

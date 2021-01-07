@@ -65,7 +65,6 @@ public class ImageService {
 		model.addAttribute("postId", postId);
 		List<Images> imageList =  imageRepo.findAllByPostId(postId);
 		model.addAttribute("images", imageList);
-		System.out.println(imageList.size());
 	}
 
 	@Transactional
@@ -189,5 +188,11 @@ public class ImageService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Transactional(readOnly = true)
+	public void getUserImages(Long userId,Model model) {
+		List<Images> imageList = imageRepo.findAllByUserIdAndImageNameNot(userId, "profile.jpg");
+		model.addAttribute("images", imageList);
 	}
 }
