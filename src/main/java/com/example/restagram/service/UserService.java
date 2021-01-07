@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
         if(optionalUser.isPresent())
         {
             Users member=optionalUser.get();
-            System.out.println(member.toString());
+//            System.out.println(member.toString());
             httpSession.setAttribute("sessionUser", new SessionUser(member));
         }
         return optionalUser.map(PrincipalDetail::new).orElse(null);

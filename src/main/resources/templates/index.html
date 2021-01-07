@@ -9,9 +9,26 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/style.css">
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 </head>
+<style>
+    .swiper-container {
+        width:50%;
+        height:50%;
+        border:5px solid silver;
+        border-radius:7px;
+        box-shadow:0 0 20px #ccc inset;
+    }
+    .swiper-slide {
+        text-align:center;
+        display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+        align-items:center; /* 위아래 기준 중앙정렬 */
+        justify-content:center; /* 좌우 기준 중앙정렬 */
+    }
+    .swiper-slide img {
+        box-shadow:0 0 5px #555;
+    }
+</style>
 <body>
 
 
@@ -68,14 +85,13 @@
 
     <section id="main_container">
         <div class="inner">
-            {{#user}}
             {{#posts}}
             <div class="contents_box">
                 <article class="contents">
                     <header class="top">
                         <div class="user_container">
                             <div class="profile_img">
-                                <img src="/imgs/thumb.jpeg" alt="프로필이미지">
+                                <img src="{{user.profileImage}}" alt="프로필이미지">
                             </div>
                             <div class="user_name">
                                 <div class="nick_name m_text">{{user.username}}</div>
@@ -95,10 +111,28 @@
 
                     <div class="img_section">
                         <div class="trans_inner">
-                            <div><img src="/imgs/img_section/img01.jpg" alt="visual01"></div>
+                            <div class="swiper-container swiper1">
+                                <div class="swiper-wrapper">
+                                    {{#images}}
+                                    <div class="swiper-slide"><img src="{{imageURL}}"></div>
+                                    {{/images}}
+                                </div>
+
+                                <!-- 네비게이션 버튼 -->
+                                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+                                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+
+                                <!-- 페이징 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+
                         </div>
                     </div>
-
+                    <div>
+                        <div>
+                            <textarea readonly style="resize: none;overflow-y:hidden;border: none;background-color: transparent">{{content}}</textarea>
+                        </div>
+                    </div>
                     <div class="bottom_icons">
                         <div class="left_icons">
                             <div class="heart_btn">
@@ -114,7 +148,7 @@
 
                     <div class="likes m_text">
                         좋아요
-                        <span id="like-count-39">2,346</span>
+                        <span id="like-count-39">{{likeCnt}}</span>
                         <span id="bookmark-count-39"></span>
                         개
                     </div>
@@ -140,7 +174,6 @@
                 </article>
             </div>
             {{/posts}}
-            {{/user}}
             <input type="hidden" id="page" value="1">
 
             <div class="side_box">
@@ -243,15 +276,21 @@
 
 
 </section>
+{{>layout/footer}}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+<script>
+    new Swiper('.swiper1', {
+        pagination : { // 페이징 설정
+            el : '.swiper-pagination',
+            clickable : true, // 페이징을 클릭하면 해당 영역으로 이동, 필요시 지정해 줘야 기능 작동
+        },
+        navigation : { // 네비게이션 설정
+            nextEl : '.swiper-button-next', // 다음 버튼 클래스명
+            prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
+        },
+    });
+</script>
 
-
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!--<script src="js/main.js"></script> -->
 </body>
 </html>

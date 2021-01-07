@@ -2,6 +2,7 @@ package com.example.restagram.service;
 
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.posts.PostsRepository;
+import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.tables.TagsTables;
 import com.example.restagram.domain.tables.TagsTablesRepository;
 import com.example.restagram.domain.tags.Tags;
@@ -15,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -91,6 +92,26 @@ public class PostsService {
     @Transactional(readOnly = true)
     public Posts findByid(Long id){
         return postsRepository.findById(id).get();
+    }
+
+    //사용자가 팔로우하는 사람들의 게시글 목록(자신의 게시물 포함)
+    @Transactional(readOnly = true)
+    public List<Posts> findAllPostsByMyFollowing(Users users){
+        List<Posts> postsList = new ArrayList<>();
+        for(FollowTable table : users.getFollowing()){
+            for(Posts posts : table.getToUser().getPosts())
+                postsList.add(posts);
+        }
+        postsList.addAll(users.getPosts());
+        Collections.sort(postsList, new Comparator<Posts>() {
+            @Override
+            public int compare(Posts a, Posts b) {
+                if(a.getCreatedDate().isBefore(b.getCreatedDate())) return 1;
+                if(a.getCreatedDate().isAfter(b.getCreatedDate())) return -1;
+                return 0;
+            }
+        });
+        return postsList;
     }
 
 //    @Transactional(readOnly = true)

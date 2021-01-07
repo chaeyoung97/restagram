@@ -1,6 +1,9 @@
 package com.example.restagram.web;
 
+import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.comments.CommentsRepository;
+import com.example.restagram.domain.users.SessionUser;
+import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.CommentsService;
 import com.example.restagram.utils.HttpSessionUtils;
 import com.example.restagram.web.dto.CommentsSaveRequestDto;
@@ -16,10 +19,13 @@ import javax.servlet.http.HttpSession;
 public class CommentsApiController {
     private final CommentsRepository commentsRepository;
     private final CommentsService commentsService;
+    private final UsersRepository usersRepository;
 
     @PostMapping("")
-    public Long save(@PathVariable Long postId, @RequestBody CommentsSaveRequestDto requestDto, HttpSession session){
-        return commentsService.save(postId, requestDto, HttpSessionUtils.getUserFromSession(session));
+    public Long save(@PathVariable Long postId, @RequestBody CommentsSaveRequestDto requestDto, @LoginUser SessionUser sessionUser){
+       if(sessionUser == null)
+           return -1L;
+        return commentsService.save(postId, requestDto, usersRepository.findByUsername(sessionUser.getUsername()).get());
     }
 
     @PutMapping("/{id}")

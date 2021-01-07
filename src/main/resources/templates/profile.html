@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{{>/include/header}}
+	{{>layout/header}}
     <link rel="stylesheet" href="/css/profile.css">
 
 </head>
@@ -53,33 +53,11 @@
             </div>
 
             <div class="mylist_contents contents_container active">
+            {{#images}}
                 <div class="pic">
-                    <a href="#"><img src="/imgs/img_section/img01.jpg" alt=""></a>
+                    <a href="#"><img src="{{imageURL}}" alt=""></a>
                 </div>
-                <div class="pic">
-                    <a href="#"><img src="/imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img01.jpg" alt=""></a>
-                </div>
+            {{/images}}
             </div>
 
 
@@ -121,9 +99,7 @@
 
 {{/user}}
 </section>
-
-
-<!--<script src="js/insta.js"></script>-->
+{{>layout/footer}}
 <script src="/js/profile.js"></script>
 <script>
 

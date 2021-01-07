@@ -14,6 +14,7 @@ import com.example.restagram.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.h2.engine.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
