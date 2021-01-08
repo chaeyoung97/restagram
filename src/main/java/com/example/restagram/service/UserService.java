@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
 
     //회원 탈퇴
     @Transactional
-    public void withdrawal(UserSaveRequestDto requestDto) throws Exception {
+    public String withdrawal(UserSaveRequestDto requestDto) throws Exception {
         //프로필 사진 삭제
         imageService.deleteProfileImage(requestDto.getId());
         //팔로우 삭제
@@ -78,7 +78,15 @@ public class UserService implements UserDetailsService {
 
         //탈퇴 진행
         userRepository.withdrawal(requestDto);
+
+        return "";
     }
+
+//    //password 체크
+//    @Transactional
+//    public int checkPw(UserSaveRequestDto requestDto) {
+//        int result=requestDto
+//    }
 
 
 }

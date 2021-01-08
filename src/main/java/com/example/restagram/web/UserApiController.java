@@ -1,6 +1,7 @@
 package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
+import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
@@ -35,8 +36,6 @@ public class UserApiController {
     }
 
     // 회원정보 수정 탈퇴 기능api추가.
-    
-
 
     //회원 정보 수정
     @PostMapping("/{id}")
@@ -45,18 +44,19 @@ public class UserApiController {
         users.update(newUsers);
         return Long.valueOf(12);
     }
-//    // 탈퇴(삭제기능)
-//    @PostMapping("/withdrawal")
-//    public String withdrawal(@RequestBody UserSaveRequestDto requestDto, @PathVariable Long id,@LoginUser SessionUser user) throws Exception {
-//        String result=checkPw(requestDto.getPassword(), user);
+    //탈퇴(삭제기능)
+    @PostMapping("/withdrawal")
+    public String withdrawal(@RequestBody UserSaveRequestDto requestDto, @PathVariable Long id,PrincipalDetail userDatail) throws Exception {
+//       int result=userService.checkPw(requestDto);
 //
 //        if(result.equals("pwConfirmOK")) {
 //            //탈퇴
 //            usersRepository.withdrawal(requestDto);
 //            //로그인 세션 삭제
-//            Users users=usersRepository.findById(id).get();
+//            Users users=
+//          //  Users users=usersRepository.findById(id).get();
 //            if(users!=null) {
-//                session.invalide();
+//                userService.withdrawal(requestDto);
 //            }
 //
 //            result="Success";
@@ -64,4 +64,11 @@ public class UserApiController {
 //
 //        return result;
 //    }
+
+
+        if (requestDto.getPassword() == userDatail.getPassword()) {
+            return userService.withdrawal(requestDto);
+        }
+        return null;
+    }
 }

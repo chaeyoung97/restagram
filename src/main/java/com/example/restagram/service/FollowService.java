@@ -42,4 +42,10 @@ public class FollowService {
         return followTableRepository.save(FollowTable.builder().fromUser(fromUser).toUser(toUser).build()).getId();
     }
 
+    @Transactional
+    public Long delete(Long id){
+        followTableRepository.deleteById(id); // cascadeType.REMOVE옵션을 줬기 때문에 post만 삭제해도 태그, 댓글, 좋아요가 모두 삭제됨
+        return id;
+    }
+
 }
