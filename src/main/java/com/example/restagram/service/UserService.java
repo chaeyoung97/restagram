@@ -5,6 +5,7 @@ import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.web.userDto.UserListResponseDto;
+import com.example.restagram.web.userDto.UserResponseDto;
 import com.example.restagram.web.userDto.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,15 +67,9 @@ public class UserService implements UserDetailsService {
 
     //회원 탈퇴
     @Transactional
-    public String withdrawal(UserSaveRequestDto requestDto) throws Exception {
+    public String withdrawal(UserResponseDto requestDto) throws Exception {
         //프로필 사진 삭제
         imageService.deleteProfileImage(requestDto.getId());
-        //팔로우 삭제
-      //  followService.
-
-        //관련 게시글 삭제
-        postsService.delete(requestDto.getId());
-
 
         //탈퇴 진행
         userRepository.withdrawal(requestDto);

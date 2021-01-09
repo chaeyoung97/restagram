@@ -1,4 +1,5 @@
 package com.example.restagram.domain.users;
+import com.example.restagram.web.userDto.UserResponseDto;
 import com.example.restagram.web.userDto.UserSaveRequestDto;
 import org.h2.engine.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,5 @@ public interface UsersRepository extends JpaRepository<Users, Long>{
 	List<Users> findbyAll_createdDate();
 
 
-    void withdrawal(UserSaveRequestDto requestDto);
+    void withdrawal(UserResponseDto requestDto);
 }
