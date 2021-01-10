@@ -86,6 +86,7 @@ public class PostsService {
     @Transactional
     public Long delete(Long id){
         postsRepository.deleteById(id); // cascadeType.REMOVE옵션을 줬기 때문에 post만 삭제해도 태그, 댓글, 좋아요가 모두 삭제됨
+        imageService.deletePostImage(id);
         return id;
     }
 

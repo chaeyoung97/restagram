@@ -93,7 +93,25 @@ public class IndexController {
         imageService.getUserImages(users.getId(), model);
         return "profile";
     }
-
+    
+    //프로필 편집 페이지 - 작성자: 이득행
+    @GetMapping("/edit/profile")
+    public String updateProfile(@LoginUser SessionUser sessionUser, Model model) {
+    	if(sessionUser==null) return "login";
+    	Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
+    	model.addAttribute("user", users);
+    	return "edit_profile";
+    }
+    @GetMapping("/edit/password")
+    public String updatePassword(@LoginUser SessionUser sessionUser, Model model) {
+    	if(sessionUser==null) return "login";
+    	Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
+    	model.addAttribute("user", users);
+    	return "edit_password";
+    }
+    
+    
+    
     /*
       아래는 테스트용 api
       테스트완료 후 삭제할 예정
