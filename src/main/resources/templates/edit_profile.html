@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{{>layout/header}}
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+	<section id="container">
+	
+    {{>layout/navigator}}
+	
+	<div id="main_container">
+	<div class="editor">
+		<ul class="edit_ul">
+			<li><a class="edit_a edit_selected" href="/edit/profile">프로필 편집</a></li>
+			<li><a class="edit_a" href="/edit/password">비밀번호 변경</a></li>
+		</ul>
+		<article class="editor_article">
+			{{#user}}
+			<div class="profile_and_name">
+				<div class="edit_profile">
+					{{>include/profileImage}}
+				</div>
+				<div class="edit_name">
+					<h1>{{username}}</h1>
+					<button id="profile_btn">프로필 사진 바꾸기</button>
+				</div>
+			</div>
+			<div class="form">
+                <form method="post" action="/users/{{id}}">
+                	<input type="hidden" name="_method" value="put"/>
+                    <div class="edit_user">
+                   		<aside><label for="username">사용자 이름</label></aside>
+                        <input type="text" id="username" placeholder="사용자 계정" value="{{username}}" /><br/>
+                    </div>
+                    <div class="edit_user">
+                   		<aside><label for="email">이메일</label></aside>
+                        <input type="text" id="email" placeholder="이메일 주소" value= "{{email}}" autofocus/><br>
+                    </div>
+                    <div class="edit_user">
+                   		<aside><label for="name">이름</label></aside>
+                        <input type="text" id="name" placeholder="성명" value="{{name}}"/><br>
+                    </div>
+                    <div class="edit_user">
+                   		<aside><label for="phone_num">전화번호</label></aside>
+                    	{{#phoneNum}}
+                        <input type="text" id="phone_num" placeholder="전화번호" value="{{phoneNum}}"/><br/>
+                        {{/phoneNum}}
+                        {{^phoneNum}}
+                        <input type="text" id="phone_num" placeholder="전화번호"/><br/>
+                        {{/phoneNum}}
+                    </div>
+                    <div class="edit_user">
+                   		<aside><label for="intro">소개</label></aside>
+                    	{{#intro}}
+                        <textarea id="intro">{{intro}}</textarea><br/>
+                        {{/intro}}
+                        {{^intro}}
+                        <textarea id="intro"></textarea><br/>
+                        {{/intro}}
+                        
+                    </div>
+                	<input type="submit" class="submit_btn" id="btn-create" value="제출"></button>
+                </form>
+
+
+            </div>
+			{{/user}}
+			
+		</article>
+		</div>
+	
+	</div>
+	</section>
+{{>layout/footer}}
+	<script>
+		$('#profile_btn').click(function(){
+	    	$('.profile_Input').click();
+		});
+	</script>
+</body>
+</html>

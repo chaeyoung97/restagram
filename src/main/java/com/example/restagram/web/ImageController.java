@@ -43,7 +43,7 @@ public class ImageController {
 	}
 
 	@PostMapping("/user/{id}")
-	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr, @LoginUser SessionUser user) throws IllegalStateException, IOException {
+	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr, @LoginUser SessionUser user) {
 		if(user == null)
 			return null;
 	    Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
@@ -52,7 +52,7 @@ public class ImageController {
 	}
 	
 	@PutMapping("/user/{id}")
-	public String updateProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr) throws IllegalStateException, IOException {
+	public String updateProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr){
 		service.updateProfileImage(id, file, attr);
 		return "redirect:/profile";
 	}
