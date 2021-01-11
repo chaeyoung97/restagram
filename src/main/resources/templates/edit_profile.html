@@ -28,15 +28,14 @@
 				</div>
 			</div>
 			<div class="form">
-                <form method="post" action="/users/{{id}}">
-                	<input type="hidden" name="_method" value="put"/>
+                <form class = "profileUpdateForm" action="/users/{{id}}">
                     <div class="edit_user">
                    		<aside><label for="username">사용자 이름</label></aside>
-                        <input type="text" id="username" placeholder="사용자 계정" value="{{username}}" /><br/>
+                        <input type="text" id="username" placeholder="사용자 계정" value="{{username}}" readonly autofocus/><br/>
                     </div>
                     <div class="edit_user">
                    		<aside><label for="email">이메일</label></aside>
-                        <input type="text" id="email" placeholder="이메일 주소" value= "{{email}}" autofocus/><br>
+                        <input type="text" id="email" placeholder="이메일 주소" value= "{{email}}"/><br>
                     </div>
                     <div class="edit_user">
                    		<aside><label for="name">이름</label></aside>
@@ -47,22 +46,16 @@
                     	{{#phoneNum}}
                         <input type="text" id="phone_num" placeholder="전화번호" value="{{phoneNum}}"/><br/>
                         {{/phoneNum}}
-                        {{^phoneNum}}
-                        <input type="text" id="phone_num" placeholder="전화번호"/><br/>
-                        {{/phoneNum}}
                     </div>
                     <div class="edit_user">
                    		<aside><label for="intro">소개</label></aside>
-                    	{{#intro}}
+						{{#intro}}
                         <textarea id="intro">{{intro}}</textarea><br/>
-                        {{/intro}}
-                        {{^intro}}
-                        <textarea id="intro"></textarea><br/>
-                        {{/intro}}
-                        
+						{{/intro}}
                     </div>
-                	<input type="submit" class="submit_btn" id="btn-create" value="제출"></button>
+                	<button type="button" class="submit_btn" id="btn-modify" >수정</button>
                 </form>
+
 
 
             </div>
@@ -74,6 +67,8 @@
 	</div>
 	</section>
 {{>layout/footer}}
+	<script src="/js/modifyUser.js"></script>
+
 	<script>
 		$('#profile_btn').click(function(){
 	    	$('.profile_Input').click();

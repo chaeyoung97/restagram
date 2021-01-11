@@ -1,9 +1,6 @@
 package com.example.restagram.web;
 import com.example.restagram.config.LoginUser;
-import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.posts.Posts;
-import com.example.restagram.domain.posts.PostsRepository;
-import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
@@ -38,7 +35,7 @@ public class IndexController {
         Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
         List<Posts> postsList = postsService.findAllPostsByMyFollowing(users);
         model.addAttribute("user", users);
-        model.addAttribute("posts", postsList);
+        model.addAttribute("followPosts", postsList);
         return "index";  //로그인이 되어있다면 home화면으로 이동
     }
 
@@ -131,6 +128,6 @@ public class IndexController {
     public @ResponseBody
     String follw(@PathVariable Long id){
         Users users = usersRepository.findById(id).get();
-        return "팔로잉: " + users.getFollowing().size() +  "팔로워: " + users.getFollower().size();
+        return "팔로잉: " + users.getFollow().size() +  "팔로워: " + users.getFollower().size();
     }
 }

@@ -32,15 +32,15 @@
                     <ul class="middle">
                         <li>
                             <span>게시물</span>
-                            3
+                            {{postSize}}
                         </li>
                         <li>
                             <span>팔로워</span>
-                            3
+                            {{followerSize}}
                         </li>
                         <li>
                             <span>팔로우</span>
-                            3
+                            {{followSize}}
                         </li>
                     </ul>
                     <p class="about">
@@ -52,41 +52,16 @@
             </div>
 
             <div class="mylist_contents contents_container active">
-            {{#images}}
+            {{#posts}}
                 <div class="pic">
-                    <a href="#"><img src="{{imageURL}}" alt=""></a>
+                    <a href="#"><img src="{{images.0.imageURL}}" alt=""></a>
                 </div>
-            {{/images}}
+            {{/posts}}
             </div>
-
 
             <div class="bookmark_contents contents_container">
                 <div class="pic">
                     <a href="#"><img src="/imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"><img src="/imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="/imgs/img_section/img02.jpg" alt=""></a>
                 </div>
             </div>
 

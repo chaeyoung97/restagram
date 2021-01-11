@@ -41,14 +41,16 @@ public class UserApiController {
     // 회원정보 수정 탈퇴 기능api추가.
 
     //회원 정보 수정
+    @Transactional
     @PutMapping("/{id}")
-    public Long update(@PathVariable Long id, Users newUsers) {
+    public Long update(@PathVariable Long id, @RequestBody Users newUsers) {
     	//해당 맵핑 수행시 newUsers에 데이터 정보가 전달되지 않음. 
         Users users =usersRepository.findById(id).get();
         users.update(newUsers);
-        usersRepository.save(users);
+       // usersRepository.save(users);
         return users.getId();
     }
+
     //탈퇴(삭제기능)
     @PostMapping("/withdrawal/{id}")
     public String withdrawal(UserResponseDto requestDto, @PathVariable Long id, PrincipalDetail userDatail) throws Exception {

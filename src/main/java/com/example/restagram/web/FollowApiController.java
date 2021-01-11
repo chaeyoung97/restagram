@@ -24,7 +24,7 @@ public class FollowApiController {
 	private final FollowService followService;
 
 	/*
-		이미 팔로우가 되어 있다면 follow 언팔로우
+		이미 팔로우가 되어 있다면 언팔로우
 		팔로우가 되어 있지 않다면 팔로우하는 api
 
 		return -3 :toUser와 fromUser가 같음

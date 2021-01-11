@@ -72,7 +72,7 @@ public class UserService implements UserDetailsService {
         imageService.deleteProfileImage(requestDto.getId());
 
         //탈퇴 진행
-        userRepository.withdrawal(requestDto);
+//        userRepository.withdrawal(requestDto);
 
         return "";
     }
@@ -82,6 +82,5 @@ public class UserService implements UserDetailsService {
 //    public int checkPw(UserSaveRequestDto requestDto) {
 //        int result=requestDto
 //    }
-
 
 }

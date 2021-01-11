@@ -9,17 +9,12 @@ import com.example.restagram.domain.tags.Tags;
 import com.example.restagram.domain.tags.TagsRepository;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.utils.ExtractHashTag;
-import com.example.restagram.utils.HttpSessionUtils;
 import com.example.restagram.web.dto.PostsSaveRequestDto;
 import com.example.restagram.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
-import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -99,7 +94,7 @@ public class PostsService {
     @Transactional(readOnly = true)
     public List<Posts> findAllPostsByMyFollowing(Users users){
         List<Posts> postsList = new ArrayList<>();
-        for(FollowTable table : users.getFollowing()){
+        for(FollowTable table : users.getFollow()){
             for(Posts posts : table.getToUser().getPosts())
                 postsList.add(posts);
         }

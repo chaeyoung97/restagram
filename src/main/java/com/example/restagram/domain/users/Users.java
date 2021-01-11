@@ -25,7 +25,14 @@ public class Users extends BaseTimeEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-
+	public Long getFollowSize(){
+		return new Long(follow.size());
+	}
+	public Long getFollowerSize(){
+		return new Long(follower.size());
+	}
+	public Long getPostSize() {return new Long (posts.size());}
+	
 	@Column(nullable=false)
 	private String username;
 	private String password;
@@ -51,10 +58,10 @@ public class Users extends BaseTimeEntity implements Serializable {
 	@OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<LikesTables> likes;
 
-	@OneToMany(mappedBy = "fromUser" ,fetch = FetchType.LAZY)
-	private List<FollowTable> following;
+	@OneToMany(mappedBy = "fromUser" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<FollowTable> follow;
 
-	@OneToMany(mappedBy = "toUser" ,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "toUser" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<FollowTable> follower;
 	
 	@Builder
@@ -68,15 +75,16 @@ public class Users extends BaseTimeEntity implements Serializable {
 		else
 			this.role = Role.USER;
 		profileImage = "/imgs/defaultImage.jpg";
+		this.phoneNum = "";
+		this.intro = "";
 	}
 
 	public void update(Users newUsers) {
 		this.name=newUsers.name;
-		this.password=newUsers.password;
 		this.email=newUsers.email;
 		this.phoneNum=newUsers.phoneNum;
 		this.intro=newUsers.intro;
-		this.profileImage=newUsers.profileImage;
+		//this.profileImage=newUsers.profileImage;
 	}
 	
 }

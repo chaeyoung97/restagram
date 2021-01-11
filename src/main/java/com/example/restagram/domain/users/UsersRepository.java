@@ -16,5 +16,5 @@ public interface UsersRepository extends JpaRepository<Users, Long>{
 	List<Users> findbyAll_createdDate();
 
 
-    void withdrawal(UserResponseDto requestDto);
+//    void withdrawal(UserResponseDto requestDto);
 }
