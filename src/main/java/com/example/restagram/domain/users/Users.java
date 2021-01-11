@@ -51,7 +51,7 @@ public class Users extends BaseTimeEntity implements Serializable {
 	private Role role;
 
 //	프로필에서 사용자가 작성한 게시글 목록을 불러오기 위해 양방향 매핑을 해줌
-	@OrderBy("createdDate")
+	@OrderBy("createdDate desc")	//최근 게시물을 맨 앞으로 하기위해 내림차순 정렬
 	@OneToMany(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Posts> posts;
 
@@ -86,5 +86,9 @@ public class Users extends BaseTimeEntity implements Serializable {
 		this.intro=newUsers.intro;
 		//this.profileImage=newUsers.profileImage;
 	}
-	
+
+	public boolean liked(Posts posts){
+		return this.likes.stream().filter(a -> a.getPost().equals(posts)).findFirst().isPresent();
+
+	}
 }

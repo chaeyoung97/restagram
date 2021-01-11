@@ -1,5 +1,6 @@
 package com.example.restagram.web;
 import com.example.restagram.config.LoginUser;
+import com.example.restagram.domain.posts.PostLikeVo;
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
@@ -34,8 +35,12 @@ public class IndexController {
         }
         Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
         List<Posts> postsList = postsService.findAllPostsByMyFollowing(users);
+        List<PostLikeVo> postLikeVos = new ArrayList<>();
+        for(Posts posts: postsList){
+            postLikeVos.add(PostLikeVo.builder().posts(posts).users(users).build());
+        }
         model.addAttribute("user", users);
-        model.addAttribute("followPosts", postsList);
+        model.addAttribute("followPosts", postLikeVos);
         return "index";  //로그인이 되어있다면 home화면으로 이동
     }
 

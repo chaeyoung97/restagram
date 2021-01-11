@@ -99,6 +99,8 @@ public class PostsService {
                 postsList.add(posts);
         }
         postsList.addAll(users.getPosts());
+
+//        내림차순 정렬
         Collections.sort(postsList, new Comparator<Posts>() {
             @Override
             public int compare(Posts a, Posts b) {

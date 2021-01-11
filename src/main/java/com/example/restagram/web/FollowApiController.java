@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
-@RequestMapping("/follow")
+@RequestMapping("/follows")
 @RestController
 public class FollowApiController {
 
@@ -51,47 +51,5 @@ public class FollowApiController {
 
 		return 	followService.follow(fromUser, toUser.get());
 	}
-
-//	//사용자가 팔로우하는 사람의 팔로워 목록
-//	@GetMapping("/follow/follower/{id}")
-//	public String followFollower(
-//			@AuthenticationPrincipal PrincipalDetail userDetails,
-//			@PathVariable Long id,
-//			Model model) {
-//		List<Follow> followers = followRepository.findByToUser(id);
-//		List<Follow> principalfollows = followRepository.findByToUser(userDetails.getUser().getId());
-//
-//		//follower 목록에 있는 id와 principalfollow 목록에 있는 id를 비교
-//		for (Follow follow1 : followers) {
-//			for (Follow follow2 : principalfollows) {
-//				if (follow1.getFromUser().getId() == follow2.getFromUser().getId()) {
-//					follow1.setFollowState(true);
-//				}
-//			}
-//		}
-//		model.addAttribute("followers", followers);
-//		return "/follow/follower";
-//	}
-//
-//	//사용자가 팔로우하는 사람을 팔로우하는 목록
-//	@GetMapping("/follow/follow/{id}")
-//	public String followFollow(
-//			@AuthenticationPrincipal PrincipalDetail userDetails,
-//			@PathVariable Long id,
-//			Model model) {
-//		List<Follow> follows=followRepository.findByFromUser(id);
-//		List<Follow> principalfollows=followRepository.findByFromUser(userDetails.getUser().getId());
-//
-//		//follow 목록에 있는 id와 principalfollow 목록에 있는 id를 비교
-//		for(Follow follow1:follows) {
-//			for(Follow follow2:principalfollows) {
-//				if(follow1.getFromUser().getId()==follow2.getFromUser().getId()) {
-//					follow1.setFollowState(true);
-//				}
-//			}
-//		}
-//		model.addAttribute("follows", follows);
-//		return "/follow/follow";
-//	}
 }
 

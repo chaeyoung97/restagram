@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@RequestMapping("/like")
+@RequestMapping("/likes")
 @RestController
 public class likesApiController {
 
@@ -36,7 +36,7 @@ public class likesApiController {
 
 	 */
     @Transactional(readOnly = true)
-    @GetMapping("/post/{postId}")
+    @GetMapping("/posts/{postId}")
     public Long like(@LoginUser SessionUser sessionUser, @PathVariable Long postId){
         if(sessionUser == null)
             return -1L;

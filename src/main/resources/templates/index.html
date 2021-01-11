@@ -130,13 +130,18 @@
                     </div>
                     <div>
                         <div>
-                            <textarea readonly style="resize: none;overflow-y:hidden;border: none;background-color: transparent">{{content}}</textarea>
+                            <textarea readonly style="resize: none;overflow-y:hidden;border: none;background-color: transparent">{{post.content}}</textarea>
                         </div>
                     </div>
                     <div class="bottom_icons">
                         <div class="left_icons">
                             <div class="heart_btn">
+                                {{#liked}}
+                                <div class="sprite_heart_icon" name="39" data-name="heartbeat"></div>
+                                {{/liked}}
+                                {{^liked}}
                                 <div class="sprite_heart_icon_outline" name="39" data-name="heartbeat"></div>
+                                {{/liked}}
                             </div>
                             <div class="sprite_bubble_icon"></div>
                             <div class="sprite_share_icon" data-name="share"></div>
@@ -148,7 +153,7 @@
 
                     <div class="likes m_text">
                         좋아요
-                        <span id="like-count-39">{{likeCnt}}</span>
+                        <span id="like-count-39">{{post.likeCnt}}</span>
                         <span id="bookmark-count-39"></span>
                         개
                     </div>
