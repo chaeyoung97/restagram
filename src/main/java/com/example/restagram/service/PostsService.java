@@ -9,13 +9,15 @@ import com.example.restagram.domain.tags.Tags;
 import com.example.restagram.domain.tags.TagsRepository;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.utils.ExtractHashTag;
-import com.example.restagram.web.dto.PostsSaveRequestDto;
-import com.example.restagram.web.dto.PostsUpdateRequestDto;
+import com.example.restagram.web.postDto.PostsResponseDto;
+import com.example.restagram.web.postDto.PostsSaveRequestDto;
+import com.example.restagram.web.postDto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -86,20 +88,19 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public Posts findByid(Long id){
-        return postsRepository.findById(id).get();
+    public PostsResponseDto findByid(Long id, Users users){
+        return PostsResponseDto.builder().posts(postsRepository.findById(id).get()).users(users).build();
     }
 
     //사용자가 팔로우하는 사람들의 게시글 목록(자신의 게시물 포함)
     @Transactional(readOnly = true)
-    public List<Posts> findAllPostsByMyFollowing(Users users){
+    public List<PostsResponseDto> findAllPostsByMyFollow(Users users){
         List<Posts> postsList = new ArrayList<>();
         for(FollowTable table : users.getFollow()){
             for(Posts posts : table.getToUser().getPosts())
                 postsList.add(posts);
         }
         postsList.addAll(users.getPosts());
-
 //        내림차순 정렬
         Collections.sort(postsList, new Comparator<Posts>() {
             @Override
@@ -109,7 +110,8 @@ public class PostsService {
                 return 0;
             }
         });
-        return postsList;
+        return postsList.stream()
+                .map(p -> new PostsResponseDto(p, users)).collect(Collectors.toList());
     }
 
 //    @Transactional(readOnly = true)

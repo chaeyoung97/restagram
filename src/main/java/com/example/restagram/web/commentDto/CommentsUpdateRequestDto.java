@@ -1,4 +1,4 @@
-package com.example.restagram.web.dto;
+package com.example.restagram.web.commentDto;
 
 import lombok.Builder;
 import lombok.Getter;

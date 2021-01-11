@@ -87,8 +87,8 @@ public class Users extends BaseTimeEntity implements Serializable {
 		//this.profileImage=newUsers.profileImage;
 	}
 
-	public boolean liked(Posts posts){
-		return this.likes.stream().filter(a -> a.getPost().equals(posts)).findFirst().isPresent();
+	public boolean liked(Long postsId){
+		return this.likes.stream().filter(a -> a.getPost().getId().equals(postsId)).findFirst().isPresent();
 
 	}
 }

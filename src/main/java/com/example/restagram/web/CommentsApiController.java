@@ -5,13 +5,10 @@ import com.example.restagram.domain.comments.CommentsRepository;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.CommentsService;
-import com.example.restagram.utils.HttpSessionUtils;
-import com.example.restagram.web.dto.CommentsSaveRequestDto;
-import com.example.restagram.web.dto.CommentsUpdateRequestDto;
+import com.example.restagram.web.commentDto.CommentsSaveRequestDto;
+import com.example.restagram.web.commentDto.CommentsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/posts/{postId}/comments")

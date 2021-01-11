@@ -1,4 +1,4 @@
-package com.example.restagram.web.dto;
+package com.example.restagram.web.postDto;
 
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.users.Users;

@@ -1,25 +1,19 @@
 package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
-import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.ImageService;
 import com.example.restagram.service.PostsService;
-import com.example.restagram.utils.HttpSessionUtils;
-import com.example.restagram.web.dto.PostsSaveRequestDto;
-import com.example.restagram.web.dto.PostsUpdateRequestDto;
+import com.example.restagram.web.postDto.PostsResponseDto;
+import com.example.restagram.web.postDto.PostsSaveRequestDto;
+import com.example.restagram.web.postDto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.h2.engine.User;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/posts")
@@ -63,7 +57,11 @@ public class PostsApiController {
     }
 
     @GetMapping("/{id}")
-    public Posts findById(@PathVariable Long id){ return postsService.findByid(id); }
+    public PostsResponseDto findById(@PathVariable Long id, @LoginUser SessionUser sessionUser){
+        if(sessionUser == null)
+            return null;
+        return postsService.findByid(id, usersRepository.findByUsername(sessionUser.getUsername()).get());
+    }
 
 //    @GetMapping("/{id}")
 //    public Long findById(@PathVariable Long id){ return postsService.findByid(id); }

@@ -1,4 +1,4 @@
-package com.example.restagram.web.dto;
+package com.example.restagram.web.commentDto;
 
 import com.example.restagram.domain.comments.Comments;
 import com.example.restagram.domain.posts.Posts;
