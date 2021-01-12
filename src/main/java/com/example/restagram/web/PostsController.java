@@ -21,7 +21,7 @@ public class PostsController {
     private final UsersRepository usersRepository;
 
     //게시물 작성 페이지로 이동
-    @GetMapping("/")
+    @GetMapping("")
     public String write(@LoginUser SessionUser sessionUser){
         if(sessionUser == null)
             return "login";//아직 예외 페이지 처리가 안되어 있어 일단 로그인 페이지로 가도돍 함;
