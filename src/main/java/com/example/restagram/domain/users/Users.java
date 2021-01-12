@@ -7,6 +7,7 @@ import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.tables.LikesTables;
 
+import com.example.restagram.web.userDto.UserUpdateRequestDto;
 import lombok.*;
 
 import java.io.Serializable;
@@ -79,11 +80,11 @@ public class Users extends BaseTimeEntity implements Serializable {
 		this.intro = "";
 	}
 
-	public void update(Users newUsers) {
-		this.name=newUsers.name;
-		this.email=newUsers.email;
-		this.phoneNum=newUsers.phoneNum;
-		this.intro=newUsers.intro;
+	public void update(UserUpdateRequestDto newUsers) {
+		this.name=newUsers.getName();
+		this.email=newUsers.getEmail();
+		this.phoneNum=newUsers.getPhoneNum();
+		this.intro=newUsers.getIntro();
 		//this.profileImage=newUsers.profileImage;
 	}
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> userList</h1>
+<table>
+    <thead>
+    <tr>
+        <th>username</th><th>email</th><th>채팅하기</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#userList}}
+    <tr>
+        <td>{{username}}</td>
+        <td>{{email}}</td>
+        <td><input type="button" id="chatting" value="{{username}}과 대화하기"></td>
+    </tr>
+    {{/userList}}
+
+    </tbody>
+</table>
+</body>
+</html>

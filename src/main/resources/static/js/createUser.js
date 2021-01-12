@@ -4,6 +4,9 @@ var create = {
         $('#btn-create').on("click", function () {
             my.createUser();
         });
+        $('#btn-delete').on("click", function () {
+            my.deleteUser();
+        });
     },
     createUser: function () {
       /*  console.log($('#user_id').val())
@@ -32,6 +35,28 @@ var create = {
             alert(JSON.stringify(error));
         });
     },
+    deleteUser : function ()
+    {
+        var id=$('#id').val();
+        console.log()
+        var data = {
+            password: $('#password').val(),
+        };
+        $.ajax({
+           type: 'DELETE',
+           url :'/users/api/del/'+id,
+            data_type: 'json',
+            contentType: 'application/json; charset-urf-8',
+            data:JSON.stringify(data)
+        }).done(function()
+        {
+            alert("회원이 탈퇴되었습니다.")
+                window.location.href='/login';
+        }).fail(function (error){
+            alert(JSON.stringify(error));
+        });
+    }
 };
 create.init();
+
 

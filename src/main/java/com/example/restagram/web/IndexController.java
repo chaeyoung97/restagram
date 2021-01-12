@@ -7,6 +7,7 @@ import com.example.restagram.service.ImageService;
 import com.example.restagram.service.PostsService;
 import com.example.restagram.service.UserService;
 import com.example.restagram.web.postDto.PostsResponseDto;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ public class IndexController {
         if(sessionUser == null){
             return "login"; //로그인이 되어있지 않다면 로그인화면으로 이동
         }
+        System.out.println(">>>>>>>>>>>>>>>>>>>>."+sessionUser.getUsername());
         Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
         List<PostsResponseDto> postsList = postsService.findAllPostsByMyFollow(users);
 
@@ -48,7 +50,18 @@ public class IndexController {
 
     //회원탈퇴 페이지
     @GetMapping("/withdrawal")
-    public String deleteMember() { return "withdrawal"; }
+    public String deleteMember(@LoginUser SessionUser sessionUser, Model model)
+    {
+        if(sessionUser==null)
+        {
+            return "login";
+        }
+        Users users=usersRepository.findByUsername(sessionUser.getUsername()).get();
+
+        model.addAttribute("users",users);
+        return "withdrawal";
+
+    }
 
     //로그인 페이지로 이동
     @GetMapping("/loginForm")
@@ -57,7 +70,7 @@ public class IndexController {
     }
 
     // 관리자만 허용하는 userList
-    @GetMapping("/admin/userList")
+    @GetMapping("/admin")
     public String userList(@LoginUser SessionUser user,Model model){
         System.out.println("여기가 관리자 페이지."); // 관리자의 역할  h2 데이터 베이스 직접 변경
         // update users set ROLE='ADMIN' where username='admin'
@@ -69,8 +82,9 @@ public class IndexController {
         {
             e.printStackTrace();
         }
-        return "/user/userList";
+        return "/userList";
     }
+
 
     //프로필 페이지로 이동
     @GetMapping("/profile/{username}")

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>layout/header}}
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+
+<section id="container">
+    {{>layout/navigator}}
+    <div id="main_container">
+
+        <div class="form_container">
+
+            <div class="form">
+
+
+                <h1 class="sprite_insta_big_logo title"></h1>
+                <form> <!-- Controller에서 회원가입 로직을 처리할 예정 -->
+                    {{#users}}
+                    <input type="hidden" id="id" value="{{id}}"></br>
+                    {{/users}}
+                    <p class="login_user_name">
+                        <input type="password" id="password" placeholder="비밀번호"/> <br/>
+                    </p>
+                </form>
+                <button type="button" class="submit_btn" id="btn-delete">회원탈퇴하기</button>
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+{{>layout/footer}}
+<script src="/js/createUser.js"></script>
+</body>
+</html>

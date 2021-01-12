@@ -1,5 +1,7 @@
-package com.example.restagram.domain.chatroom;
+package com.example.restagram.service;
 
+import com.example.restagram.domain.chatroom.ChatRoom;
+import com.example.restagram.domain.chatroom.ChatRoomRepository;
 import com.example.restagram.web.dto.ChattingListResponseDto;
 import com.example.restagram.web.dto.ChattingRoomResponseDto;
 import com.example.restagram.web.dto.RequestCreateChatRoom;
@@ -13,9 +15,9 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class ChatRoomService {
-    private final ChatRoomRepository chatRoomRepository;
+public class ChatService {
 
+    private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
     public Long Create(RequestCreateChatRoom requestDto) {
@@ -35,4 +37,5 @@ public class ChatRoomService {
 //        System.out.println(">>>>>>>>>>>>>>>>>>>방 조회." + chatRoom.getId());// 널이면 오류
         return new ChattingRoomResponseDto(chatRoom);
     }
+
 }

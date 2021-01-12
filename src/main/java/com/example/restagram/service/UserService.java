@@ -4,9 +4,7 @@ import com.example.restagram.config.PrincipalDetail;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
-import com.example.restagram.web.userDto.UserListResponseDto;
-import com.example.restagram.web.userDto.UserResponseDto;
-import com.example.restagram.web.userDto.UserSaveRequestDto;
+import com.example.restagram.web.userDto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -64,7 +63,17 @@ public class UserService implements UserDetailsService {
         return userRepository.findbyAll_createdDate().stream()
                 .map(UserListResponseDto::new).collect(Collectors.toList());
     }
-
+    //회원정보 수정
+    @Transactional
+    public Long update(Long id, UserUpdateRequestDto requestDto)
+    {
+        Users users=userRepository.findById(id).orElseThrow(
+                ()->new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
+        );
+        users.update(requestDto);
+        System.out.println("user Update Dirty Checking");
+        return id;
+    }
     //회원 탈퇴
     @Transactional
     public String withdrawal(UserResponseDto requestDto) throws Exception {
@@ -75,6 +84,22 @@ public class UserService implements UserDetailsService {
 //        userRepository.withdrawal(requestDto);
 
         return "";
+    }
+    @Transactional
+    public void delete(UserDeleteRequestDto requestDto, Long id) {
+
+        Users deleteUser=userRepository.findById(id).orElseThrow(
+                ()->new IllegalArgumentException(" 해당 사용자가 존재하지 않습니다.")
+        );
+        if(encrpyt.matches(requestDto.getPassword(),deleteUser.getPassword()))
+        {
+            System.out.println(">>>>>>>>>>>>>>>deleteSuccess");
+            userRepository.delete(deleteUser);
+        }
+        else
+        {
+            System.out.println(">>>>>>>>>>>>>>>>>misMathch");
+        }
     }
 
 //    //password 체크

@@ -1,36 +1,36 @@
 package com.example.restagram.domain.chatroom;
 
-
-import com.example.restagram.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@NoArgsConstructor
 @Getter
-@ToString
+@Setter
+@NoArgsConstructor
 @Entity
-public class ChatRoom extends BaseTimeEntity {
+public class ChatMessage {
+    public enum MessageType{
+        ENTER,TALK
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    private MessageType type;
     private String roomId;
-    private String name;
-
-
+    private String sender;
+    private String Message;
     @Builder
-    public ChatRoom( String roomId,String name) {
-        this.name = name; // 유저 아이디로 대체..
-        this.roomId=roomId;
+    public ChatMessage(MessageType type, String roomId, String sender, String message) {
+        this.type = type;
+        this.roomId = roomId;
+        this.sender = sender;
+        Message = message;
     }
-
-
 }

@@ -33,7 +33,6 @@ public class UserSaveRequestDto {
     }
 
     public Users toEntity() {
-
         return Users.builder().name(name).username(username)
                 .password(password).email(email)
                 .build();
