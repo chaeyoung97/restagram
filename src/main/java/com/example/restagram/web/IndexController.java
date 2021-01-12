@@ -72,21 +72,14 @@ public class IndexController {
         return "/user/userList";
     }
 
-    //게시물 작성 페이지로 이동
-    @GetMapping("/posts")
-    public String write(@LoginUser SessionUser sessionUser){
-        if(sessionUser == null)
-            return "login";//아직 예외 페이지 처리가 안되어 있어 일단 로그인 페이지로 가도돍 함;
-        return "new_post";
-    }
-
     //프로필 페이지로 이동
-    @GetMapping("/profile")
-    public String profile(@LoginUser SessionUser sessionUser, Model model){
+    @GetMapping("/profile/{username}")
+    public String profile(@LoginUser SessionUser sessionUser,@PathVariable String username, Model model){
         if(sessionUser == null)
             return "login";
-        Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
+        Users users = usersRepository.findByUsername(username).get();
         model.addAttribute("user", users);
+        model.addAttribute("isSameSessionUser", sessionUser.getUsername().equals(username));
         imageService.getProfileImage(users.getId(), model);
         imageService.getUserImages(users.getId(), model);
         return "profile";
@@ -100,35 +93,12 @@ public class IndexController {
     	model.addAttribute("user", users);
     	return "edit_profile";
     }
+
     @GetMapping("/edit/password")
     public String updatePassword(@LoginUser SessionUser sessionUser, Model model) {
     	if(sessionUser==null) return "login";
     	Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
     	model.addAttribute("user", users);
     	return "edit_password";
-    }
-    
-    
-    
-    /*
-      아래는 테스트용 api
-      테스트완료 후 삭제할 예정
-   */
-
-    //유저가 작성한 게시물 갯수 확인
-    @Transactional
-    @GetMapping("/get/{id}/")
-    public @ResponseBody Long image(@PathVariable Long id){
-        Users users = usersRepository.findById(id).get();
-        return new Long(users.getPosts().size());
-    }
-
-    //유저가 팔로우한 목록 확인
-    @Transactional
-    @GetMapping("/get/user/{id}/")
-    public @ResponseBody
-    String follw(@PathVariable Long id){
-        Users users = usersRepository.findById(id).get();
-        return "팔로잉: " + users.getFollow().size() +  "팔로워: " + users.getFollower().size();
     }
 }

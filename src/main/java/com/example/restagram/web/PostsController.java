@@ -20,6 +20,15 @@ public class PostsController {
     private final PostsService postsService;
     private final UsersRepository usersRepository;
 
+    //게시물 작성 페이지로 이동
+    @GetMapping("/")
+    public String write(@LoginUser SessionUser sessionUser){
+        if(sessionUser == null)
+            return "login";//아직 예외 페이지 처리가 안되어 있어 일단 로그인 페이지로 가도돍 함;
+        return "new_post";
+    }
+
+    //게시물 상세보기 페이지
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, @LoginUser SessionUser sessionUser, Model model){
        if(sessionUser == null)

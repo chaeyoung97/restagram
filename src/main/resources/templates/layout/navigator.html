@@ -9,10 +9,9 @@
                 </div>
             </a>
         </h1>
-
+{{#sessionUser}}
         <div class="search_field">
-            <input type="text" placeholder="검색" tabindex="0">
-
+            <input class = "search" type="text" placeholder="검색" tabindex="0">
             <div class="fake_field">
                 <span class=sprite_small_search_icon></span>
                 <span>검색</span>
@@ -24,10 +23,8 @@
             <a href="/posts"><div class="sprite_camera_icon"></div></a>
             <a href="signUpForm.html"><div class="sprite_compass_icon"></div></a>
             <a href="/follow"><div class="sprite_heart_icon_outline"></div></a>
-            <a href="/profile"><div class="sprite_user_icon_outline"></div></a>
-            {{#login}}
-            <a href="/logout" style="font-weight: bold;font-size: x-small" class="btn btn-info active" role="button">Logout</a>
-            {{/login}}
+            <a href="/profile/{{username}}"><div class="sprite_user_icon_outline"></div></a>
         </div>
+{{/sessionUser}}
     </section>
 </header>

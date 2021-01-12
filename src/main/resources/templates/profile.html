@@ -25,8 +25,10 @@
                 <div class="detail">
                     <div class="top">
                         <div class="user_name">{{username}}</div>
+       {{#isSameSessionUser}}
                         <a href="/edit/profile" class="profile_edit">프로필편집</a>
                         <form action="/logout" method="post" class = "logout"><input type="submit" value="로그아웃" style="background-color:transparent;  border:1px  solid;"></form>
+       {{/isSameSessionUser}}
                     </div>
 
                     <ul class="middle">

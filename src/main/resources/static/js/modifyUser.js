@@ -1,4 +1,4 @@
-var create = {
+var modify = {
     init: function () {
         var _this = this;
         $('#btn-modify').on("click", function () {
@@ -6,10 +6,7 @@ var create = {
         });
     },
     modifyUser: function () {
-      /*  console.log($('#user_id').val())
-        console.log( $('#password').val())
-        console.log( $('#email').val())
-        console.log( $('#phone_Num').val())*/
+
         var data = {
             username: $('#username').val(),
             email: $('#email').val(),
@@ -19,6 +16,9 @@ var create = {
             profile_Image :null
         };
         var url = $('.profileUpdateForm').attr('action');
+
+        var userName = $('#username').val();
+
         $.ajax({
             type: 'PUT',
             url: url,
@@ -27,11 +27,11 @@ var create = {
             data: JSON.stringify(data)
         }).done(function () {
             alert("회원정보수정완료!");
-            window.location.href = '/profile';
+            window.location.href = '/profile/' + userName;
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
     },
 };
-create.init();
+modify.init();
 
