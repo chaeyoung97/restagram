@@ -45,16 +45,19 @@ public class ImageController {
 	@PostMapping("/user/{id}")
 	public String postProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr, @LoginUser SessionUser user) {
 		if(user == null)
-			return null;
+			return "login";
 	    Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
 		service.saveProfileImage(id, file, attr, sessionedUser);
-		return "redirect:/profile";
+		return "redirect:/profile/" + sessionedUser.getUsername();
 	}
 	
 	@PutMapping("/user/{id}")
-	public String updateProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr){
+	public String updateProfile(@PathVariable Long id ,@RequestParam MultipartFile file, RedirectAttributes attr,  @LoginUser SessionUser user){
+		if(user==null)
+			return "login";
+		Users sessionedUser = usersRepository.findByUsername(user.getUsername()).get();
 		service.updateProfileImage(id, file, attr);
-		return "redirect:/profile";
+		return "redirect:/profile/" + sessionedUser.getUsername();
 	}
 	
 	@DeleteMapping("/user/{id}")//프로필 삭제

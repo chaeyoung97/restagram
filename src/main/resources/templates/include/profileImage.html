@@ -1,8 +1,8 @@
 <div class="profileImage">
 	{{#ImageURL}}
 	<form enctype="multipart/form-data" method="post" action="/image/user/{{id}}">
-	<input type="hidden" name="_method" value="put"/>
-		<label for="file_input">
+		<input type="hidden" name="_method" value="put"/>
+		<label for="file_input1">
 			<img src = "{{ImageURL}}" class="profileImage"/><br>		
 		</label>
 		<input accept="image/png, image/jpeg" type="file" name="file" style= "display : none;" class="profile_Input" id="file_input1" onchange="form.submit()">

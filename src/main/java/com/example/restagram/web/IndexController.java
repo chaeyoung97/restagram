@@ -105,6 +105,7 @@ public class IndexController {
     	if(sessionUser==null) return "login";
     	Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
     	model.addAttribute("user", users);
+    	imageService.getProfileImage(users.getId(), model);
     	return "edit_profile";
     }
 
@@ -113,6 +114,7 @@ public class IndexController {
     	if(sessionUser==null) return "login";
     	Users users = usersRepository.findByUsername(sessionUser.getUsername()).get();
     	model.addAttribute("user", users);
+    	imageService.getProfileImage(users.getId(), model);
     	return "edit_password";
     }
 }
