@@ -3,7 +3,38 @@
 <head>
 	{{>layout/header}}
     <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/modal.css">
+<style>
+
+    .user_container{
+        width: 100%;
+        display: flex;
+    }
+
+    .user_container .profile_img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 10px;
+    }
+
+    .user_container .profile_img img{
+        height: 100%;
+        width: 100%;
+    }
+
+    .user_container .user_name{
+        color:#262626;
+    }
+    .user_container .nick_name{
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+</style>
 </head>
+
 <body>
 
 
@@ -29,6 +60,9 @@
                         <a href="/edit/profile" class="profile_edit">프로필편집</a>
                         <form action="/logout" method="post" class = "logout"><input type="submit" value="로그아웃" style="background-color:transparent;  border:1px  solid;"></form>
        {{/isSameSessionUser}}
+       {{^isSameSessionUser}}
+                        <a href="/follows/toUser/{{user.id}}" class="profile_edit">팔로우</a>
+       {{/isSameSessionUser}}
                     </div>
 
                     <ul class="middle">
@@ -36,13 +70,65 @@
                             <span>게시물</span>
                             {{postSize}}
                         </li>
-                        <li>
-                            <span>팔로워</span>
+                        <li id = "myBtn" style="cursor: pointer">
+                           <span>팔로워</span>
                             {{followerSize}}
+                            <div id= "myModal" class = "modal">
+                                <div class="modal-content">
+                                    <div><h2>{{username}}님의 팔로워 리스트</h2></div><br><br>
+                                    <div class = "close" style="visibility: hidden">&times;</div>
+                                    <table style="border: none">
+                                        {{#follower}}
+
+                                        <tr>
+                                        <td style="width:20%">
+                                            <div class="user_container">
+                                                <div class="profile_img">
+                                                    <a href="/profile/{{fromUser.username}}"><img src="{{fromUser.profileImage}}" alt="" ></a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                         <td style="width:50%">
+                                            <div class="user_name">
+                                                <div class="nick_name"><a href="/profile/{{fromUser.username}}">{{fromUser.username}}</a></div>
+                                            </div>
+                                        </td>
+                                        </tr>
+
+                                    {{/follower}}
+                                    </table>
+                                </div>
+                            </div>
                         </li>
-                        <li>
+                        <li id = "myBtn2" style="cursor: pointer">
                             <span>팔로우</span>
                             {{followSize}}
+                            <div id= "myModal2" class = "modal2">
+                                <div class="modal-content">
+                                    <div><h2>{{username}}님의 팔로우 리스트</h2></div><br>
+                                    <div class = "close2" style="visibility: hidden">&times;</div>
+                                    <table style="border: none">
+                                        {{#follow}}
+
+                                        <tr style="width:20%">
+                                            <td>
+                                                <div class="user_container">
+                                                    <div class="profile_img">
+                                                        <a href="/profile/{{toUser.username}}"><img src="{{toUser.profileImage}}" alt=""></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width:50%">
+                                                <div class="user_name">
+                                                    <div class="nick_name"><a href="/profile/{{toUser.username}}">{{toUser.username}}</a></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        {{/follow}}
+                                    </table>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                     <p class="about">
@@ -76,7 +162,9 @@
 {{/user}}
 </section>
 {{>layout/footer}}
+<script src="/js/modal.js"></script>
 <script src="/js/profile.js"></script>
+
 <script>
 
 
