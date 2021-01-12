@@ -61,7 +61,7 @@
                         <a href="/withdrawal" style="font-size: xx-small">회원탈퇴</a>
        {{/isSameSessionUser}}
        {{^isSameSessionUser}}
-                        <a href="/follows/toUser/{{user.id}}" class="profile_edit">팔로우</a>
+                        <a href="/follows/toUser/{{user.id}}" class="profile_edit" id="follow-btn">팔로우</a>
                         <a href="#" class="dark-blue">DM</a>
        {{/isSameSessionUser}}
                     </div>
@@ -73,7 +73,7 @@
                         </li>
                         <li id = "myBtn" style="cursor: pointer">
                            <span>팔로워</span>
-                            {{followerSize}}
+                            <span id = "follower-size">{{followerSize}}</span>
                             <div id= "myModal" class = "modal">
                                 <div class="modal-content">
                                     <div><h2>{{username}}님의 팔로워 리스트</h2></div><br><br>
@@ -165,11 +165,40 @@
 {{>layout/footer}}
 <script src="/js/modal.js"></script>
 <script src="/js/profile.js"></script>
-
 <script>
+    $("#follow-btn").click(follow);
+    var atag = $("#follow-btn");
+    var followersize = $("#follower-size");
 
+    function follow(e) {
+        console.log("팔로우 버튼 클릭");
+        e.preventDefault();
 
+        var url = atag.attr("href");
+        console.log("전송 url :" + url);
 
+        $.ajax({
+            type: 'get',
+            url: url,
+            async : false,
+            error: onError,
+            success: onSuccess
+        });
+    }
+
+    function onError(){}
+    function onSuccess(response){
+        console.log(response);
+        if(response == 0){
+            atag.text("팔로우");
+            followersize.text(eval(followersize.text()-1));
+        }else{
+            atag.text("팔로우 취소");
+            followersize.text(eval(followersize.text()+1));
+        }
+
+    }
 </script>
+
 </body>
 </html>
