@@ -44,7 +44,7 @@ public class likesApiController {
 
         Optional<Posts> posts = postsRepository.findById(postId);
         if(!posts.isPresent())
-            return -4L;
+            return -2L;
         return likesService.like(users, posts.get());
     }
 }

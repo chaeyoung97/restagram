@@ -51,7 +51,7 @@ var create = {
         }).done(function()
         {
             alert("회원이 탈퇴되었습니다.")
-                window.location.href='/login';
+                window.location.href='/loginForm';
         }).fail(function (error){
             alert(JSON.stringify(error));
         });

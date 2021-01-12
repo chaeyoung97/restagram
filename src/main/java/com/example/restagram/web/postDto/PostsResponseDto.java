@@ -24,8 +24,9 @@ public class PostsResponseDto {
     private List<Images> images;
     private Long commentsCnt;
     private Long likeCnt;
-    private boolean liked;
-
+    private Boolean liked;
+    private String createdDate;
+    private String modifiedDate;
     @Builder
     public PostsResponseDto(Posts posts, Users users){
         this.id = posts.getId();
@@ -38,5 +39,7 @@ public class PostsResponseDto {
         this.commentsCnt = posts.getCommentsCnt();
         this.likeCnt = posts.getLikeCnt();
         this.liked = users.liked(posts.getId());
+        this.createdDate = posts.getFormattedCreatedDate();
+        this.modifiedDate = posts.getFormattedModifiedDate();
     }
 }

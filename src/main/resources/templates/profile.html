@@ -133,7 +133,7 @@
                         </li>
                     </ul>
                     <p class="about">
-                        <span class="nick_name">kindtigerrr</span>
+                        <span class="nick_name">post</span>
                         <span class="book_mark">bookmark</span>
                     </p>
 
@@ -191,10 +191,13 @@
         console.log(response);
         if(response == 0){
             atag.text("팔로우");
-            followersize.text(eval(followersize.text()-1));
-        }else{
+            followersize.text(eval(parseInt(followersize.text())-1));
+        }else if(response > 0){
             atag.text("팔로우 취소");
-            followersize.text(eval(followersize.text()+1));
+            followersize.text(eval(parseInt(followersize.text())+1));
+        }
+        else{
+            alert("권한이 없는 접근입니다.");
         }
 
     }
