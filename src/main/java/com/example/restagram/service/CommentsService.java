@@ -18,11 +18,11 @@ public class CommentsService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Long save(Long postId, CommentsSaveRequestDto requestDto, Users users){
+    public Comments save(Long postId, CommentsSaveRequestDto requestDto, Users users){
         Posts posts = postsRepository.findById(postId).get();
         Comments comments = commentsRepository.save(requestDto.toEntity(posts, users));
         posts.addComments();
-        return postId;
+        return comments;
     }
 
     @Transactional

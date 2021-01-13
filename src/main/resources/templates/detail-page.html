@@ -120,7 +120,7 @@
                                 <div class="heart_btn" id = "heart_btn">
                                    <div class = "#" id = "heart-icon" data-name="heartbeat"></div>
                                 </div>
-                                <input type="hidden" style="display: none" id = "like-url" value="/likes/posts/{{id}}">
+                                <input type="hidden" style="display: none" id = "like-url" value="/api/likes/posts/{{id}}">
                                 <div style = "display:none"><span id = "liked">{{#liked}}like{{/liked}}{{^liked}}dislike{{/liked}}</span></div>
 
                                 <!--
@@ -237,7 +237,24 @@
         }
     }
 </script>
-
+<script type="text/template" id = "commentTemplate">
+    <div class="user_container-detail">
+        <div class="user"><img src="{0}" alt="user"></div>
+        <div class="comment">
+            <span class="user_id">{1}</span>{2}
+            <div class="time">{3} <!--<span class="try_comment">답글 달기</span>--></div>
+            <div class="icon_wrap">
+                <div class="more_trigger">
+                    <div class="sprite_more_icon"></div>
+                </div>
+                <div>
+                  <!--  <div class="sprite_small_heart_icon_outline"></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="/js/comment.js"></script>
 
 </body>
 </html>

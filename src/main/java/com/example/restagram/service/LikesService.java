@@ -16,8 +16,6 @@ import java.util.Optional;
 @Service
 public class LikesService {
     private final LikesTablesRepository likesTablesRepository;
-    private final UsersRepository usersRepository;
-    private final PostsRepository postsRepository;
 
     @Transactional
     public Long like(Users users, Posts posts){

@@ -42,8 +42,9 @@ public class Posts extends BaseTimeEntity implements Serializable {
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Images> images;
-
+    @Transient
     private Long commentsCnt = new Long(0);
+    @Transient
     private Long likeCnt = new Long(0);
 
     @Builder

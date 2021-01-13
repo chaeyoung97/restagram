@@ -1,6 +1,7 @@
 package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
+import com.example.restagram.domain.comments.Comments;
 import com.example.restagram.domain.comments.CommentsRepository;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.UsersRepository;
@@ -14,14 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/posts/{postId}/comments")
 @RestController
 public class CommentsApiController {
-    private final CommentsRepository commentsRepository;
     private final CommentsService commentsService;
     private final UsersRepository usersRepository;
 
     @PostMapping("")
-    public Long save(@PathVariable Long postId, @RequestBody CommentsSaveRequestDto requestDto, @LoginUser SessionUser sessionUser){
+    public Comments save(@PathVariable Long postId, @RequestBody CommentsSaveRequestDto requestDto, @LoginUser SessionUser sessionUser){
        if(sessionUser == null)
-           return -1L;
+           return null;
         return commentsService.save(postId, requestDto, usersRepository.findByUsername(sessionUser.getUsername()).get());
     }
 
