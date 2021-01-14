@@ -61,7 +61,7 @@
                         <a href="/withdrawal" style="font-size: xx-small">회원탈퇴</a>
        {{/isSameSessionUser}}
        {{^isSameSessionUser}}
-                        <a href="/follows/toUser/{{user.id}}" class="profile_edit" id="follow-btn">팔로우</a>
+                        <a href="/api/follows/toUser/{{user.id}}" class="profile_edit" id="follow-btn">팔로우</a>
                         <a href="#" class="dark-blue">DM</a>
        {{/isSameSessionUser}}
                     </div>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{{>layout/header}}
+    <link rel="stylesheet" href="/css/new_post.css">
+</head>
+<body>
+
+
+<section id="container">
+
+
+    {{>layout/navigator}}
+
+{{#post}}
+    <div id="main_container">
+
+        <div class="post_form_container">
+            <form class="post_form" id = "post-save">
+                <div class="title">
+                    UPDATE POST
+                </div>
+                <div class="preview">
+                    <div class="upload">
+                        <div class="post_btn">
+                            <div class="plus_icon">
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <p>포스트 이미지 추가</p>
+                            <canvas id="imageCanvas"></canvas>
+                            <!--<p><img id="img_id" src="#" style="width: 300px; height: 300px; object-fit: cover" alt="thumbnail"></p>-->
+                        </div>
+                    </div>                 
+                   	<button class="slide_btn" id="btn-slide-left" type="button"> &lt; </button>
+                    <button class="slide_btn" id="btn-slide-right" type="button"> &gt; </button>
+                </div>
+                <p>
+                    <input type="file" name="photo" id="files" required="required" multiple = "multiple" >
+                </p>
+                <p>
+                    <textarea name="content" id="content" cols="50" rows="5" placeholder="140자 까지 등록 가능합니다.
+#태그명 을 통해서 검색 태그를 등록할 수 있습니다.
+예시 : I # love # insta!">{{content}}</textarea>
+
+                </p>
+            </form>
+            <button class="submit_btn" id = "btn-update" type="button">저장</button>
+
+
+        </div>
+
+    </div>
+    <input type="hidden" id = "post-id" value="{{id}}">
+{{/post}}
+
+
+</section>
+{{>layout/footer}}
+
+<script src="/js/post.js"></script>
+
+
+<script>
+       var fileInput  = document.querySelector( "#files" ),
+           button     = document.querySelector( ".input-file-trigger" ),
+           the_return = document.querySelector(".file-return"),
+		   slide_left = document.querySelector("#btn-slide-left"),
+		   slide_right = document.querySelector("#btn-slide-right");
+       // Show image
+       fileInput.addEventListener('change', handleImage, fileInput);
+       slide_left.addEventListener('click',slideLeft,false);
+       slide_right.addEventListener('click',slideRight,false);
+       var canvas = document.getElementById('imageCanvas');
+       var ctx = canvas.getContext('2d');
+	   var currentIndex = 0;
+	   var length, files, reader;
+        function handleImage(e){
+           files = e.target.files;
+           length = files.length;
+           currentIndex = 0;
+           if(length>=2) slide_right.style.visibility='visible';
+           else slide_right.style.visibility = 'hidden';
+           slide_left.style.visibility = 'hidden';
+           reader = new FileReader();
+           reader.onload = function(event){
+               var img = new Image();
+               img.onload = function(){
+                   canvas.width = 300;
+                   canvas.height = 300;
+                   ctx.drawImage(img,0,0,300,300);
+               };
+               img.src = event.target.result;
+           };
+           reader.readAsDataURL(files[0]);
+       }
+       
+     function slideLeft(e){
+    	 currentIndex --;
+		if(currentIndex==0) slide_left.style.visibility = 'hidden';   
+		 if(length-currentIndex>=1) slide_right.style.visibility = 'visible';
+		reader.readAsDataURL(files[currentIndex]);
+		console.log("left");
+     }
+     function slideRight(e){
+    	 currentIndex ++;
+    	 slide_left.style.visibility = 'visible';
+    	 if(length-currentIndex<=1) slide_right.style.visibility = 'hidden';
+    	 reader.readAsDataURL(files[currentIndex]);
+    	 console.log("right");
+     }
+     
+</script>
+</body>
+</html>

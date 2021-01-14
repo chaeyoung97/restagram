@@ -93,14 +93,16 @@
                                     <div class="country">Seoul, South Korea</div>
                                 </div>
                             </div>
+                        {{#isSameUser}}
                             <div class="sprite_more_icon" data-name="more">
-                                <ul class="more_detail">
-                                    <li>팔로우</li>
-                                    <li>수정</li>
-                                    <li>삭제</li>
+                                <ul class="toggle_box">
+                                    <li><a href="/posts/{{id}}/update" style="text-decoration: none">수정</a></li>
+                                    <li><a href="javascript:postDelete();" style="text-decoration: none">삭제</a>
+
+                                    </li>
                                 </ul>
                             </div>
-
+                        {{/isSameUser}}
                         </header>
 
                         <section class="scroll_section">
@@ -181,6 +183,7 @@
         </section>
 
     </div>
+    <input type="hidden" id="postId" value="{{id}}">
     {{/post}}
 
 
@@ -271,6 +274,34 @@
     </div>
 </script>
 <script src="/js/comment.js"></script>
+<script>
+    var toggle_btn = $(".toggle_box")
+    $(".sprite_more_icon").click(displayToggleBox);
 
+    function  displayToggleBox(){
+        console.log("토글 버튼 클릭");
+
+        if(toggle_btn.css("display")=="none")
+            toggle_btn.css("display","block");
+        else
+            toggle_btn.css("display", "none");
+    }
+
+    function postDelete (){
+        console.log("삭제버튼");
+        id =  $("#postId").val();
+
+        $.ajax({
+            type : 'delete',
+            url : "/api/posts/" + id ,
+
+        }).done(function () {
+            alert("삭제완료!");
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert("실패");
+        });
+    }
+</script>
 </body>
 </html>

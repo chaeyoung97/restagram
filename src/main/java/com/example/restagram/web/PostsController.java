@@ -1,12 +1,15 @@
 package com.example.restagram.web;
 
 import com.example.restagram.config.LoginUser;
+import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.service.PostsService;
 import com.example.restagram.service.UserService;
+import com.example.restagram.web.postDto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +36,18 @@ public class PostsController {
     public String detail(@PathVariable Long id, @LoginUser SessionUser sessionUser, Model model){
        if(sessionUser == null)
            return "loginForm";
-        model.addAttribute("post", postsService.findByid(id, usersRepository.findByUsername(sessionUser.getUsername()).get()));
+        Users users =usersRepository.findByUsername(sessionUser.getUsername()).get();
+        PostsResponseDto posts =  postsService.findByid(id, users);
+        model.addAttribute("post",posts);
+        model.addAttribute("isSameUser", posts.getUser().equals(users));
         return "detail-page";
+    }
+
+    @GetMapping("/{id}/update")
+    public String update(@PathVariable Long id, @LoginUser SessionUser sessionUser,Model model){
+        if(sessionUser==null)
+            return "loginForm";
+        model.addAttribute("post", postsService.findByid(id, usersRepository.findByUsername(sessionUser.getUsername()).get()));
+        return "update-post";
     }
 }
