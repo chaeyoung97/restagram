@@ -28,6 +28,22 @@
         .swiper-slide img {
             box-shadow:0 0 5px #555;
         }
+
+        .comment-btn{
+            font-weight: bold;
+            font-size: 14px;
+            color:#3897f0;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform:translateY(-50%);
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .comment-btn{
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -92,7 +108,7 @@
                                 <div class="admin"><img src="{{user.profileImage}}" alt="user"></div>
                                 <div class="comment">
                                     <span class="user_id">{{user.username}}</span>{{content}}
-                                    <div class="time">2시간</div>
+                                    <div class="time">{{createdDate}}</div>
                                 </div>
                             </div>
 
@@ -101,13 +117,13 @@
                                 <div class="user"><img src="{{user.profileImage}}" alt="user"></div>
                                 <div class="comment">
                                     <span class="user_id">{{user.username}}</span>{{content}}
-                                    <div class="time">방금 전 <!--<span class="try_comment">답글 달기</span>--></div>
+                                    <div class="time">{{formattedCreatedDate}} <!--<span class="try_comment">답글 달기</span>--></div>
                                     <div class="icon_wrap">
                                         <div class="more_trigger">
                                             <div class="sprite_more_icon"></div>
                                         </div>
                                         <div>
-                                            <div class="sprite_small_heart_icon_outline"></div>
+                                           <!-- <div class="sprite_small_heart_icon_outline"></div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -146,9 +162,9 @@
                         <div class="timer">{{createdDate}}</div>
 
                         <div class="commit_field">
-                            <input type="text" placeholder="댓글달기..">
-
-                            <div class="upload_btn">게시</div>
+                            <input id ="commentInput" type="text" placeholder="댓글달기..">
+                            <input type="hidden" id="comment-url" value="/api/posts/{{id}}/comments">
+                            <div class="comment-btn">게시</div>
                         </div>
 
 

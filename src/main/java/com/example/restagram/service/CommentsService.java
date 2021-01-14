@@ -5,6 +5,7 @@ import com.example.restagram.domain.comments.CommentsRepository;
 import com.example.restagram.domain.posts.Posts;
 import com.example.restagram.domain.posts.PostsRepository;
 import com.example.restagram.domain.users.Users;
+import com.example.restagram.web.commentDto.CommentsResponseDto;
 import com.example.restagram.web.commentDto.CommentsSaveRequestDto;
 import com.example.restagram.web.commentDto.CommentsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,11 @@ public class CommentsService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Comments save(Long postId, CommentsSaveRequestDto requestDto, Users users){
+    public CommentsResponseDto save(Long postId, CommentsSaveRequestDto requestDto, Users users){
         Posts posts = postsRepository.findById(postId).get();
         Comments comments = commentsRepository.save(requestDto.toEntity(posts, users));
         posts.addComments();
-        return comments;
+        return CommentsResponseDto.builder().comments(comments).build();
     }
 
     @Transactional
