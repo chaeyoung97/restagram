@@ -44,6 +44,7 @@ public class Posts extends BaseTimeEntity implements Serializable {
     private List<Images> images;
 
     private Long commentsCnt = new Long(0);
+
     private Long likeCnt = new Long(0);
 
     @Builder

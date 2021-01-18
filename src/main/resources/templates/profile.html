@@ -54,7 +54,7 @@
                 </div>
                 <div class="detail">
                     <div class="top">
-                        <div class="user_name" >{{username}}</div>
+                        <div class="user_name">{{username}}</div>
        {{#isSameSessionUser}}
                         <a href="/edit/profile" class="profile_edit">프로필편집</a>
                         <form action="/logout" method="post" class = "logout"><input type="submit" value="로그아웃" style="background-color:transparent;  border:1px  solid;"></form>
@@ -62,9 +62,7 @@
        {{/isSameSessionUser}}
        {{^isSameSessionUser}}
                         <a href="/follows/toUser/{{user.id}}" class="profile_edit" id="follow-btn">팔로우</a>
-
-                        <input type="button" class="DM" id="chat-create" value="DM">
-                        <td><input type="hidden" id="responseUserId" value="{{username}}"></td>
+                        <a href="#" class="dark-blue">DM</a>
        {{/isSameSessionUser}}
                     </div>
 
@@ -204,6 +202,6 @@
 
     }
 </script>
-<script src="/JS/chattingJs.js"></script>
+
 </body>
 </html>
