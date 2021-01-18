@@ -21,9 +21,6 @@ var chat={
                 chatLi.find('.message span').text(msg.body);
                 $('div.chat:not(.format) ul').append(chatLi);
                 $('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
-
-
-                $('#greetings').append("<tr><td>"+y+" : "+(msg.body)+"<br>"+"</td></tr>");
             });
         });
         //--------------------------------------------//
