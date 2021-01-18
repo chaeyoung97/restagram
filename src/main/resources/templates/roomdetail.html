@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Websocket ChatRoom</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/css/chatRoomdetail.css">
+</head>
+<body>
+<div class="chat_wrap2">
+<div class="header">
+    {{#room}}
+    {{name}}
+    {{/room}}
+</div>
+    <div class="chat2">
+        <ul>
+            {{#message}}
+            <li>
+            <div class="sender">
+                <span>{{sender}}</span>
+            </div>
+            <div class="message">
+                 <span>{{message}}</span>
+            </div>
+            </li>
+            {{/message}}
+        </ul>
+    </div>
+</div>
+<div class="chat_wrap">
+    <div class="chat">
+        <ul>
+            <!-- 동적 생성 -->
+        </ul>
+    </div>
+    <div class="input-div">
+        <textarea placeholder="Press Enter for send message." id="msg"></textarea>
+    </div>
+
+    <!-- format -->
+
+    <div class="chat format">
+        <ul>
+            <li>
+                <div class="sender">
+                    <span></span>
+                </div>
+                <div class="message">
+                    <span></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="/webjars/jquery/jquery.min.js"></script>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/JS/socket.js"></script>
+</body>
+</html>

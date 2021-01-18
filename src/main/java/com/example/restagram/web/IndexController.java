@@ -1,19 +1,26 @@
 package com.example.restagram.web;
 import com.example.restagram.config.LoginUser;
+import com.example.restagram.domain.ChatMessage.ChatMessage;
+import com.example.restagram.domain.ChatMessage.ChatMessageRepository;
+import com.example.restagram.domain.tables.ChatRoomTable;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
-import com.example.restagram.service.ImageService;
-import com.example.restagram.service.PostsService;
-import com.example.restagram.service.UserService;
+import com.example.restagram.service.*;
+import com.example.restagram.web.chatDto.ChattingListResponseDto;
+import com.example.restagram.web.chatDto.ChattingRoomResponseDto;
+import com.example.restagram.web.chatDto.RequestCreateChatMessageDto;
 import com.example.restagram.web.postDto.PostsResponseDto;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
@@ -25,6 +32,9 @@ public class IndexController {
     private final UserService userService;
     private final ImageService imageService;
     private final PostsService postsService;
+    private final ChatService chatService;
+    private final ChatMessageService chatMessageService;
+
 
     // 기본 home
     @GetMapping("/")
@@ -117,4 +127,35 @@ public class IndexController {
     	imageService.getProfileImage(users.getId(), model);
     	return "edit_password";
     }
+    // 채팅방 List
+    @GetMapping("/room")
+    public String room(Model model,@LoginUser SessionUser sessionUser) {
+
+        model.addAttribute("chat", chatService.findAllAsc(sessionUser));
+        model.addAttribute("user",sessionUser);
+        return "/room";
+    }
+
+    // 채팅방 입장.
+    @GetMapping("/chat/room/{roomId}")
+    public String roomEnter(@PathVariable String roomId,Model model)
+    {
+        ChattingRoomResponseDto responseDto= chatService.select(roomId);
+//       System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+responseDto.toString());
+        model.addAttribute("message",chatMessageService.findAll(roomId));
+        model.addAttribute("room",responseDto);
+        return "/roomdetail";
+    }
+    // pub/sub message sending
+    private final SimpMessageSendingOperations messagingTemplate;
+    @MessageMapping("/chat/message")
+    public void message(RequestCreateChatMessageDto message) {
+        Long id=chatMessageService.CreateMessage(message);
+        if(id!=null)
+        {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  메시지 저장 완료");
+            messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message.getMessage());
+        }
+    }
+
 }

@@ -25,7 +25,6 @@ public class UserApiController {
     //기본 회원가입을 하는 페이지로 이동하고 로직을 한번에 처리하는 것을 분리.
     //페이지 이동은 getMapping 부분에서 이루어지는 Controller 이고 RestController는 APi 기능 (가입승인, follow승인, 등등.)
     // 눈에 보이지 않는 백엔드 부분.
-
     @Autowired
     UsersRepository usersRepository;
 

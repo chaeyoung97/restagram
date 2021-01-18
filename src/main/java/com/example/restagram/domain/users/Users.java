@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.example.restagram.domain.BaseTimeEntity;
 import com.example.restagram.domain.posts.Posts;
+import com.example.restagram.domain.tables.ChatRoomTable;
 import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.tables.LikesTables;
 
@@ -11,13 +12,11 @@ import com.example.restagram.web.userDto.UserUpdateRequestDto;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @EqualsAndHashCode
 @NoArgsConstructor
-@ToString
 @Getter
 //@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Entity
@@ -64,7 +63,13 @@ public class Users extends BaseTimeEntity implements Serializable {
 
 	@OneToMany(mappedBy = "toUser" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<FollowTable> follower;
-	
+
+	@OneToMany(mappedBy = "requestUserId",cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<ChatRoomTable> requestUser;
+
+	@OneToMany(mappedBy = "responseUserId",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<ChatRoomTable> responseUser;
+
 	@Builder
 	public Users(String name, String username, String password, String email) {
 		this.name = name;

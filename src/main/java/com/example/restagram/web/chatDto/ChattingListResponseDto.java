@@ -1,6 +1,6 @@
-package com.example.restagram.web.dto;
+package com.example.restagram.web.chatDto;
 
-import com.example.restagram.domain.chatroom.ChatRoom;
+import com.example.restagram.domain.tables.ChatRoomTable;
 import lombok.Getter;
 
 @Getter
@@ -9,9 +9,7 @@ public class ChattingListResponseDto {
     private String roomId;
     private String name;
 
-
-
-    public ChattingListResponseDto(ChatRoom entity)
+    public ChattingListResponseDto(ChatRoomTable entity)
     {
         this.id=entity.getId();
         this.roomId=entity.getRoomId();

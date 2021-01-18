@@ -17,11 +17,14 @@
     <tr>
         <td>{{username}}</td>
         <td>{{email}}</td>
-        <td><input type="button" id="chatting" value="{{username}}과 대화하기"></td>
+        <td><input type="button" id="chat-create" value="{{username}}과 대화하기"></td>
+        <td><input type="hidden" id="responseUserId" value="{{username}}"></td>
     </tr>
     {{/userList}}
 
     </tbody>
 </table>
+{{>layout/footer}}
+
 </body>
 </html>

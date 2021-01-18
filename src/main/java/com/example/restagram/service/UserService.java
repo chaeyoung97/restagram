@@ -6,13 +6,14 @@ import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
 import com.example.restagram.web.userDto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -25,11 +26,10 @@ public class UserService implements UserDetailsService {
 
     private final UsersRepository userRepository;
     private final HttpSession httpSession;
-    private final PasswordEncoder encrpyt;
+    private final PasswordEncoder encrypt;
     private final PostsService postsService;
     private final FollowService followService;
     private final ImageService imageService;
-
     // 로그인 인증과정.
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     public Long save(UserSaveRequestDto requestDto) {
         if(!userRepository.findByUsername(requestDto.getUsername()).isPresent())
         {
-            requestDto.setPassword(encrpyt.encode(requestDto.getPassword()));
+            requestDto.setPassword(encrypt.encode(requestDto.getPassword()));
             return userRepository.save(requestDto.toEntity()).getId();
         }
         else
@@ -87,11 +87,11 @@ public class UserService implements UserDetailsService {
     }
     @Transactional
     public void delete(UserDeleteRequestDto requestDto, Long id) {
-
+        imageService.deleteProfileImage(id);
         Users deleteUser=userRepository.findById(id).orElseThrow(
                 ()->new IllegalArgumentException(" 해당 사용자가 존재하지 않습니다.")
         );
-        if(encrpyt.matches(requestDto.getPassword(),deleteUser.getPassword()))
+        if(encrypt.matches(requestDto.getPassword(),deleteUser.getPassword()))
         {
             System.out.println(">>>>>>>>>>>>>>>deleteSuccess");
             userRepository.delete(deleteUser);

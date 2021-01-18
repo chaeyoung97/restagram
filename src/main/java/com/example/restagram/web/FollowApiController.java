@@ -5,7 +5,6 @@ import com.example.restagram.config.LoginUser;
 import com.example.restagram.domain.users.SessionUser;
 import com.example.restagram.domain.users.Users;
 import com.example.restagram.domain.users.UsersRepository;
-import com.example.restagram.domain.tables.FollowTable;
 import com.example.restagram.domain.tables.FollowTableRepository;
 import com.example.restagram.service.FollowService;
 import lombok.RequiredArgsConstructor;

@@ -15,6 +15,5 @@ public interface UsersRepository extends JpaRepository<Users, Long>{
 	@Query(value = "select u from Users u order by u.createdDate")
 	List<Users> findbyAll_createdDate();
 
-
 //    void withdrawal(UserResponseDto requestDto);
 }
