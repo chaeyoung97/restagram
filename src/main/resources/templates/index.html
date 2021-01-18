@@ -91,10 +91,10 @@
                     <header class="top">
                         <div class="user_container">
                             <div class="profile_img">
-                                <a href="/profile/{{user.username}}"><img src="{{user.profileImage}}" alt="프로필이미지"></a>
+                                <img src="{{user.profileImage}}" alt="프로필이미지">
                             </div>
                             <div class="user_name">
-                                <div class="nick_name m_text"> <a href="/profile/{{user.username}}" style="text-decoration: none">{{user.username}}</a></div>
+                                <div class="nick_name m_text">{{user.username}}</div>
                                 <div class="country s_text">Seoul, South Korea</div>
                             </div>
 
@@ -114,7 +114,7 @@
                             <div class="swiper-container swiper1">
                                 <div class="swiper-wrapper">
                                     {{#images}}
-                                    <div class="swiper-slide"> <a href="/posts/detail/{{id}}"><img src="{{imageURL}}"></a></div>
+                                    <div class="swiper-slide"><img src="{{imageURL}}"></div>
                                     {{/images}}
                                 </div>
 
@@ -130,7 +130,7 @@
                     </div>
                     <div>
                         <div>
-                            <a href="/posts/detail/{{id}}" style="text-decoration: none"><textarea readonly style="resize: none;overflow-y:hidden;border: none;background-color: transparent">{{content}}</textarea></a>
+                            <textarea readonly style="resize: none;overflow-y:hidden;border: none;background-color: transparent">{{content}}</textarea>
                         </div>
                     </div>
                     <div class="bottom_icons">
@@ -163,7 +163,7 @@
                         <div class="comment" id="comment-list-ajax-post37">
                             <div class="comment-detail">
                                 <div class="nick_name m_text">dongdong2</div>
-                                <div> <a href="/posts/detail/{{id}}" style="text-decoration: none">강아지가 너무 귀여워요~!</a></div>
+                                <div>강아지가 너무 귀여워요~!</div>
                             </div>
                         </div>
                         <div class="small_heart">
