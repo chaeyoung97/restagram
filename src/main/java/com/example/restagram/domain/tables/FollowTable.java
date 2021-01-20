@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Entity
-public class FollowTable extends BaseTimeEntity {
+public class FollowTable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	//팔로우 시퀀스

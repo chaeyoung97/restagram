@@ -28,6 +28,22 @@
         .swiper-slide img {
             box-shadow:0 0 5px #555;
         }
+
+        .comment-btn{
+            font-weight: bold;
+            font-size: 14px;
+            color:#3897f0;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform:translateY(-50%);
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .comment-btn{
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -77,14 +93,16 @@
                                     <div class="country">Seoul, South Korea</div>
                                 </div>
                             </div>
+                        {{#isSameUser}}
                             <div class="sprite_more_icon" data-name="more">
-                                <ul class="more_detail">
-                                    <li>팔로우</li>
-                                    <li>수정</li>
-                                    <li>삭제</li>
+                                <ul class="toggle_box">
+                                    <li><a href="/posts/{{id}}/update" style="text-decoration: none">수정</a></li>
+                                    <li><a href="javascript:postDelete();" style="text-decoration: none">삭제</a>
+
+                                    </li>
                                 </ul>
                             </div>
-
+                        {{/isSameUser}}
                         </header>
 
                         <section class="scroll_section">
@@ -92,7 +110,7 @@
                                 <div class="admin"><img src="{{user.profileImage}}" alt="user"></div>
                                 <div class="comment">
                                     <span class="user_id">{{user.username}}</span>{{content}}
-                                    <div class="time">2시간</div>
+                                    <div class="time">{{createdDate}}</div>
                                 </div>
                             </div>
 
@@ -101,13 +119,13 @@
                                 <div class="user"><img src="{{user.profileImage}}" alt="user"></div>
                                 <div class="comment">
                                     <span class="user_id">{{user.username}}</span>{{content}}
-                                    <div class="time">방금 전 <!--<span class="try_comment">답글 달기</span>--></div>
+                                    <div class="time">{{formattedCreatedDate}} <!--<span class="try_comment">답글 달기</span>--></div>
                                     <div class="icon_wrap">
                                         <div class="more_trigger">
                                             <div class="sprite_more_icon"></div>
                                         </div>
                                         <div>
-                                            <div class="sprite_small_heart_icon_outline"></div>
+                                           <!-- <div class="sprite_small_heart_icon_outline"></div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +138,7 @@
                                 <div class="heart_btn" id = "heart_btn">
                                    <div class = "#" id = "heart-icon" data-name="heartbeat"></div>
                                 </div>
-                                <input type="hidden" style="display: none" id = "like-url" value="/likes/posts/{{id}}">
+                                <input type="hidden" style="display: none" id = "like-url" value="/api/likes/posts/{{id}}">
                                 <div style = "display:none"><span id = "liked">{{#liked}}like{{/liked}}{{^liked}}dislike{{/liked}}</span></div>
 
                                 <!--
@@ -146,9 +164,9 @@
                         <div class="timer">{{createdDate}}</div>
 
                         <div class="commit_field">
-                            <input type="text" placeholder="댓글달기..">
-
-                            <div class="upload_btn">게시</div>
+                            <input id ="commentInput" type="text" placeholder="댓글달기..">
+                            <input type="hidden" id="comment-url" value="/api/posts/{{id}}/comments">
+                            <div class="comment-btn">게시</div>
                         </div>
 
 
@@ -165,6 +183,7 @@
         </section>
 
     </div>
+    <input type="hidden" id="postId" value="{{id}}">
     {{/post}}
 
 
@@ -237,7 +256,52 @@
         }
     }
 </script>
+<script type="text/template" id = "commentTemplate">
+    <div class="user_container-detail">
+        <div class="user"><img src="{0}" alt="user"></div>
+        <div class="comment">
+            <span class="user_id">{1}</span>{2}
+            <div class="time">{3} <!--<span class="try_comment">답글 달기</span>--></div>
+            <div class="icon_wrap">
+                <div class="more_trigger">
+                    <div class="sprite_more_icon"></div>
+                </div>
+                <div>
+                  <!--  <div class="sprite_small_heart_icon_outline"></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="/js/comment.js"></script>
+<script>
+    var toggle_btn = $(".toggle_box")
+    $(".sprite_more_icon").click(displayToggleBox);
 
+    function  displayToggleBox(){
+        console.log("토글 버튼 클릭");
 
+        if(toggle_btn.css("display")=="none")
+            toggle_btn.css("display","block");
+        else
+            toggle_btn.css("display", "none");
+    }
+
+    function postDelete (){
+        console.log("삭제버튼");
+        id =  $("#postId").val();
+
+        $.ajax({
+            type : 'delete',
+            url : "/api/posts/" + id ,
+
+        }).done(function () {
+            alert("삭제완료!");
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert("실패");
+        });
+    }
+</script>
 </body>
 </html>

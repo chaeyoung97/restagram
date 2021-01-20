@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 public class FollowService {
 
-    private final UsersRepository usersRepository;
     private final FollowTableRepository followTableRepository;
 
     /*

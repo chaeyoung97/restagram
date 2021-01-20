@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
-@RequestMapping("/follows")
+@RequestMapping("/api/follows")
 @RestController
 public class FollowApiController {
 
 	private final UsersRepository usersRepository;
-	private final FollowTableRepository followTableRepository;
 	private final FollowService followService;
 
 	/*

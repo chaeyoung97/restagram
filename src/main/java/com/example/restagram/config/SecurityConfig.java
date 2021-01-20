@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable().headers().frameOptions().disable().and()
                 .authorizeRequests()
-                    .antMatchers("/","/login","/signUpForm","/loginForm","/users/api/create","/h2-console/**","/css/**", "/imgs/**","/images/**" , "/js/**").permitAll()
+                    .antMatchers("/swagger-ui.html","/","/login","/signUpForm","/loginForm","/users/api/create","/h2-console/**","/css/**", "/imgs/**","/images/**" , "/js/**").permitAll()
                     //              .antMatchers("").hasRole("USER") // 사용자 접근 url
                     .antMatchers("/admin/userList").hasRole("ADMIN") // 회원 정보 list 관리자 권한 승인한자만 사용가능.
                     //              .antMatchers("").authenticated() // 로그인이 필요하다. 이 부분은 api 부분의 url 적는 곳.

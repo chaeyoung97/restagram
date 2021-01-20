@@ -1,0 +1,52 @@
+[33mc67d0ff[m[33m ([m[1;36mHEAD[m[33m)[m HEAD@{0}: commit: feat : chatting front_Back complete
+[33m19ff14b[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{1}: checkout: moving from master to 19ff14bedd717532fd09bca398a2d11f8b302e0e
+[33m19ff14b[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{2}: merge origin/master: Fast-forward
+[33mc55e1ef[m HEAD@{3}: reset: moving to HEAD
+[33mc55e1ef[m HEAD@{4}: commit: feat :front_profile.html 회원탈퇴,DM
+[33mb9c888c[m HEAD@{5}: merge origin/master: Merge made by the 'recursive' strategy.
+[33mecc8a07[m HEAD@{6}: commit: feat :webSocket Config, ChatRoom_And_ChatMessage Domain,User withdrawal Complete
+[33m92a7401[m HEAD@{7}: merge origin/master: Fast-forward
+[33mda0568f[m HEAD@{8}: reset: moving to HEAD
+[33mda0568f[m HEAD@{9}: merge origin/master: Fast-forward
+[33m9bc21f6[m HEAD@{10}: reset: moving to HEAD
+[33m9bc21f6[m HEAD@{11}: merge origin/master: Fast-forward
+[33m1dae461[m HEAD@{12}: reset: moving to HEAD
+[33m1dae461[m HEAD@{13}: merge origin/master: Fast-forward
+[33mb129fc6[m HEAD@{14}: reset: moving to HEAD
+[33mb129fc6[m HEAD@{15}: merge origin/master: Fast-forward
+[33m08f9242[m HEAD@{16}: commit: SecurityConfig 부분 수정.
+[33m929e1c8[m HEAD@{17}: commit: chatRoom 임시테이블 생성
+[33mbaa7bf1[m HEAD@{18}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m3fdfeba[m HEAD@{19}: reset: moving to HEAD
+[33m3fdfeba[m HEAD@{20}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m983d6a1[m HEAD@{21}: commit: 로그아웃 url mapping 완료
+[33m3f7ec98[m HEAD@{22}: merge origin/master: Fast-forward
+[33m8f7baf9[m HEAD@{23}: merge origin/master: Fast-forward
+[33maab2087[m HEAD@{24}: commit: 권한 관리자 페이지 userList.html 완성.
+[33m8129ffe[m HEAD@{25}: merge origin/master: Fast-forward
+[33m62603cc[m HEAD@{26}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m85f941a[m HEAD@{27}: commit: 시큐리티 적용(로그인,회원가입) 및 api 분리
+[33m86c47d5[m HEAD@{28}: merge origin/master: Merge made by the 'recursive' strategy.
+[33mc9b6a91[m HEAD@{29}: reset: moving to HEAD
+[33mc9b6a91[m HEAD@{30}: commit: controller commit
+[33m45687e0[m HEAD@{31}: merge origin/master: Fast-forward
+[33md556f95[m HEAD@{32}: commit: 유저생성 단위테스트 통과
+[33m18a9120[m HEAD@{33}: merge origin/master: Fast-forward
+[33m920a00b[m HEAD@{34}: reset: moving to HEAD
+[33m920a00b[m HEAD@{35}: merge origin/master: Fast-forward
+[33m522b9c3[m HEAD@{36}: reset: moving to HEAD
+[33m522b9c3[m HEAD@{37}: rebase (finish): returning to refs/heads/master
+[33m522b9c3[m HEAD@{38}: rebase (start): checkout origin/master
+[33m60bbcdf[m HEAD@{39}: reset: moving to HEAD
+[33m60bbcdf[m HEAD@{40}: merge origin/master: Fast-forward
+[33m902352c[m HEAD@{41}: reset: moving to HEAD
+[33m902352c[m HEAD@{42}: checkout: moving from master to master
+[33m902352c[m HEAD@{43}: branch: Reset to origin/master
+[33m902352c[m HEAD@{44}: reset: moving to 902352c8852b6da7e4ced851dbc3ace1d450212c
+[33m902352c[m HEAD@{45}: merge origin/master: Fast-forward
+[33m930bd86[m HEAD@{46}: reset: moving to HEAD
+[33m930bd86[m HEAD@{47}: commit: commit
+[33m3bc1c93[m HEAD@{48}: commit: Dummy User Test && IndexPage Controller Test Complete.
+[33m87bcb20[m HEAD@{49}: merge origin/master: Fast-forward
+[33m2e1635c[m HEAD@{50}: reset: moving to HEAD
+[33m2e1635c[m HEAD@{51}: clone: from https://github.com/chaeyoung97/restagram.git
