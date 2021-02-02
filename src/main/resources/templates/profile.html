@@ -62,7 +62,8 @@
        {{/isSameSessionUser}}
        {{^isSameSessionUser}}
                         <a href="/follows/toUser/{{user.id}}" class="profile_edit" id="follow-btn">팔로우</a>
-                        <a href="#" class="dark-blue">DM</a>
+                        <input type="button" class="DM" id="chat-create" value="DM">
+                        <td><input type="hidden" id="responseUserId" value="{{username}}"></td>
        {{/isSameSessionUser}}
                     </div>
 

@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FollowTableRepository extends JpaRepository<FollowTable, Long>{
+    @Transactional
+    Long deleteByFromUserIdAndToUserId(Long fromUser, Long toUser);
+    List<FollowTable> findByFromUser(Long id);
+    List<FollowTable> findByToUser(Long id);
+
     Optional<FollowTable> findByFromUserAndToUser(Users fromUser, Users toUser);
 }
 
